@@ -27,7 +27,7 @@ export const bookingSchema = z.object({
     .string()
     .min(7, "Mobile number must be at least 7 digits")
     .max(20, "Mobile number too long"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
+  email: z.string().optional().default(""),
   country: z.string().min(1, "Country is required").default("India"),
   checkIn: z.string().min(1, "Check-in date is required"),
   checkOut: z.string().min(1, "Check-out date is required"),
