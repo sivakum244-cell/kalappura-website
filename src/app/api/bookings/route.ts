@@ -26,23 +26,13 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    // Generate unique booking ID
-    // Count today's bookings to get the sequence number
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const todayCount = await prisma.booking.count({
-      where: {
-        createdAt: {
-          gte: today,
-          lt: tomorrow,
-        },
-      },
-    });
-
-    const bookingId = generateBookingId(todayCount + 1);
+    // Generate unique booking ID using timestamp + random to avoid collisions
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const random = String(Math.floor(Math.random() * 9000) + 1000);
+    const bookingId = `KHB-${year}${month}${day}-${random}`;
 
     // Save to database
     const booking = await prisma.booking.create({
