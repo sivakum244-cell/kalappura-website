@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  eslint: {
+    // Disable ESLint during builds (we run it separately in dev)
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
