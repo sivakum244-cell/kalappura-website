@@ -1,4 +1,5 @@
 // Kalappura Houseboats & Tours - Database Schema (Supabase PostgreSQL)
+// Updated: force fresh deploy
 
 generator client {
   provider = "prisma-client-js"
