@@ -70,42 +70,35 @@ export async function POST(request: NextRequest) {
     });
 
     // Send emails (non-blocking - don't fail the booking if emails fail)
-    const emailData = {
-      bookingId: booking.bookingId,
-      guestName: booking.guestName,
-      mobile: booking.mobile,
-      email: booking.email || "",
-      country: booking.country,
-      checkIn: booking.checkIn,
-      checkOut: booking.checkOut,
-      eta: booking.eta,
-      adults: booking.adults,
-      children: booking.children,
-      infants: booking.infants,
-      roomType: booking.roomType,
-      numberOfRooms: booking.numberOfRooms,
-      foodRequirements: booking.foodRequirements,
-      specialRequests: booking.specialRequests,
-      additionalNotes: booking.additionalNotes,
-      paymentPreference: booking.paymentPreference,
-      createdAt: booking.createdAt.toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }),
-    };
+    try {
+      const emailData = {
+        bookingId: booking.bookingId,
+        guestName: booking.guestName,
+        mobile: booking.mobile,
+        email: booking.email || "",
+        country: booking.country,
+        checkIn: booking.checkIn,
+        checkOut: booking.checkOut,
+        eta: booking.eta,
+        adults: booking.adults,
+        children: booking.children,
+        infants: booking.infants,
+        roomType: booking.roomType,
+        numberOfRooms: booking.numberOfRooms,
+        foodRequirements: booking.foodRequirements,
+        specialRequests: booking.specialRequests,
+        additionalNotes: booking.additionalNotes,
+        paymentPreference: booking.paymentPreference,
+        createdAt: new Date(booking.createdAt).toISOString(),
+      };
 
-    // Fire-and-forget emails (don't await to prevent slow response)
-    Promise.allSettled([
-      sendAdminNotification(emailData),
-      sendGuestConfirmation(emailData),
-    ]).then((results) => {
-      results.forEach((result, i) => {
-        const target = i === 0 ? "admin" : "guest";
-        if (result.status === "rejected") {
-          console.error(`[BOOKING] Failed to send ${target} email:`, result.reason);
-        }
-      });
-    });
+      Promise.allSettled([
+        sendAdminNotification(emailData),
+        sendGuestConfirmation(emailData),
+      ]).catch(() => {});
+    } catch (emailErr) {
+      console.error("[BOOKING] Email preparation failed:", emailErr);
+    }
 
     return NextResponse.json(
       {

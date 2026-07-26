@@ -46,6 +46,7 @@ export const bookingSchema = z.object({
   paymentPreference: z
     .enum(["pay-at-property", "online-payment", "bank-transfer"])
     .default("pay-at-property"),
+  extraBed: z.number().int().min(0).max(5).default(0),
   termsAccepted: z.boolean().refine((val) => val === true, {
     message: "You must accept the terms & conditions",
   }),
