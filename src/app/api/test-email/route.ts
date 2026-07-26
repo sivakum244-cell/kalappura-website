@@ -34,14 +34,14 @@ export async function GET() {
 
     await transporter.sendMail({
       from: `"Kalappura Houseboats" <sivakum244@gmail.com>`,
-      to: "sivakum244@gmail.com",
+      to: "josejkalappurackal@gmail.com",
       subject: "✅ Kalappura Email Test - Working!",
       html: `<h2>Email is working!</h2><p>Your booking emails are now active.</p><p>Sent at: ${new Date().toISOString()}</p>`,
     });
 
     return NextResponse.json({
       success: true,
-      message: "Test email sent to sivakum244@gmail.com",
+      message: "Test email sent to josejkalappurackal@gmail.com",
       config,
     });
   } catch (error: unknown) {
