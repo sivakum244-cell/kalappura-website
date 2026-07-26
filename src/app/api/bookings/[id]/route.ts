@@ -98,11 +98,11 @@ export async function PATCH(
           createdAt: new Date(updated.createdAt).toISOString(),
         };
 
-        // Send emails (non-blocking)
-        Promise.allSettled([
+        // Send emails (awaited so Vercel doesn't kill the function early)
+        await Promise.allSettled([
           sendAdminConfirmedNotification(emailData),
           sendGuestBookingConfirmed(emailData),
-        ]).catch(() => {});
+        ]);
       } catch (emailErr) {
         console.error("[BOOKING] Email preparation failed:", emailErr);
       }

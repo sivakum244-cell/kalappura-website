@@ -82,10 +82,10 @@ export async function POST(request: NextRequest) {
         createdAt: new Date(booking.createdAt).toISOString(),
       };
 
-      Promise.allSettled([
+      await Promise.allSettled([
         sendAdminNotification(emailData),
         sendGuestConfirmation(emailData),
-      ]).catch(() => {});
+      ]);
     } catch (emailErr) {
       console.error("[BOOKING] Email preparation failed:", emailErr);
     }
