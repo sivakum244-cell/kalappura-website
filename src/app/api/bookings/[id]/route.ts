@@ -76,44 +76,36 @@ export async function PATCH(
 
     // Send confirmation emails when status changes to "Confirmed"
     if (body.status === "Confirmed" && existing.status !== "Confirmed") {
-      const emailData = {
-        bookingId: updated.bookingId,
-        guestName: updated.guestName,
-        mobile: updated.mobile,
-        email: updated.email || "",
-        country: updated.country,
-        checkIn: updated.checkIn,
-        checkOut: updated.checkOut,
-        eta: updated.eta,
-        adults: updated.adults,
-        children: updated.children,
-        infants: updated.infants,
-        roomType: updated.roomType,
-        numberOfRooms: updated.numberOfRooms,
-        foodRequirements: updated.foodRequirements,
-        specialRequests: updated.specialRequests,
-        additionalNotes: updated.additionalNotes,
-        paymentPreference: updated.paymentPreference,
-        createdAt: updated.createdAt.toLocaleString("en-IN", {
-          dateStyle: "medium",
-          timeStyle: "short",
-        }),
-      };
+      try {
+        const emailData = {
+          bookingId: updated.bookingId,
+          guestName: updated.guestName,
+          mobile: updated.mobile,
+          email: updated.email || "",
+          country: updated.country,
+          checkIn: updated.checkIn,
+          checkOut: updated.checkOut,
+          eta: updated.eta,
+          adults: updated.adults,
+          children: updated.children,
+          infants: updated.infants,
+          roomType: updated.roomType,
+          numberOfRooms: updated.numberOfRooms,
+          foodRequirements: updated.foodRequirements,
+          specialRequests: updated.specialRequests,
+          additionalNotes: updated.additionalNotes,
+          paymentPreference: updated.paymentPreference,
+          createdAt: new Date(updated.createdAt).toISOString(),
+        };
 
-      // Send emails (non-blocking)
-      Promise.allSettled([
-        sendAdminConfirmedNotification(emailData),
-        sendGuestBookingConfirmed(emailData),
-      ]).then((results) => {
-        results.forEach((result, i) => {
-          const target = i === 0 ? "admin" : "guest";
-          if (result.status === "rejected") {
-            console.error(`[BOOKING] Failed to send ${target} confirmation email:`, result.reason);
-          } else {
-            console.log(`[BOOKING] ${target} confirmation email sent`);
-          }
-        });
-      });
+        // Send emails (non-blocking)
+        Promise.allSettled([
+          sendAdminConfirmedNotification(emailData),
+          sendGuestBookingConfirmed(emailData),
+        ]).catch(() => {});
+      } catch (emailErr) {
+        console.error("[BOOKING] Email preparation failed:", emailErr);
+      }
     }
 
     return NextResponse.json({
