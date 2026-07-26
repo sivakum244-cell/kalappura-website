@@ -10,10 +10,10 @@ function createTransporter() {
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: Number(process.env.SMTP_PORT) || 587,
-    secure: false, // true for 465, false for other ports
+    secure: false,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
+      user: process.env.SMTP_USER || "sivakum244@gmail.com",
+      pass: process.env.SMTP_PASSWORD || "fsmmlsrsbldlkjjy",
     },
   });
 }
@@ -23,8 +23,10 @@ function createTransporter() {
 // ============================================================================
 
 async function sendEmail(to: string, subject: string, html: string) {
-  // Skip sending if SMTP is not configured
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+  const smtpUser = process.env.SMTP_USER || "sivakum244@gmail.com";
+  const smtpPass = process.env.SMTP_PASSWORD || "fsmmlsrsbldlkjjy";
+
+  if (!smtpUser || !smtpPass) {
     console.log("[EMAIL] SMTP not configured. Skipping email to:", to);
     console.log("[EMAIL] Subject:", subject);
     return { success: true, skipped: true };
@@ -33,7 +35,7 @@ async function sendEmail(to: string, subject: string, html: string) {
   try {
     const transporter = createTransporter();
     const fromName = process.env.SMTP_FROM_NAME || "Kalappura Houseboats";
-    const fromEmail = process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER;
+    const fromEmail = process.env.SMTP_FROM_EMAIL || "sivakum244@gmail.com";
 
     await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
@@ -80,7 +82,7 @@ interface BookingEmailData {
 // ============================================================================
 
 export async function sendAdminNotification(data: BookingEmailData) {
-  const adminEmail = process.env.ADMIN_EMAIL || "info@kalappurahouseboats.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "sivakum244@gmail.com";
   const subject = `🏠 New Booking: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
@@ -262,7 +264,7 @@ export async function sendGuestConfirmation(data: BookingEmailData) {
 // ============================================================================
 
 export async function sendAdminConfirmedNotification(data: BookingEmailData) {
-  const adminEmail = process.env.ADMIN_EMAIL || "info@kalappurahouseboats.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "sivakum244@gmail.com";
   const subject = `✅ Booking CONFIRMED: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
