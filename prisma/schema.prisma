@@ -1,0 +1,52 @@
+// Kalappura Houseboats & Tours - Database Schema (Supabase PostgreSQL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  bookingId String   @unique // e.g., KHB-20260725-0001
+
+  // Guest Information
+  guestName String
+  mobile    String
+  email     String?
+  country   String   @default("India")
+
+  // Stay Details
+  checkIn   String
+  checkOut  String
+  eta       String
+
+  // Guests (PAX)
+  adults    Int      @default(2)
+  children  Int      @default(0)
+  infants   Int      @default(0)
+
+  // Accommodation
+  roomType      String
+  numberOfRooms Int      @default(1)
+
+  // Preferences
+  foodRequirements   String   @default("")
+  foodAllergyDetails String   @default("")
+  specialRequests    String   @default("")
+  additionalNotes    String   @default("")
+  paymentPreference  String   @default("pay-at-property")
+
+  // System
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([checkIn])
+  @@index([createdAt])
+}
