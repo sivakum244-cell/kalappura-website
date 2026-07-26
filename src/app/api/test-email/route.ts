@@ -5,12 +5,17 @@ import nodemailer from "nodemailer";
 // Visit: /api/test-email to send a test email
 
 export async function GET() {
+  // Debug: list all SMTP-related env vars
+  const allEnvKeys = Object.keys(process.env).filter(k => k.includes("SMTP") || k.includes("ADMIN"));
+  
   const config = {
     host: process.env.SMTP_HOST || "NOT SET",
     port: process.env.SMTP_PORT || "NOT SET",
     user: process.env.SMTP_USER ? "SET (hidden)" : "NOT SET",
     pass: process.env.SMTP_PASSWORD ? "SET (hidden)" : "NOT SET",
     adminEmail: process.env.ADMIN_EMAIL || "NOT SET",
+    foundEnvKeys: allEnvKeys,
+    nodeEnv: process.env.NODE_ENV || "unknown",
   };
 
   // Check if configured
