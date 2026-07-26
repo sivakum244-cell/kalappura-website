@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       bookingId: booking.bookingId,
       guestName: booking.guestName,
       mobile: booking.mobile,
-      email: booking.email,
+      email: booking.email || "",
       country: booking.country,
       checkIn: booking.checkIn,
       checkOut: booking.checkOut,
