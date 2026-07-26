@@ -108,12 +108,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error("[BOOKING API] Error creating booking:", error);
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errName = error instanceof Error ? error.name : "Unknown";
+    console.error("[BOOKING API] Error creating booking:", errName, errMsg, JSON.stringify(error));
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to create booking. Please try again.",
+        error: "Failed to create booking: " + errMsg,
       },
       { status: 500 }
     );
