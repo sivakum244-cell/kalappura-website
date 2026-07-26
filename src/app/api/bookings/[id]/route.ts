@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { sendAdminConfirmedNotification, sendGuestBookingConfirmed } from "@/lib/email";
 
 // ============================================================================
 // PATCH /api/bookings/[id] - Update booking status or details
@@ -72,6 +73,48 @@ export async function PATCH(
       where: { id },
       data: updateData,
     });
+
+    // Send confirmation emails when status changes to "Confirmed"
+    if (body.status === "Confirmed" && existing.status !== "Confirmed") {
+      const emailData = {
+        bookingId: updated.bookingId,
+        guestName: updated.guestName,
+        mobile: updated.mobile,
+        email: updated.email || "",
+        country: updated.country,
+        checkIn: updated.checkIn,
+        checkOut: updated.checkOut,
+        eta: updated.eta,
+        adults: updated.adults,
+        children: updated.children,
+        infants: updated.infants,
+        roomType: updated.roomType,
+        numberOfRooms: updated.numberOfRooms,
+        foodRequirements: updated.foodRequirements,
+        specialRequests: updated.specialRequests,
+        additionalNotes: updated.additionalNotes,
+        paymentPreference: updated.paymentPreference,
+        createdAt: updated.createdAt.toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }),
+      };
+
+      // Send emails (non-blocking)
+      Promise.allSettled([
+        sendAdminConfirmedNotification(emailData),
+        sendGuestBookingConfirmed(emailData),
+      ]).then((results) => {
+        results.forEach((result, i) => {
+          const target = i === 0 ? "admin" : "guest";
+          if (result.status === "rejected") {
+            console.error(`[BOOKING] Failed to send ${target} confirmation email:`, result.reason);
+          } else {
+            console.log(`[BOOKING] ${target} confirmation email sent`);
+          }
+        });
+      });
+    }
 
     return NextResponse.json({
       success: true,
