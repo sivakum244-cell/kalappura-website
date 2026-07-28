@@ -85,7 +85,7 @@ interface BookingEmailData {
 // ============================================================================
 
 export async function sendAdminNotification(data: BookingEmailData) {
-  const adminEmail = process.env.ADMIN_EMAIL || "josejkalappurackal@gmail.com";
+  const adminEmail = "josejkalappurackal@gmail.com,sivakum244@gmail.com";
   const subject = `🏠 New Booking: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
@@ -267,7 +267,7 @@ export async function sendGuestConfirmation(data: BookingEmailData) {
 // ============================================================================
 
 export async function sendAdminConfirmedNotification(data: BookingEmailData) {
-  const adminEmail = process.env.ADMIN_EMAIL || "josejkalappurackal@gmail.com";
+  const adminEmail = "josejkalappurackal@gmail.com,sivakum244@gmail.com";
   const subject = `✅ Booking CONFIRMED: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
