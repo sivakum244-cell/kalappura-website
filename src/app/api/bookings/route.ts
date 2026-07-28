@@ -60,16 +60,8 @@ export async function POST(request: NextRequest) {
     });
 
     // Return success immediately - booking is saved
-    const response = NextResponse.json(
-      {
-        success: true,
-        bookingId: booking.bookingId,
-        message: "Booking created successfully",
-      },
-      { status: 201 }
-    );
-
-    // Try to send emails with a 5-second timeout (don't block response)
+    // Email sending disabled temporarily for debugging
+    /*
     try {
       const emailData = {
         bookingId: booking.bookingId,
@@ -105,8 +97,16 @@ export async function POST(request: NextRequest) {
     } catch (emailErr) {
       console.error("[BOOKING] Email failed:", emailErr);
     }
+    */
 
-    return response;
+    return NextResponse.json(
+      {
+        success: true,
+        bookingId: booking.bookingId,
+        message: "Booking created successfully",
+      },
+      { status: 201 }
+    );
   } catch (error: unknown) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const errName = error instanceof Error ? error.name : "Unknown";
