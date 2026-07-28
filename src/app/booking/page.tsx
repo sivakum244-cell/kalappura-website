@@ -39,7 +39,21 @@ function BookingContent() {
   });
 
   const updateForm = (field: string, value: string | number | boolean | string[]) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      
+      // Auto-reset room type when PAX changes and current selection becomes unavailable
+      if (field === "adults") {
+        const pax = value as number;
+        if (pax >= 4 && prev.roomType !== "standard-cabin") {
+          updated.roomType = "standard-cabin";
+        } else if (pax === 3 && prev.roomType === "suite-river-view") {
+          updated.roomType = "standard-cabin";
+        }
+      }
+      
+      return updated;
+    });
     setError("");
   };
 
@@ -225,10 +239,10 @@ function BookingContent() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Children (6–11 Years)</label>
+                  <label className="text-sm font-medium text-gray-700">Children (6–11 Years) <span className="text-xs text-gray-400">Max 2 per boat</span></label>
                   <select value={formData.children} onChange={(e) => updateForm("children", Number(e.target.value))}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {[0,1,2,3,4,5].map((n) => (<option key={n} value={n}>{n}</option>))}
+                    {[0,1,2].map((n) => (<option key={n} value={n}>{n}</option>))}
                   </select>
                 </div>
                 <div>
@@ -250,8 +264,17 @@ function BookingContent() {
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Room / Houseboat Type *</label>
+                  {/* Room availability based on PAX:
+                      2 pax = all 3 boats
+                      3 pax = Standard Cabin + Double/Twin only
+                      4+ pax = Standard Cabin only */}
                   <div className="space-y-2">
-                    {ROOMS.map((room) => (
+                    {ROOMS.filter((room) => {
+                      const pax = formData.adults;
+                      if (pax <= 2) return true; // 2 pax: all rooms
+                      if (pax === 3) return room.id === "standard-cabin" || room.id === "double-twin-room"; // 3 pax: standard + double
+                      return room.id === "standard-cabin"; // 4+ pax: only standard cabin
+                    }).map((room) => (
                       <label key={room.id}
                         className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                           formData.roomType === room.id ? "border-gold-500 bg-gold-50" : "border-gray-200 hover:border-gold-200"
@@ -271,6 +294,11 @@ function BookingContent() {
                       </label>
                     ))}
                   </div>
+                  {formData.adults >= 3 && (
+                    <p className="text-xs text-orange-600 mt-2 bg-orange-50 p-2 rounded-lg">
+                      ℹ️ {formData.adults >= 4 ? "For 4+ guests, only Standard Cabin on Boat is available." : "For 3 guests, Suite with River View is not available."}
+                    </p>
+                  )}
                 </div>
                 <div className="max-w-xs">
                   <label className="text-sm font-medium text-gray-700">Number of Rooms</label>
