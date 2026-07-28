@@ -15,6 +15,9 @@ function createTransporter() {
       user: process.env.SMTP_USER || "sivakum244@gmail.com",
       pass: process.env.SMTP_PASSWORD || "fsmmlsrsbldlkjjy",
     },
+    connectionTimeout: 5000,
+    greetingTimeout: 3000,
+    socketTimeout: 5000,
   });
 }
 

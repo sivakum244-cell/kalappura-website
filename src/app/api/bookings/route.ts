@@ -59,7 +59,17 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send emails (non-blocking - don't fail the booking if emails fail)
+    // Return success immediately - booking is saved
+    const response = NextResponse.json(
+      {
+        success: true,
+        bookingId: booking.bookingId,
+        message: "Booking created successfully",
+      },
+      { status: 201 }
+    );
+
+    // Try to send emails with a 5-second timeout (don't block response)
     try {
       const emailData = {
         bookingId: booking.bookingId,
@@ -82,22 +92,21 @@ export async function POST(request: NextRequest) {
         createdAt: new Date(booking.createdAt).toISOString(),
       };
 
-      await Promise.allSettled([
-        sendAdminNotification(emailData),
-        sendGuestConfirmation(emailData),
-      ]);
+      const emailTimeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Email timeout")), 5000));
+      await Promise.race([
+        Promise.allSettled([
+          sendAdminNotification(emailData),
+          sendGuestConfirmation(emailData),
+        ]),
+        emailTimeout,
+      ]).catch((err) => {
+        console.log("[BOOKING] Email skipped (timeout or error):", err);
+      });
     } catch (emailErr) {
-      console.error("[BOOKING] Email preparation failed:", emailErr);
+      console.error("[BOOKING] Email failed:", emailErr);
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        bookingId: booking.bookingId,
-        message: "Booking created successfully",
-      },
-      { status: 201 }
-    );
+    return response;
   } catch (error: unknown) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const errName = error instanceof Error ? error.name : "Unknown";
