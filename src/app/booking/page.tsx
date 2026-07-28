@@ -135,8 +135,21 @@ function BookingContent() {
           }),
         }).catch(() => {}); // Fire and forget
         
-        // Redirect to success page
-        router.push(`/booking/success?id=${result.bookingId}`);
+        // If online payment selected, redirect to PayU
+        if (formData.paymentPreference === "online-payment") {
+          const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+          const roomRate = currentRoom.price * formData.numberOfRooms;
+          const childrenCharge = formData.children * 1000;
+          const extraBedCharge = formData.extraBed * 1000;
+          const subtotal = roomRate + childrenCharge + extraBedCharge;
+          const gst = Math.round(subtotal * 0.15);
+          const total = subtotal + gst;
+
+          router.push(`/payment?bookingId=${result.bookingId}&amount=${total}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}`);
+        } else {
+          // Pay at property or bank transfer - go to success page
+          router.push(`/booking/success?id=${result.bookingId}`);
+        }
       } else {
         if (result.details) {
           const firstError = Object.values(result.details).flat()[0];
