@@ -26,13 +26,15 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    // Generate unique booking ID using timestamp + random to avoid collisions
+    // Generate unique booking ID using full timestamp (guaranteed unique)
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    const random = String(Math.floor(Math.random() * 9000) + 1000) + String(Date.now()).slice(-2);
-    const bookingId = `KHB-${year}${month}${day}-${random}`;
+    const hours = String(now.getHours()).padStart(2, "0");
+    const mins = String(now.getMinutes()).padStart(2, "0");
+    const secs = String(now.getSeconds()).padStart(2, "0");
+    const bookingId = `KHB-${year}${month}${day}-${hours}${mins}${secs}`;
 
     // Save to database
     const booking = await prisma.booking.create({
@@ -110,11 +112,11 @@ export async function POST(request: NextRequest) {
   } catch (error: unknown) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const errName = error instanceof Error ? error.name : "Unknown";
-    console.error("[BOOKING API] Error creating booking:", errName, errMsg, JSON.stringify(error));
+    console.error("[BOOKING API v3] Error creating booking:", errName, errMsg);
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to create booking: " + errMsg,
+        error: "Failed to create booking (v3): " + errMsg,
       },
       { status: 500 }
     );

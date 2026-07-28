@@ -107,7 +107,7 @@ function BookingContent() {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({ success: false, error: `Server error (${response.status})` }));
 
       if (result.success) {
         // Redirect to success page
