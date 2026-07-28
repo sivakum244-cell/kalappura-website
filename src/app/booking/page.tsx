@@ -453,9 +453,7 @@ function BookingContent() {
             </div>
 
             {/* Submit Button */}
-            <motion.button type="submit" disabled={isSubmitting}
-              whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-              whileTap={!isSubmitting ? { scale: 0.95 } : {}}
+            <button type="submit" disabled={isSubmitting} onClick={(e) => { if (!isSubmitting) { handleSubmit(e); } }}
               className={`w-full py-4 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-lg ${
                 isSubmitting
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -477,7 +475,7 @@ function BookingContent() {
                   Submit Booking
                 </>
               )}
-            </motion.button>
+            </button>
 
             <p className="text-center text-xs text-gray-500 mt-3">
               Your booking will be saved securely. Confirmation email will be sent to your email address.
