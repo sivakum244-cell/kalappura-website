@@ -110,6 +110,31 @@ function BookingContent() {
       const result = await response.json().catch(() => ({ success: false, error: `Server error (${response.status})` }));
 
       if (result.success) {
+        // Send email in background (don't wait for it)
+        fetch("/api/send-booking-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bookingId: result.bookingId,
+            guestName: formData.guestName,
+            mobile: formData.mobile,
+            email: formData.email,
+            country: formData.country,
+            checkIn: formData.checkIn,
+            checkOut: formData.checkOut,
+            eta: formData.eta,
+            adults: formData.adults,
+            children: formData.children,
+            infants: formData.infants,
+            roomType: formData.roomType,
+            numberOfRooms: formData.numberOfRooms,
+            foodRequirements: Array.isArray(formData.foodRequirements) ? formData.foodRequirements.join(", ") : "",
+            specialRequests: Array.isArray(formData.specialRequests) ? formData.specialRequests.join(", ") : "",
+            additionalNotes: formData.additionalNotes,
+            paymentPreference: formData.paymentPreference,
+          }),
+        }).catch(() => {}); // Fire and forget
+        
         // Redirect to success page
         router.push(`/booking/success?id=${result.bookingId}`);
       } else {
