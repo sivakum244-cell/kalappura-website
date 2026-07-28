@@ -72,6 +72,26 @@ function BookingContent() {
     if (isSubmitting) return;
 
     // Client-side validation
+    if (!formData.guestName.trim()) {
+      setError("Please enter your full name.");
+      return;
+    }
+    if (!formData.mobile.trim()) {
+      setError("Please enter your mobile number.");
+      return;
+    }
+    if (!formData.checkIn) {
+      setError("Please select a check-in date.");
+      return;
+    }
+    if (!formData.checkOut) {
+      setError("Please select a check-out date.");
+      return;
+    }
+    if (!formData.eta) {
+      setError("Please select your estimated arrival time.");
+      return;
+    }
     if (!formData.termsAccepted) {
       setError("Please accept the terms & conditions to proceed.");
       return;
@@ -174,12 +194,12 @@ function BookingContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <label className="text-sm font-medium text-gray-700">Guest Name *</label>
-                  <input type="text" value={formData.guestName} onChange={(e) => updateForm("guestName", e.target.value)} required
+                  <input type="text" value={formData.guestName} onChange={(e) => updateForm("guestName", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" placeholder="Full Name" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Mobile Number *</label>
-                  <input type="tel" value={formData.mobile} onChange={(e) => updateForm("mobile", e.target.value)} required
+                  <input type="tel" value={formData.mobile} onChange={(e) => updateForm("mobile", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" placeholder="+91 98950 53528" />
                 </div>
                 <div>
@@ -208,17 +228,17 @@ function BookingContent() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700">Check-in Date * 📅</label>
-                  <input type="date" value={formData.checkIn} onChange={(e) => updateForm("checkIn", e.target.value)} required
+                  <input type="date" value={formData.checkIn} onChange={(e) => updateForm("checkIn", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Check-out Date * 📅</label>
-                  <input type="date" value={formData.checkOut} onChange={(e) => updateForm("checkOut", e.target.value)} required
+                  <input type="date" value={formData.checkOut} onChange={(e) => updateForm("checkOut", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Arrival Time (ETA) * ⏰</label>
-                  <input type="time" value={formData.eta} onChange={(e) => updateForm("eta", e.target.value)} required
+                  <input type="time" value={formData.eta} onChange={(e) => updateForm("eta", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
                 </div>
               </div>
