@@ -23,8 +23,10 @@ function generateHash(params: {
   productinfo: string;
   firstname: string;
   email: string;
+  udf1?: string;
 }): string {
-  const hashString = `${PAYU_KEY}|${params.txnid}|${params.amount}|${params.productinfo}|${params.firstname}|${params.email}|||||||||||${PAYU_SALT}`;
+  // PayU hash formula: sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
+  const hashString = `${PAYU_KEY}|${params.txnid}|${params.amount}|${params.productinfo}|${params.firstname}|${params.email}|${params.udf1 || ""}||||||||||${PAYU_SALT}`;
   return crypto.createHash("sha512").update(hashString).digest("hex");
 }
 
@@ -47,6 +49,7 @@ export async function POST(request: NextRequest) {
       productinfo,
       firstname,
       email,
+      udf1: bookingId,
     });
 
     const payuData = {
