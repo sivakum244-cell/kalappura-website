@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    const random = String(Math.floor(Math.random() * 9000) + 1000);
+    const random = String(Math.floor(Math.random() * 9000) + 1000) + String(Date.now()).slice(-2);
     const bookingId = `KHB-${year}${month}${day}-${random}`;
 
     // Save to database
