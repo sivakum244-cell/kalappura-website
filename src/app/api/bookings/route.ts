@@ -26,15 +26,14 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    // Generate unique booking ID using full timestamp (guaranteed unique)
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const mins = String(now.getMinutes()).padStart(2, "0");
-    const secs = String(now.getSeconds()).padStart(2, "0");
-    const bookingId = `KHB-${year}${month}${day}-${hours}${mins}${secs}`;
+    // Generate truly unique booking ID using millisecond timestamp
+    const now = Date.now();
+    const d = new Date(now);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const ms = String(now).slice(-6); // last 6 digits of timestamp (unique per millisecond)
+    const bookingId = `KHB-${year}${month}${day}-${ms}`;
 
     // Save to database
     const booking = await prisma.booking.create({
