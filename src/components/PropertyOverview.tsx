@@ -6,10 +6,8 @@ import { motion, useInView } from "framer-motion";
 const features = [
   { icon: "❄️", label: "Air Conditioning" },
   { icon: "🚿", label: "Private Bathrooms" },
-  { icon: "🍳", label: "Kitchenette" },
   { icon: "🌊", label: "Lake View" },
   { icon: "🏞️", label: "River View" },
-  { icon: "🌅", label: "Private Balcony" },
   { icon: "🍛", label: "Traditional Kerala Food" },
   { icon: "✨", label: "Luxury Interiors" },
   { icon: "👨‍👩‍👧", label: "Family Friendly" },
