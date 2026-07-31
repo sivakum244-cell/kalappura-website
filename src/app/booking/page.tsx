@@ -385,33 +385,64 @@ function BookingContent() {
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">5</span>
-                Food Requirements
+                Food Requirements <span className="text-sm font-normal text-gray-500">(Please Select)</span>
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {foodOptions.map((option) => (
-                  <label key={option} className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all text-sm ${
-                    formData.foodRequirements.includes(option) ? "border-gold-500 bg-gold-50 text-gold-800" : "border-gray-200 hover:border-gold-200 text-gray-700"
-                  }`}>
-                    <input type="checkbox" checked={formData.foodRequirements.includes(option)}
-                      onChange={() => toggleCheckbox("foodRequirements", option)} className="sr-only" />
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
-                      formData.foodRequirements.includes(option) ? "bg-gold-500 border-gold-500" : "border-gray-300"
+              
+              {/* Food Type */}
+              <div className="mb-4">
+                <label className="text-sm font-medium text-gray-700 mb-2 block">Food Type</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {["Vegetarian", "Non-Vegetarian"].map((option) => (
+                    <label key={option} className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all text-sm ${
+                      formData.foodRequirements.includes(option) ? "border-gold-500 bg-gold-50 text-gold-800" : "border-gray-200 hover:border-gold-200 text-gray-700"
                     }`}>
-                      {formData.foodRequirements.includes(option) && (
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
-                      )}
-                    </div>
-                    {option}
-                  </label>
-                ))}
-              </div>
-              {formData.foodRequirements.includes("Food Allergies (Specify)") && (
-                <div className="mt-3">
-                  <input type="text" value={formData.foodAllergyDetails} onChange={(e) => updateForm("foodAllergyDetails", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50"
-                    placeholder="Please specify your food allergies..." />
+                      <input type="checkbox" checked={formData.foodRequirements.includes(option)}
+                        onChange={() => toggleCheckbox("foodRequirements", option)} className="sr-only" />
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
+                        formData.foodRequirements.includes(option) ? "bg-gold-500 border-gold-500" : "border-gray-300"
+                      }`}>
+                        {formData.foodRequirements.includes(option) && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
+                        )}
+                      </div>
+                      {option}
+                    </label>
+                  ))}
                 </div>
-              )}
+              </div>
+
+              {/* Spice Level */}
+              <div className="mb-4">
+                <label className="text-sm font-medium text-gray-700 mb-2 block">Spice Level</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["No Spicy", "Medium Spicy", "Extra Spicy"].map((option) => (
+                    <label key={option} className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all text-sm ${
+                      formData.foodRequirements.includes(option) ? "border-gold-500 bg-gold-50 text-gold-800" : "border-gray-200 hover:border-gold-200 text-gray-700"
+                    }`}>
+                      <input type="checkbox" checked={formData.foodRequirements.includes(option)}
+                        onChange={() => toggleCheckbox("foodRequirements", option)} className="sr-only" />
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
+                        formData.foodRequirements.includes(option) ? "bg-gold-500 border-gold-500" : "border-gray-300"
+                      }`}>
+                        {formData.foodRequirements.includes(option) && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
+                        )}
+                      </div>
+                      {option}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Remarks */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Specify any remarks <span className="text-xs text-gray-400">(Allergies, cooking style, or requirements)</span>
+                </label>
+                <input type="text" value={formData.foodAllergyDetails} onChange={(e) => updateForm("foodAllergyDetails", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50"
+                  placeholder="E.g. No onion, no garlic, gluten free, etc." />
+              </div>
             </div>
 
             {/* 6. Special Requests */}
