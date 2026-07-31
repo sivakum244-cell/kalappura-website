@@ -152,8 +152,20 @@ function BookingContent() {
           const total = subtotal + gst;
 
           router.push(`/payment?bookingId=${result.bookingId}&amount=${total}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}`);
+        } else if (formData.paymentPreference === "pay-at-property") {
+          // 20% advance payment via PayU
+          const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+          const roomRate = currentRoom.price * formData.numberOfRooms;
+          const childrenCharge = formData.children * 1000;
+          const extraBedCharge = formData.extraBed * 1000;
+          const subtotal = roomRate + childrenCharge + extraBedCharge;
+          const gst = Math.round(subtotal * 0.18);
+          const total = subtotal + gst;
+          const advance = Math.round(total * 0.2); // 20% advance
+
+          router.push(`/payment?bookingId=${result.bookingId}&amount=${advance}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}&type=advance`);
         } else {
-          // Pay at property or bank transfer - go to success page
+          // Bank transfer - go to success page
           router.push(`/booking/success?id=${result.bookingId}`);
         }
       } else {
@@ -183,8 +195,8 @@ function BookingContent() {
   ];
 
   const paymentOptions = [
-    { id: "pay-at-property", name: "Pay at Property", desc: "No advance payment needed", icon: "🏨" },
-    { id: "online-payment", name: "Online Payment", desc: "UPI / Cards / Net Banking", icon: "💳" },
+    { id: "pay-at-property", name: "20% Advance + Balance at Property", desc: "Pay 20% now, remaining at check-in", icon: "🏨" },
+    { id: "online-payment", name: "Full Online Payment", desc: "UPI / Cards / Net Banking", icon: "💳" },
     { id: "bank-transfer", name: "Bank Transfer", desc: "NEFT / IMPS / RTGS", icon: "🏦" },
   ];
 
@@ -612,6 +624,18 @@ function BookingContent() {
                       <span className="font-bold text-gray-900">Total / Night</span>
                       <span className="font-bold text-gray-900 text-lg">{formatPrice(total)}</span>
                     </div>
+                    {formData.paymentPreference === "pay-at-property" && (
+                      <>
+                        <div className="flex justify-between text-emerald-600 bg-emerald-50 p-2 rounded-lg mt-2">
+                          <span className="font-medium">20% Advance (Pay Now)</span>
+                          <span className="font-bold">{formatPrice(Math.round(total * 0.2))}</span>
+                        </div>
+                        <div className="flex justify-between text-gray-500">
+                          <span>Balance at Property</span>
+                          <span className="font-medium">{formatPrice(Math.round(total * 0.8))}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 );
               })()}
