@@ -26,7 +26,12 @@ function generateHash(params: {
   udf1?: string;
 }): string {
   // PayU hash formula: sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
-  const hashString = `${PAYU_KEY}|${params.txnid}|${params.amount}|${params.productinfo}|${params.firstname}|${params.email}|${params.udf1 || ""}||||||||||${PAYU_SALT}`;
+  const udf1 = params.udf1 || "";
+  const udf2 = "";
+  const udf3 = "";
+  const udf4 = "";
+  const udf5 = "";
+  const hashString = `${PAYU_KEY}|${params.txnid}|${params.amount}|${params.productinfo}|${params.firstname}|${params.email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${PAYU_SALT}`;
   return crypto.createHash("sha512").update(hashString).digest("hex");
 }
 
@@ -36,11 +41,11 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const txnid = `KHB${Date.now()}`;
-    const amount = String(body.amount);
+    const amount = parseFloat(String(body.amount)).toFixed(2);
     const productinfo = body.productinfo || "Houseboat Booking";
-    const firstname = body.firstname || "";
-    const email = body.email || "";
-    const phone = body.phone || "";
+    const firstname = body.firstname || "Guest";
+    const email = body.email || "test@kalappurahouseboats.com";
+    const phone = body.phone || "9895053528";
     const bookingId = body.bookingId || "";
 
     const hash = generateHash({
