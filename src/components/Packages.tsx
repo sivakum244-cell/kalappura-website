@@ -104,14 +104,53 @@ const packages = [
   },
   {
     id: "luxury",
-    name: "Luxury Package",
-    subtitle: "Coming Soon",
+    name: "Semi Luxury Package",
+    subtitle: "For 1 Night",
     badge: "Best Experience",
-    schedule: [],
-    aircon: "",
-    meals: [],
-    cruiseRoutes: [],
-    menu: null,
+    schedule: [
+      { label: "Check-in Time", value: "Around 12:00 PM" },
+      { label: "Lunch Break", value: "1 Hour" },
+      { label: "Evening Anchoring", value: "5:00 PM" },
+      { label: "Checkout", value: "Next day 9:00 AM" },
+    ],
+    aircon: "Air Con available either in the bedroom or in the hall all the time",
+    meals: [
+      "Welcome Drinks - Tender Coconut",
+      "Lunch - Veg or Non Veg Kerala Meals",
+      "Evening Tea & Snacks",
+      "Dinner",
+      "Breakfast",
+    ],
+    cruiseRoutes: [
+      "Kainakari Village",
+      "Kuppappuram Village",
+      "Vembanad Lake",
+      "Punnamada Lake",
+      "Meenappally Lake",
+      "Meenappally Village",
+      "Pallathuruthi",
+    ],
+    menu: {
+      lunch: {
+        title: "Lunch - Kerala Meals",
+        items: "Rice, Sambar, Pappadam, Long beans Mezhukkupuratti, Mixed veg thoran/cabbage thoran, Pickle",
+        nonveg: "2 Non-Veg varieties: 1. Pearl-spot or any full fish fry/Pollichathu  2. Chicken Curry/Roast/65",
+      },
+      dinner: {
+        title: "Dinner",
+        items: "Chapati, dal, rice, curd, veg curry/thoran, pickle",
+        nonveg: "2 Non-Veg varieties: 1. Sea food/fish roast or fry (squid/prawns/king fish/pomfret/tuna)  2. Chicken Curry/Roast/65",
+      },
+      breakfast: {
+        title: "Breakfast",
+        options: [
+          "Idly, sambar, coconut chutney, eggs, tea/coffee",
+          "Puttu, Chickpeas masala/Egg curry, tea/coffee",
+          "AND Bread Toast, Butter, Jam, Banana, eggs, tea/coffee",
+        ],
+        note: "Fish & Seafood dishes based on availability",
+      },
+    },
   },
 ];
 
