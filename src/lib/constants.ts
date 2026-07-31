@@ -29,9 +29,9 @@ export const ROOMS = [
     description:
       "Our spacious 3 bedroom houseboat is perfect for families and groups. Choose 1, 2, or all 3 bedrooms on the same boat. Each room features premium linens, private bathroom, and stunning backwater views.",
     bedrooms: 3,
-    beds: "3 Bedrooms Available",
+    beds: "3 Rooms • 2+1 per room (Double Bed + Futon)",
     size: "Large Boat",
-    maxGuests: 6,
+    maxGuests: 9,
     images: [
       "/images/rooms/standard-cabin/1.jpg",
       "/images/rooms/standard-cabin/2.jpg",
@@ -89,9 +89,9 @@ export const ROOMS = [
     description:
       "A beautiful 2 bedroom houseboat with lake views. Choose 1 or both bedrooms on the same boat. Features private bathrooms, kitchen, and a stunning terrace overlooking the backwaters.",
     bedrooms: 2,
-    beds: "2 Bedrooms Available",
+    beds: "2 Rooms • 2+1 per room (Double Bed + Futon)",
     size: "Medium Boat",
-    maxGuests: 4,
+    maxGuests: 6,
     images: [
       "/images/rooms/double-twin-room/1.jpg",
       "/images/rooms/double-twin-room/2.jpg",
@@ -138,9 +138,9 @@ export const ROOMS = [
     description:
       "An intimate single bedroom houseboat ideal for couples. Enjoy complete privacy with panoramic river views, a luxury bedroom, and all modern amenities on your own private boat.",
     bedrooms: 1,
-    beds: "1 Bedroom",
+    beds: "1 Room • 2+1 (Double Bed + Futon Mattress)",
     size: "Compact Boat",
-    maxGuests: 2,
+    maxGuests: 3,
     images: [
       "/images/rooms/suite-river-view/1.jpg",
       "/images/rooms/suite-river-view/2.jpg",

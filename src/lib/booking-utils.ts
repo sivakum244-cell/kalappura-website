@@ -65,19 +65,19 @@ export const ROOM_TYPES: Record<
   "standard-cabin": {
     name: "3 Bedroom Houseboat",
     price: 16500,
-    maxGuests: 6,
+    maxGuests: 9,
     maxRooms: 3,
   },
   "double-twin-room": {
     name: "2 Bedroom Houseboat",
     price: 15300,
-    maxGuests: 4,
+    maxGuests: 6,
     maxRooms: 2,
   },
   "suite-river-view": {
     name: "Single Bedroom Houseboat",
     price: 16200,
-    maxGuests: 2,
+    maxGuests: 3,
     maxRooms: 1,
   },
 };
