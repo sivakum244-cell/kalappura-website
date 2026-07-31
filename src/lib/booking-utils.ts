@@ -31,7 +31,7 @@ export const bookingSchema = z.object({
   country: z.string().min(1, "Country is required").default("India"),
   checkIn: z.string().min(1, "Check-in date is required"),
   checkOut: z.string().min(1, "Check-out date is required"),
-  eta: z.string().min(1, "Estimated time of arrival is required"),
+  eta: z.string().optional().default(""),
   adults: z.number().int().min(1, "At least 1 adult required").max(20),
   children: z.number().int().min(0).max(10).default(0),
   infants: z.number().int().min(0).max(5).default(0),

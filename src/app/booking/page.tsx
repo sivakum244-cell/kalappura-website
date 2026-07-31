@@ -98,10 +98,6 @@ function BookingContent() {
       setError("Please select a check-out date.");
       return;
     }
-    if (!formData.eta) {
-      setError("Please select your estimated arrival time.");
-      return;
-    }
     if (!formData.termsAccepted) {
       setError("Please accept the terms & conditions to proceed.");
       return;
@@ -273,7 +269,7 @@ function BookingContent() {
                 <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">2</span>
                 Stay Details
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700">Check-in Date * 📅</label>
                   <input type="date" value={formData.checkIn} onChange={(e) => updateForm("checkIn", e.target.value)}
@@ -282,11 +278,6 @@ function BookingContent() {
                 <div>
                   <label className="text-sm font-medium text-gray-700">Check-out Date * 📅</label>
                   <input type="date" value={formData.checkOut} onChange={(e) => updateForm("checkOut", e.target.value)}
-                    className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Arrival Time (ETA) * ⏰</label>
-                  <input type="time" value={formData.eta} onChange={(e) => updateForm("eta", e.target.value)}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
                 </div>
               </div>
