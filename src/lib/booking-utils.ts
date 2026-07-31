@@ -60,22 +60,25 @@ export type BookingFormData = z.infer<typeof bookingSchema>;
 
 export const ROOM_TYPES: Record<
   string,
-  { name: string; price: number; maxGuests: number }
+  { name: string; price: number; maxGuests: number; maxRooms: number }
 > = {
   "standard-cabin": {
-    name: "Standard Cabin on Boat",
+    name: "3 Bedroom Houseboat",
     price: 16500,
-    maxGuests: 2,
+    maxGuests: 6,
+    maxRooms: 3,
   },
   "double-twin-room": {
-    name: "Double / Twin Room with Lake View",
+    name: "2 Bedroom Houseboat",
     price: 15300,
     maxGuests: 4,
+    maxRooms: 2,
   },
   "suite-river-view": {
-    name: "Suite with River View",
+    name: "Single Bedroom Houseboat",
     price: 16200,
     maxGuests: 2,
+    maxRooms: 1,
   },
 };
 

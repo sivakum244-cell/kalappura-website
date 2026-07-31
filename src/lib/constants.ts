@@ -22,16 +22,16 @@ export const SITE_CONFIG = {
 export const ROOMS = [
   {
     id: "standard-cabin",
-    name: "Standard Cabin on Boat",
+    name: "3 Bedroom Houseboat",
     slug: "standard-cabin-on-boat",
     price: 16500,
     originalPrice: 19800,
     description:
-      "A cozy and comfortable cabin aboard our traditional houseboat, featuring a queen bed with premium linens, private bathroom, and a personal balcony overlooking the serene backwaters.",
-    bedrooms: 1,
-    beds: "1 Queen Bed + 1 Futon",
-    size: "10 sqm",
-    maxGuests: 2,
+      "Our spacious 3 bedroom houseboat is perfect for families and groups. Choose 1, 2, or all 3 bedrooms on the same boat. Each room features premium linens, private bathroom, and stunning backwater views.",
+    bedrooms: 3,
+    beds: "3 Bedrooms Available",
+    size: "Large Boat",
+    maxGuests: 6,
     images: [
       "/images/rooms/standard-cabin/1.jpg",
       "/images/rooms/standard-cabin/2.jpg",
@@ -82,15 +82,15 @@ export const ROOMS = [
   },
   {
     id: "double-twin-room",
-    name: "Double / Twin Room with Lake View",
+    name: "2 Bedroom Houseboat",
     slug: "double-twin-room-lake-view",
     price: 15300,
     originalPrice: 18400,
     description:
-      "A spacious room with flexible bedding options - choose between a luxurious queen bed or comfortable twin beds. Features a private bathroom, kitchen, and stunning lake views from your terrace.",
+      "A beautiful 2 bedroom houseboat with lake views. Choose 1 or both bedrooms on the same boat. Features private bathrooms, kitchen, and a stunning terrace overlooking the backwaters.",
     bedrooms: 2,
-    beds: "Queen Bed or Twin Beds",
-    size: "12 sqm",
+    beds: "2 Bedrooms Available",
+    size: "Medium Boat",
     maxGuests: 4,
     images: [
       "/images/rooms/double-twin-room/1.jpg",
@@ -131,15 +131,15 @@ export const ROOMS = [
   },
   {
     id: "suite-river-view",
-    name: "Suite with River View",
+    name: "Single Bedroom Houseboat",
     slug: "suite-with-river-view",
     price: 16200,
     originalPrice: 20000,
     description:
-      "Our premium suite offers an elevated luxury experience with a separate living room, bedroom, and private kitchen. Enjoy panoramic river views from your exclusive terrace with the finest amenities.",
+      "An intimate single bedroom houseboat ideal for couples. Enjoy complete privacy with panoramic river views, a luxury bedroom, and all modern amenities on your own private boat.",
     bedrooms: 1,
-    beds: "1 King Bed",
-    size: "18 sqm",
+    beds: "1 Bedroom",
+    size: "Compact Boat",
     maxGuests: 2,
     images: [
       "/images/rooms/suite-river-view/1.jpg",

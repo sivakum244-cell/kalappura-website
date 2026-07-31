@@ -47,8 +47,18 @@ function BookingContent() {
         const pax = value as number;
         if (pax >= 4 && prev.roomType !== "standard-cabin") {
           updated.roomType = "standard-cabin";
+          updated.numberOfRooms = 1;
         } else if (pax === 3 && prev.roomType === "suite-river-view") {
           updated.roomType = "standard-cabin";
+          updated.numberOfRooms = 1;
+        }
+      }
+      
+      // Auto-reset numberOfRooms when room type changes
+      if (field === "roomType") {
+        const maxRooms = value === "standard-cabin" ? 3 : value === "double-twin-room" ? 2 : 1;
+        if (prev.numberOfRooms > maxRooms) {
+          updated.numberOfRooms = 1;
         }
       }
       
@@ -359,10 +369,15 @@ function BookingContent() {
                   )}
                 </div>
                 <div className="max-w-xs">
-                  <label className="text-sm font-medium text-gray-700">Number of Rooms</label>
+                  <label className="text-sm font-medium text-gray-700">Number of Rooms on Boat</label>
                   <select value={formData.numberOfRooms} onChange={(e) => updateForm("numberOfRooms", Number(e.target.value))}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {[1,2,3,4,5].map((n) => (<option key={n} value={n}>{n}</option>))}
+                    {formData.roomType === "standard-cabin" 
+                      ? [1,2,3].map((n) => (<option key={n} value={n}>{n} Bedroom{n > 1 ? "s" : ""}</option>))
+                      : formData.roomType === "double-twin-room"
+                      ? [1,2].map((n) => (<option key={n} value={n}>{n} Bedroom{n > 1 ? "s" : ""}</option>))
+                      : [1].map((n) => (<option key={n} value={n}>{n} Bedroom</option>))
+                    }
                   </select>
                 </div>
                 <div className="max-w-xs">
