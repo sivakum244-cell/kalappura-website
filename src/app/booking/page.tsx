@@ -178,8 +178,8 @@ function BookingContent() {
   ];
 
   const activityOptions = [
-    "Airport Pickup", "Honeymoon Decoration", "Birthday / Anniversary Celebration",
-    "Candlelight Dinner", "Canoeing", "Kayaking", "Fishing", "Village Walk", "Other Requests",
+    "Honeymoon Decoration", "Birthday / Anniversary Celebration",
+    "Candlelight Dinner", "Country Boat Ride", "Other Requests",
   ];
 
   const paymentOptions = [
@@ -469,6 +469,9 @@ function BookingContent() {
                   </label>
                 ))}
               </div>
+              <p className="text-xs text-orange-600 mt-3 bg-orange-50 p-2.5 rounded-lg">
+                ⚠️ <strong>Country Boat Ride</strong> is not included in the package. It will be charged extra according to requirements and depends on availability.
+              </p>
             </div>
 
             {/* 7. Payment Preference */}
