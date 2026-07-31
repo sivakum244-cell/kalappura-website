@@ -10,7 +10,7 @@ import Experiences from "@/components/Experiences";
 import Amenities from "@/components/Amenities";
 import Location from "@/components/Location";
 import Reviews from "@/components/Reviews";
-import SpecialOffers from "@/components/SpecialOffers";
+import Packages from "@/components/Packages";
 import HostSection from "@/components/HostSection";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
@@ -30,7 +30,7 @@ export default function Home() {
       <Amenities />
       <Location />
       <Reviews />
-      <SpecialOffers />
+      <Packages />
       <HostSection />
       <FAQ />
       <Footer />
