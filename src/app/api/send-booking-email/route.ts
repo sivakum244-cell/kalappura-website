@@ -30,6 +30,12 @@ export async function POST(request: NextRequest) {
       additionalNotes: data.additionalNotes || "",
       paymentPreference: data.paymentPreference || "",
       createdAt: data.createdAt || new Date().toISOString(),
+      packageType: data.packageType || "standard",
+      totalAmount: data.totalAmount || 0,
+      gstAmount: data.gstAmount || 0,
+      advanceAmount: data.advanceAmount || 0,
+      balanceAmount: data.balanceAmount || 0,
+      packageExtra: data.packageExtra || 0,
     };
 
     const results = await Promise.allSettled([

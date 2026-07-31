@@ -117,6 +117,18 @@ function BookingContent() {
       const result = await response.json().catch(() => ({ success: false, error: `Server error (${response.status})` }));
 
       if (result.success) {
+        // Calculate pricing for emails
+        const emailRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+        const emailRoomRate = emailRoom.price * formData.numberOfRooms;
+        const emailPackageExtra = formData.packageType === "premium" ? 1500 * formData.numberOfRooms : formData.packageType === "luxury" ? 2500 * formData.numberOfRooms : 0;
+        const emailChildrenCharge = formData.children * 1000;
+        const emailExtraBedCharge = formData.extraBed * 1000;
+        const emailSubtotal = emailRoomRate + emailPackageExtra + emailChildrenCharge + emailExtraBedCharge;
+        const emailGst = Math.round(emailSubtotal * 0.18);
+        const emailTotal = emailSubtotal + emailGst;
+        const emailAdvance = Math.round(emailTotal * 0.2);
+        const emailBalance = emailTotal - emailAdvance;
+
         // Send email in background (don't wait for it)
         fetch("/api/send-booking-email", {
           method: "POST",
@@ -135,10 +147,16 @@ function BookingContent() {
             infants: formData.infants,
             roomType: formData.roomType,
             numberOfRooms: formData.numberOfRooms,
+            packageType: formData.packageType,
             foodRequirements: Array.isArray(formData.foodRequirements) ? formData.foodRequirements.join(", ") : "",
             specialRequests: Array.isArray(formData.specialRequests) ? formData.specialRequests.join(", ") : "",
             additionalNotes: formData.additionalNotes,
             paymentPreference: formData.paymentPreference,
+            totalAmount: emailTotal,
+            gstAmount: emailGst,
+            advanceAmount: emailAdvance,
+            balanceAmount: emailBalance,
+            packageExtra: emailPackageExtra,
           }),
         }).catch(() => {}); // Fire and forget
         

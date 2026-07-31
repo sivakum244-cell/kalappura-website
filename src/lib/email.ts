@@ -78,6 +78,12 @@ interface BookingEmailData {
   additionalNotes: string;
   paymentPreference: string;
   createdAt: string;
+  packageType?: string;
+  totalAmount?: number;
+  gstAmount?: number;
+  advanceAmount?: number;
+  balanceAmount?: number;
+  packageExtra?: number;
 }
 
 // ============================================================================
@@ -143,8 +149,22 @@ export async function sendAdminNotification(data: BookingEmailData) {
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
         <tr><td style="padding:8px 0;color:#6b7280;width:140px;">Room Type</td><td style="padding:8px 0;color:#1f2937;font-weight:600;">${getRoomName(data.roomType)}</td></tr>
         <tr><td style="padding:8px 0;color:#6b7280;">Number of Rooms</td><td style="padding:8px 0;color:#1f2937;">${data.numberOfRooms}</td></tr>
-        <tr><td style="padding:8px 0;color:#6b7280;">Payment</td><td style="padding:8px 0;color:#1f2937;">${data.paymentPreference}</td></tr>
+        <tr><td style="padding:8px 0;color:#6b7280;">Package</td><td style="padding:8px 0;color:#1f2937;font-weight:600;">${data.packageType === "luxury" ? "Semi Luxury" : data.packageType === "premium" ? "Premium" : "Standard"}</td></tr>
       </table>
+
+      <!-- Payment Details -->
+      <h2 style="color:#1f2937;font-size:16px;border-bottom:2px solid #f3f4f6;padding-bottom:8px;margin-top:24px;">💰 Payment Details</h2>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px;margin-top:12px;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr><td style="padding:6px 0;color:#6b7280;">Total Amount (incl. 18% GST)</td><td style="padding:6px 0;color:#1f2937;font-weight:700;text-align:right;">₹${data.totalAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280;">GST (18%)</td><td style="padding:6px 0;color:#1f2937;text-align:right;">₹${data.gstAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          <tr style="border-top:1px solid #d1fae5;"><td style="padding:6px 0;color:#6b7280;">Payment Mode</td><td style="padding:6px 0;color:#1f2937;font-weight:600;text-align:right;">${data.paymentPreference === "pay-at-property" ? "20% Advance + Balance at Property" : data.paymentPreference === "online-payment" ? "Full Online Payment" : "Bank Transfer"}</td></tr>
+          ${data.paymentPreference === "pay-at-property" ? `
+          <tr><td style="padding:6px 0;color:#059669;font-weight:600;">Advance Paid (20%)</td><td style="padding:6px 0;color:#059669;font-weight:700;text-align:right;">₹${data.advanceAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          <tr><td style="padding:6px 0;color:#d97706;font-weight:600;">Balance at Property</td><td style="padding:6px 0;color:#d97706;font-weight:700;text-align:right;">₹${data.balanceAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          ` : ""}
+        </table>
+      </div>
 
       <!-- Food & Requests -->
       <h2 style="color:#1f2937;font-size:16px;border-bottom:2px solid #f3f4f6;padding-bottom:8px;margin-top:24px;">🍽️ Food & Special Requests</h2>
@@ -225,10 +245,24 @@ export async function sendGuestConfirmation(data: BookingEmailData) {
           <tr style="border-top:1px solid #f3f4f6;"><td style="padding:10px 0;color:#6b7280;">Arrival Time</td><td style="padding:10px 0;color:#1f2937;">⏰ ${data.eta}</td></tr>
           <tr style="border-top:1px solid #f3f4f6;"><td style="padding:10px 0;color:#6b7280;">Guests</td><td style="padding:10px 0;color:#1f2937;">${data.adults} Adult${data.adults > 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} Child${data.children > 1 ? "ren" : ""}` : ""}${data.infants > 0 ? `, ${data.infants} Infant${data.infants > 1 ? "s" : ""}` : ""}</td></tr>
           <tr style="border-top:1px solid #f3f4f6;"><td style="padding:10px 0;color:#6b7280;">Rooms</td><td style="padding:10px 0;color:#1f2937;">${data.numberOfRooms}</td></tr>
+          <tr style="border-top:1px solid #f3f4f6;"><td style="padding:10px 0;color:#6b7280;">Package</td><td style="padding:10px 0;color:#1f2937;font-weight:600;">${data.packageType === "luxury" ? "Semi Luxury" : data.packageType === "premium" ? "Premium" : "Standard"}</td></tr>
         </table>
       </div>
 
-      <!-- What's Next -->
+      <!-- Payment Summary -->
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;margin-top:16px;">
+        <h3 style="color:#166534;margin:0 0 12px;font-size:14px;">💰 Payment Summary</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr><td style="padding:6px 0;color:#4b5563;">Total Amount (incl. 18% GST)</td><td style="padding:6px 0;color:#1f2937;font-weight:700;text-align:right;">₹${data.totalAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          <tr><td style="padding:6px 0;color:#4b5563;">Payment Mode</td><td style="padding:6px 0;color:#1f2937;font-weight:600;text-align:right;">${data.paymentPreference === "pay-at-property" ? "20% Advance + Balance at Property" : data.paymentPreference === "online-payment" ? "Full Online Payment" : "Bank Transfer"}</td></tr>
+          ${data.paymentPreference === "pay-at-property" ? `
+          <tr style="border-top:1px solid #bbf7d0;"><td style="padding:8px 0;color:#059669;font-weight:600;">Advance (20%)</td><td style="padding:8px 0;color:#059669;font-weight:700;text-align:right;">₹${data.advanceAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          <tr><td style="padding:6px 0;color:#d97706;font-weight:600;">Balance at Property</td><td style="padding:6px 0;color:#d97706;font-weight:700;text-align:right;">₹${data.balanceAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          ` : `
+          <tr style="border-top:1px solid #bbf7d0;"><td style="padding:8px 0;color:#059669;font-weight:600;">Amount</td><td style="padding:8px 0;color:#059669;font-weight:700;text-align:right;">₹${data.totalAmount?.toLocaleString("en-IN") || "—"}</td></tr>
+          `}
+        </table>
+      </div>
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:20px;margin-top:24px;">
         <h3 style="color:#1e40af;margin:0 0 8px;font-size:14px;">📞 What happens next?</h3>
         <p style="color:#1e40af;margin:0;font-size:13px;line-height:1.6;">
