@@ -254,24 +254,9 @@ export const EXPERIENCES = [
     icon: "utensils",
   },
   {
-    title: "Sunset Cruise",
-    description: "Witness magical sunsets over the Vembanad Lake",
-    icon: "sunset",
-  },
-  {
     title: "Village Walk",
     description: "Explore authentic Kerala village life and culture",
     icon: "footprints",
-  },
-  {
-    title: "Fishing",
-    description: "Traditional fishing experience with local fishermen",
-    icon: "fish",
-  },
-  {
-    title: "Canoeing",
-    description: "Paddle through narrow canals and lush waterways",
-    icon: "waves",
   },
   {
     title: "Bird Watching",
