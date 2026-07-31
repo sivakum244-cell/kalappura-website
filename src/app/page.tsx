@@ -8,7 +8,6 @@ import Gallery from "@/components/Gallery";
 import Rooms from "@/components/Rooms";
 import Experiences from "@/components/Experiences";
 import Amenities from "@/components/Amenities";
-import FoodSection from "@/components/FoodSection";
 import Location from "@/components/Location";
 import Reviews from "@/components/Reviews";
 import SpecialOffers from "@/components/SpecialOffers";
@@ -29,7 +28,6 @@ export default function Home() {
       <Rooms />
       <Experiences />
       <Amenities />
-      <FoodSection />
       <Location />
       <Reviews />
       <SpecialOffers />

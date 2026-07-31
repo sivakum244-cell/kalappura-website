@@ -3,17 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-const menuHighlights = [
-  {
-    category: "Breakfast",
-    items: ["Appam & Stew", "Puttu & Kadala", "Dosa Varieties", "Continental"],
-  },
-  {
-    category: "Lunch & Dinner",
-    items: ["Kerala Fish Curry", "Prawn Fry", "Vegetarian Thali", "Biryani"],
-  },
-  {
-    category: "Specialties",
+const menuHighlights: { category: string; items: string[] }[] = [];
     items: ["Fresh Seafood", "Chef's Special", "Tandoori", "Desserts"],
   },
 ];
