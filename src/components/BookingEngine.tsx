@@ -126,7 +126,7 @@ export default function BookingEngine() {
 
         {/* Price Hint */}
         <p className="text-center text-white/50 text-xs mt-3">
-          Starting from ₹15,300/night • No credit card needed • Free
+          Starting from ₹15,300/night • 20% advance, balance at property • Free
           cancellation available
         </p>
       </div>

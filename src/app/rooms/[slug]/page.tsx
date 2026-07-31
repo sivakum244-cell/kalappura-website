@@ -336,7 +336,7 @@ export default function RoomDetailPage() {
                   {[
                     "Best Price Guarantee",
                     "Instant Confirmation",
-                    "No Credit Card Needed",
+                    "20% Advance, Balance at Property",
                     "Free Cancellation*",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2">

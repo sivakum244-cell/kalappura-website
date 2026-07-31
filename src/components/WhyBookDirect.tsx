@@ -31,9 +31,9 @@ const benefits = [
         <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
       </svg>
     ),
-    title: "No Credit Card Needed",
-    description: "Reserve your houseboat without any payment. Pay at property or choose online payment.",
-    highlight: "Pay Later",
+    title: "20% Advance, Balance at Property",
+    description: "Secure your booking with just 20% advance payment. Pay the remaining balance when you arrive.",
+    highlight: "Easy Pay",
   },
   {
     icon: (
