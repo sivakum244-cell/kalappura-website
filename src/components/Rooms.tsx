@@ -149,7 +149,7 @@ export default function Rooms() {
           className="text-center text-gray-500 text-sm mt-8"
         >
           All prices include breakfast, lunch, dinner & evening tea.
-          15% GST applicable. Children (6-11): ₹1,000 extra. • Free cancellation up to 7 days before check-in.
+          18% GST applicable. Children (6-11): ₹1,000 extra. • Free cancellation up to 7 days before check-in.
         </motion.p>
       </div>
     </section>

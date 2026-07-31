@@ -148,7 +148,7 @@ function BookingContent() {
           const childrenCharge = formData.children * 1000;
           const extraBedCharge = formData.extraBed * 1000;
           const subtotal = roomRate + childrenCharge + extraBedCharge;
-          const gst = Math.round(subtotal * 0.15);
+          const gst = Math.round(subtotal * 0.18);
           const total = subtotal + gst;
 
           router.push(`/payment?bookingId=${result.bookingId}&amount=${total}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}`);
@@ -580,12 +580,12 @@ function BookingContent() {
                 const childrenCharge = formData.children * 1000;
                 const extraBedCharge = formData.extraBed * 1000;
                 const subtotal = roomRate + childrenCharge + extraBedCharge;
-                const gst = Math.round(subtotal * 0.15);
+                const gst = Math.round(subtotal * 0.18);
                 const total = subtotal + gst;
                 return (
                   <div className="space-y-2.5 text-sm border-t border-gray-100 pt-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Room Rate {formData.numberOfRooms > 1 ? `(×${formData.numberOfRooms})` : ""}</span>
+                      <span className="text-gray-500">Room Rate {formData.numberOfRooms > 1 ? `(₹${currentRoom.price.toLocaleString()} × ${formData.numberOfRooms} rooms)` : ""}</span>
                       <span className="font-medium">{formatPrice(roomRate)}</span>
                     </div>
                     {formData.children > 0 && (
@@ -605,7 +605,7 @@ function BookingContent() {
                       <span className="font-medium">{formatPrice(subtotal)}</span>
                     </div>
                     <div className="flex justify-between text-orange-600">
-                      <span>GST (15%)</span>
+                      <span>GST (18%)</span>
                       <span className="font-medium">+{formatPrice(gst)}</span>
                     </div>
                     <div className="border-t border-gray-100 pt-3 flex justify-between">
