@@ -48,19 +48,59 @@ const packages = [
           "Puttu, Chickpeas masala/Egg curry, tea/coffee",
           "Bread Toast, Butter, Jam, Banana, eggs, tea/coffee",
         ],
+        note: "",
       },
     },
   },
   {
     id: "premium",
     name: "Premium Package",
-    subtitle: "Coming Soon",
+    subtitle: "For 1 Night",
     badge: "Upgrade",
-    schedule: [],
-    aircon: "",
-    meals: [],
-    cruiseRoutes: [],
-    menu: null,
+    schedule: [
+      { label: "Check-in Time", value: "Around 12:00 PM" },
+      { label: "Lunch Break", value: "1 Hour" },
+      { label: "Evening Anchoring", value: "5:00 PM" },
+      { label: "Checkout", value: "Next day 9:00 AM" },
+    ],
+    aircon: "Air Con available in the bedroom/hall from 5:30 PM to 7:30 AM",
+    meals: [
+      "Welcome Drinks - Tender Coconut",
+      "Lunch - Veg or Non Veg Kerala Meals",
+      "Evening Tea & Snacks",
+      "Dinner",
+      "Breakfast",
+    ],
+    cruiseRoutes: [
+      "Kainakari Village",
+      "Kuppappuram Village",
+      "Vembanad Lake",
+      "Punnamada Lake",
+      "Meenappally Lake",
+      "Meenappally Village",
+      "Pallathuruthi",
+    ],
+    menu: {
+      lunch: {
+        title: "Lunch - Kerala Meals",
+        items: "Rice, Sambar, Pappadam, Long beans Mezhukkupuratti, Mixed veg thoran/cabbage thoran, Pickle",
+        nonveg: "2 Non-Veg varieties: 1. Pearl-spot or any full fish fry/Pollichathu  2. Chicken Curry/Roast/65",
+      },
+      dinner: {
+        title: "Dinner",
+        items: "Chapati, dal, rice, curd, veg curry/thoran, pickle",
+        nonveg: "2 Non-Veg varieties: 1. Sea food/fish roast or fry (squid/prawns/king fish/pomfret/tuna)  2. Chicken Curry/Roast/65",
+      },
+      breakfast: {
+        title: "Breakfast",
+        options: [
+          "Idly, sambar, coconut chutney, eggs, tea/coffee",
+          "Puttu, Chickpeas masala/Egg curry, tea/coffee",
+          "AND Bread Toast, Butter, Jam, Banana, eggs, tea/coffee",
+        ],
+        note: "Fish & Seafood dishes based on availability",
+      },
+    },
   },
   {
     id: "luxury",
@@ -248,11 +288,14 @@ export default function Packages() {
                         <div className="space-y-1.5">
                           {activePackage.menu.breakfast.options.map((opt, i) => (
                             <p key={i} className="text-xs text-gray-600">
-                              {i > 0 && <span className="text-yellow-600 font-medium">OR </span>}
-                              {opt}
+                              {i > 0 && !opt.startsWith("AND") && <span className="text-yellow-600 font-medium">OR </span>}
+                              {opt.startsWith("AND") ? <span><span className="text-yellow-600 font-medium">AND </span>{opt.replace("AND ", "")}</span> : opt}
                             </p>
                           ))}
                         </div>
+                        {activePackage.menu.breakfast.note && (
+                          <p className="text-xs text-orange-600 mt-2 font-medium">Note: {activePackage.menu.breakfast.note}</p>
+                        )}
                       </div>
                     </div>
                   </div>
