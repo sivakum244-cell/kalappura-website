@@ -6,7 +6,7 @@ import BookingEngine from "./BookingEngine";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const heroImages = [
-  "/images/gallery/drone-1.jpg",
+  "/images/hero.jpg",
   "/images/rooms/standard-cabin/1.jpg",
   "/images/rooms/suite-river-view/1.jpg",
   "/images/rooms/double-twin-room/1.jpg",
