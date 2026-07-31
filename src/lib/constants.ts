@@ -272,7 +272,6 @@ export const EXPERIENCES = [
 
 export const AMENITIES = [
   { name: "Free Parking", icon: "car" },
-  { name: "Airport Shuttle", icon: "plane" },
   { name: "Restaurant", icon: "utensils" },
   { name: "Breakfast Included", icon: "coffee" },
   { name: "Free WiFi", icon: "wifi" },
@@ -282,11 +281,8 @@ export const AMENITIES = [
   { name: "Kitchen", icon: "chef-hat" },
   { name: "Lake View", icon: "mountain" },
   { name: "River View", icon: "waves" },
-  { name: "Spa & Massage", icon: "sparkles" },
-  { name: "Laundry", icon: "shirt" },
   { name: "Room Service", icon: "bell" },
   { name: "Accessible", icon: "accessibility" },
-  { name: "Fishing", icon: "fish" },
   { name: "Daily Housekeeping", icon: "sparkle" },
   { name: "24/7 Security", icon: "shield" },
 ];
