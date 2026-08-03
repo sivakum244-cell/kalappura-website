@@ -9,6 +9,7 @@ const packages = [
     name: "Standard Package",
     subtitle: "For 1 Night",
     badge: "Most Popular",
+    price: 15000,
     schedule: [
       { label: "Check-in Time", value: "Around 12:00 PM" },
       { label: "Lunch Break", value: "1 Hour" },
@@ -57,6 +58,7 @@ const packages = [
     name: "Premium Package",
     subtitle: "For 1 Night",
     badge: "Upgrade",
+    price: 19000,
     schedule: [
       { label: "Check-in Time", value: "Around 12:00 PM" },
       { label: "Lunch Break", value: "1 Hour" },
@@ -107,6 +109,7 @@ const packages = [
     name: "Semi Luxury Package",
     subtitle: "For 1 Night",
     badge: "Best Experience",
+    price: 24000,
     schedule: [
       { label: "Check-in Time", value: "Around 12:00 PM" },
       { label: "Lunch Break", value: "1 Hour" },
@@ -237,9 +240,14 @@ export default function Packages() {
                     <h3 className="font-display text-2xl font-bold text-white">{activePackage.name}</h3>
                     <p className="text-emerald-200 text-sm mt-1">{activePackage.subtitle}</p>
                   </div>
-                  <span className="px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full">
-                    {activePackage.badge}
-                  </span>
+                  <div className="text-right">
+                    <span className="inline-block px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full mb-2">
+                      {activePackage.badge}
+                    </span>
+                    <p className="text-white/70 text-xs">For 3 Boats (All Rooms)</p>
+                    <p className="text-3xl font-bold text-white">₹{activePackage.price?.toLocaleString("en-IN")}</p>
+                    <p className="text-emerald-200 text-xs">+ 18% GST per night</p>
+                  </div>
                 </div>
               </div>
 

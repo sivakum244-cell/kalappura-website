@@ -119,8 +119,9 @@ function BookingContent() {
       if (result.success) {
         // Calculate pricing for emails
         const emailRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-        const emailRoomRate = emailRoom.price * formData.numberOfRooms;
-        const emailPackageExtra = formData.packageType === "premium" ? 1500 * formData.numberOfRooms : formData.packageType === "luxury" ? 2500 * formData.numberOfRooms : 0;
+        const emailPackageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
+        const emailRoomRate = emailPackageRate * formData.numberOfRooms;
+        const emailPackageExtra = 0;
         const emailChildrenCharge = formData.children * 1000;
         const emailExtraBedCharge = formData.extraBed * 1000;
         const emailSubtotal = emailRoomRate + emailPackageExtra + emailChildrenCharge + emailExtraBedCharge;
@@ -163,11 +164,11 @@ function BookingContent() {
         // If online payment selected, redirect to PayU
         if (formData.paymentPreference === "online-payment") {
           const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const roomRate = currentRoom.price * formData.numberOfRooms;
-          const packageExtra = formData.packageType === "premium" ? 1500 * formData.numberOfRooms : formData.packageType === "luxury" ? 2500 * formData.numberOfRooms : 0;
+          const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
+          const roomRate = packageRate * formData.numberOfRooms;
           const childrenCharge = formData.children * 1000;
           const extraBedCharge = formData.extraBed * 1000;
-          const subtotal = roomRate + packageExtra + childrenCharge + extraBedCharge;
+          const subtotal = roomRate + childrenCharge + extraBedCharge;
           const gst = Math.round(subtotal * 0.18);
           const total = subtotal + gst;
 
@@ -175,11 +176,11 @@ function BookingContent() {
         } else if (formData.paymentPreference === "pay-at-property") {
           // 20% advance payment via PayU
           const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const roomRate = currentRoom.price * formData.numberOfRooms;
-          const packageExtra = formData.packageType === "premium" ? 1500 * formData.numberOfRooms : formData.packageType === "luxury" ? 2500 * formData.numberOfRooms : 0;
+          const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
+          const roomRate = packageRate * formData.numberOfRooms;
           const childrenCharge = formData.children * 1000;
           const extraBedCharge = formData.extraBed * 1000;
-          const subtotal = roomRate + packageExtra + childrenCharge + extraBedCharge;
+          const subtotal = roomRate + childrenCharge + extraBedCharge;
           const gst = Math.round(subtotal * 0.18);
           const total = subtotal + gst;
           const advance = Math.round(total * 0.2); // 20% advance
@@ -417,9 +418,9 @@ function BookingContent() {
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Select Package *</label>
                   <div className="space-y-2">
                     {[
-                      { id: "standard", name: "Standard Package", extra: 0, desc: "AC 8:30PM-6:30AM • 1 Non-Veg option • Lime Juice" },
-                      { id: "premium", name: "Premium Package", extra: 1500, desc: "AC 5:30PM-7:30AM • 2 Non-Veg options • Tender Coconut" },
-                      { id: "luxury", name: "Semi Luxury Package", extra: 2500, desc: "AC all the time • 2 Non-Veg options • Tender Coconut" },
+                      { id: "standard", name: "Standard Package", rate: 15000, desc: "AC 8:30PM-6:30AM • 1 Non-Veg option • Lime Juice" },
+                      { id: "premium", name: "Premium Package", rate: 19000, desc: "AC 5:30PM-7:30AM • 2 Non-Veg options • Tender Coconut" },
+                      { id: "luxury", name: "Semi Luxury Package", rate: 24000, desc: "AC all the time • 2 Non-Veg options • Tender Coconut" },
                     ].map((pkg) => (
                       <label key={pkg.id}
                         className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
@@ -436,13 +437,16 @@ function BookingContent() {
                           <p className="font-medium text-gray-900">{pkg.name}</p>
                           <p className="text-xs text-gray-500">{pkg.desc}</p>
                         </div>
-                        <span className="font-bold text-gray-900 text-sm">
-                          {pkg.extra === 0 ? "Included" : `+₹${pkg.extra.toLocaleString()}`}
-                          {pkg.extra > 0 && <span className="text-xs text-gray-500 font-normal block text-right">/room</span>}
-                        </span>
+                        <div className="text-right">
+                          <p className="font-bold text-gray-900">₹{pkg.rate.toLocaleString("en-IN")}</p>
+                          <p className="text-xs text-gray-400">per night</p>
+                        </div>
                       </label>
                     ))}
                   </div>
+                  <p className="text-xs text-blue-600 bg-blue-50 p-2 rounded-lg mt-2">
+                    ℹ️ Package rate applies to all 3 boats. Price shown is for the full boat per night.
+                  </p>
                 </div>
               </div>
             </div>
@@ -633,8 +637,9 @@ function BookingContent() {
               <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Booking Summary</h3>
               {(() => {
                 const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-                const roomRate = currentRoom.price * formData.numberOfRooms;
-                const packageExtra = formData.packageType === "premium" ? 1500 * formData.numberOfRooms : formData.packageType === "luxury" ? 2500 * formData.numberOfRooms : 0;
+                const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
+                const roomRate = packageRate * formData.numberOfRooms;
+                const packageExtra = 0;
                 const childrenCharge = formData.children * 1000;
                 const extraBedCharge = formData.extraBed * 1000;
                 const subtotal = roomRate + packageExtra + childrenCharge + extraBedCharge;
@@ -653,7 +658,7 @@ function BookingContent() {
                   </div>
                   <div className="space-y-2.5 text-sm border-t border-gray-100 pt-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Room Rate {formData.numberOfRooms > 1 ? `(₹${currentRoom.price.toLocaleString()} × ${formData.numberOfRooms} rooms)` : ""}</span>
+                      <span className="text-gray-500">{formData.packageType === "luxury" ? "Semi Luxury" : formData.packageType === "premium" ? "Premium" : "Standard"} Package {formData.numberOfRooms > 1 ? `(₹${packageRate.toLocaleString()} × ${formData.numberOfRooms} rooms)` : ""}</span>
                       <span className="font-medium">{formatPrice(roomRate)}</span>
                     </div>
                     {packageExtra > 0 && (
