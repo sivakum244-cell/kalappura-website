@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ROOMS } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
+import AvailabilityBadge, { useAvailability, isDateBlocked } from "@/components/AvailabilityBadge";
 
 function BookingContent() {
   const router = useRouter();
@@ -15,6 +16,7 @@ function BookingContent() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const { data: availabilityData } = useAvailability();
 
   const [formData, setFormData] = useState({
     guestName: "",
@@ -97,6 +99,11 @@ function BookingContent() {
     }
     if (!formData.checkOut) {
       setError("Please select a check-out date.");
+      return;
+    }
+    // Check availability
+    if (formData.checkIn && availabilityData?.blockedDates && isDateBlocked(formData.checkIn, formData.roomType, availabilityData.blockedDates)) {
+      setError("Selected check-in date is not available for this houseboat. Please choose a different date.");
       return;
     }
     if (!formData.termsAccepted) {
@@ -315,6 +322,8 @@ function BookingContent() {
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
                 </div>
               </div>
+              {/* Availability Status */}
+              <AvailabilityBadge checkIn={formData.checkIn} roomType={formData.roomType} blockedDates={availabilityData?.blockedDates} />
             </div>
 
             {/* 3. Number of Guests */}
