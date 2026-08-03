@@ -348,25 +348,90 @@ function BookingContent() {
               </div>
             </div>
 
-            {/* 4. Accommodation */}
+            {/* 4. Select Package */}
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">4</span>
-                Accommodation
+                Select Package *
+              </h2>
+              <div className="space-y-3">
+                {[
+                  {
+                    id: "standard", name: "Standard Package", rate: 15000,
+                    highlights: ["AC: 8:30 PM – 6:30 AM (Bedroom only)", "Welcome: Lime Juice", "1 Non-Veg option per meal", "5 Cruise Routes"],
+                    schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
+                    meals: "Lunch + Tea & Snacks + Dinner + Breakfast",
+                  },
+                  {
+                    id: "premium", name: "Premium Package", rate: 19000,
+                    highlights: ["AC: 5:30 PM – 7:30 AM (Bedroom/Hall)", "Welcome: Tender Coconut", "2 Non-Veg options per meal", "7 Cruise Routes"],
+                    schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
+                    meals: "Lunch + Tea & Snacks + Dinner + Full Breakfast (all options)",
+                  },
+                  {
+                    id: "luxury", name: "Semi Luxury Package", rate: 24000,
+                    highlights: ["AC: All the time (Bedroom or Hall)", "Welcome: Tender Coconut", "2 Non-Veg options per meal", "7 Cruise Routes"],
+                    schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
+                    meals: "Lunch + Tea & Snacks + Dinner + Full Breakfast (all options)",
+                  },
+                ].map((pkg) => (
+                  <label key={pkg.id}
+                    className={`block p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                      formData.packageType === pkg.id ? "border-emerald-500 bg-emerald-50 shadow-md" : "border-gray-200 hover:border-emerald-200"
+                    }`}>
+                    <input type="radio" name="packageType" value={pkg.id} checked={formData.packageType === pkg.id}
+                      onChange={(e) => updateForm("packageType", e.target.value)} className="sr-only" />
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                          formData.packageType === pkg.id ? "border-emerald-500" : "border-gray-300"
+                        }`}>
+                          {formData.packageType === pkg.id && <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />}
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900 text-lg">{pkg.name}</p>
+                          <p className="text-xs text-gray-500">{pkg.schedule}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-emerald-700">₹{pkg.rate.toLocaleString("en-IN")}</p>
+                        <p className="text-xs text-gray-400">per room/night</p>
+                      </div>
+                    </div>
+                    {/* Package Details */}
+                    <div className="ml-8 mt-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {pkg.highlights.map((h) => (
+                        <div key={h} className="flex items-center gap-1.5 text-xs text-gray-600">
+                          <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M20 6L9 17l-5-5" />
+                          </svg>
+                          {h}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="ml-8 mt-2 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded inline-block">
+                      🍽️ {pkg.meals}
+                    </p>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* 5. Houseboat Type */}
+            <div>
+              <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">5</span>
+                Select Houseboat *
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Room / Houseboat Type *</label>
-                  {/* Room availability based on PAX:
-                      2 pax = all 3 boats
-                      3 pax = Standard Cabin + Double/Twin only
-                      4+ pax = Standard Cabin only */}
+                  <label className="text-sm font-medium text-gray-700 mb-2 block">Houseboat Type</label>
                   <div className="space-y-2">
                     {ROOMS.filter((room) => {
                       const pax = formData.adults;
-                      if (pax <= 2) return true; // 2 pax: all rooms
-                      if (pax === 3) return room.id === "standard-cabin" || room.id === "double-twin-room"; // 3 pax: standard + double
-                      return room.id === "standard-cabin"; // 4+ pax: only standard cabin
+                      if (pax <= 2) return true;
+                      if (pax === 3) return room.id === "standard-cabin" || room.id === "double-twin-room";
+                      return room.id === "standard-cabin";
                     }).map((room) => (
                       <label key={room.id}
                         className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
@@ -381,72 +446,37 @@ function BookingContent() {
                         </div>
                         <div className="flex-1">
                           <p className="font-medium text-gray-900">{room.name}</p>
-                          <p className="text-xs text-gray-500">{room.beds} • {room.size} • Max {room.maxGuests} guests</p>
+                          <p className="text-xs text-gray-500">{room.beds} • Max {room.maxGuests} guests</p>
                         </div>
-                        <span className="font-bold text-gray-900">{formatPrice(room.price)}<span className="text-xs text-gray-500 font-normal">/night</span></span>
                       </label>
                     ))}
                   </div>
                   {formData.adults >= 3 && (
                     <p className="text-xs text-orange-600 mt-2 bg-orange-50 p-2 rounded-lg">
-                      ℹ️ {formData.adults >= 4 ? "For 4+ guests, only Standard Cabin on Boat is available." : "For 3 guests, Suite with River View is not available."}
+                      ℹ️ {formData.adults >= 4 ? "For 4+ guests, only 3 Bedroom Houseboat is available." : "For 3 guests, Single Bedroom Houseboat is not available."}
                     </p>
                   )}
                 </div>
-                <div className="max-w-xs">
-                  <label className="text-sm font-medium text-gray-700">Number of Rooms on Boat</label>
-                  <select value={formData.numberOfRooms} onChange={(e) => updateForm("numberOfRooms", Number(e.target.value))}
-                    className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {formData.roomType === "standard-cabin" 
-                      ? [1,2,3].map((n) => (<option key={n} value={n}>{n} Bedroom{n > 1 ? "s" : ""}</option>))
-                      : formData.roomType === "double-twin-room"
-                      ? [1,2].map((n) => (<option key={n} value={n}>{n} Bedroom{n > 1 ? "s" : ""}</option>))
-                      : [1].map((n) => (<option key={n} value={n}>{n} Bedroom</option>))
-                    }
-                  </select>
-                </div>
-                <div className="max-w-xs">
-                  <label className="text-sm font-medium text-gray-700">Extra Bed (₹1,000/bed)</label>
-                  <select value={formData.extraBed} onChange={(e) => updateForm("extraBed", Number(e.target.value))}
-                    className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {[0,1,2,3].map((n) => (<option key={n} value={n}>{n === 0 ? "No extra bed" : `${n} extra bed${n > 1 ? "s" : ""} (+₹${n * 1000})`}</option>))}
-                  </select>
-                </div>
-
-                {/* Package Selection */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Select Package *</label>
-                  <div className="space-y-2">
-                    {[
-                      { id: "standard", name: "Standard Package", rate: 15000, desc: "AC 8:30PM-6:30AM • 1 Non-Veg option • Lime Juice" },
-                      { id: "premium", name: "Premium Package", rate: 19000, desc: "AC 5:30PM-7:30AM • 2 Non-Veg options • Tender Coconut" },
-                      { id: "luxury", name: "Semi Luxury Package", rate: 24000, desc: "AC all the time • 2 Non-Veg options • Tender Coconut" },
-                    ].map((pkg) => (
-                      <label key={pkg.id}
-                        className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                          formData.packageType === pkg.id ? "border-emerald-500 bg-emerald-50" : "border-gray-200 hover:border-emerald-200"
-                        }`}>
-                        <input type="radio" name="packageType" value={pkg.id} checked={formData.packageType === pkg.id}
-                          onChange={(e) => updateForm("packageType", e.target.value)} className="sr-only" />
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                          formData.packageType === pkg.id ? "border-emerald-500" : "border-gray-300"
-                        }`}>
-                          {formData.packageType === pkg.id && <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />}
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-gray-900">{pkg.name}</p>
-                          <p className="text-xs text-gray-500">{pkg.desc}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-bold text-gray-900">₹{pkg.rate.toLocaleString("en-IN")}</p>
-                          <p className="text-xs text-gray-400">per night</p>
-                        </div>
-                      </label>
-                    ))}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Number of Rooms</label>
+                    <select value={formData.numberOfRooms} onChange={(e) => updateForm("numberOfRooms", Number(e.target.value))}
+                      className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
+                      {formData.roomType === "standard-cabin" 
+                        ? [1,2,3].map((n) => (<option key={n} value={n}>{n} Room{n > 1 ? "s" : ""}</option>))
+                        : formData.roomType === "double-twin-room"
+                        ? [1,2].map((n) => (<option key={n} value={n}>{n} Room{n > 1 ? "s" : ""}</option>))
+                        : [1].map((n) => (<option key={n} value={n}>{n} Room</option>))
+                      }
+                    </select>
                   </div>
-                  <p className="text-xs text-blue-600 bg-blue-50 p-2 rounded-lg mt-2">
-                    ℹ️ Package rate applies to all 3 boats. Price shown is for the full boat per night.
-                  </p>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Extra Bed (₹1,000/bed)</label>
+                    <select value={formData.extraBed} onChange={(e) => updateForm("extraBed", Number(e.target.value))}
+                      className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
+                      {[0,1,2,3].map((n) => (<option key={n} value={n}>{n === 0 ? "No extra bed" : `${n} (+₹${n * 1000})`}</option>))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -454,7 +484,7 @@ function BookingContent() {
             {/* 5. Food Requirements */}
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">5</span>
+                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">6</span>
                 Food Requirements <span className="text-sm font-normal text-gray-500">(Please Select)</span>
               </h2>
               
@@ -518,7 +548,7 @@ function BookingContent() {
             {/* 6. Special Requests */}
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">6</span>
+                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">7</span>
                 Special Requests
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
@@ -547,7 +577,7 @@ function BookingContent() {
             {/* 7. Payment Preference */}
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">7</span>
+                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">8</span>
                 Payment Preference
               </h2>
               <div className="space-y-2">
@@ -570,7 +600,7 @@ function BookingContent() {
             {/* 8. Additional Notes */}
             <div>
               <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">8</span>
+                <span className="w-8 h-8 rounded-full bg-gold-100 text-gold-700 flex items-center justify-center text-sm font-bold">9</span>
                 Additional Notes
               </h2>
               <textarea value={formData.additionalNotes} onChange={(e) => updateForm("additionalNotes", e.target.value)}
