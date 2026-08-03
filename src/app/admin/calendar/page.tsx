@@ -295,25 +295,61 @@ export default function CalendarPage() {
               {/* Status for each boat */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {BOATS.map((boat) => {
+                  const totalRooms = boat.id === "standard-cabin" ? 3 : boat.id === "double-twin-room" ? 2 : 1;
                   const blocked = isBlocked(selectedDate, boat.id);
                   const dayBookings = getBookingsForDate(selectedDate).filter(b => b.roomType === boat.id);
-                  const status = blocked ? "blocked" : dayBookings.length > 0 ? "booked" : "available";
+                  
+                  // Count blocked rooms for this boat on this date
+                  const blockedRooms = blockedDates.filter(
+                    bd => bd.date === selectedDate && (bd.roomType === boat.id || bd.roomType === "all" || bd.roomType === `${boat.id}-room`)
+                  );
+                  const roomBlockedCount = blockedRooms.filter(bd => bd.roomType.includes("-room")).length;
+                  const isFullyBlocked = blocked || roomBlockedCount >= totalRooms;
+                  const availableRooms = totalRooms - roomBlockedCount - dayBookings.length;
+                  
+                  const status = isFullyBlocked ? "blocked" : dayBookings.length > 0 || roomBlockedCount > 0 ? "partial" : "available";
 
                   return (
                     <div key={boat.id} className={`p-4 rounded-xl border-2 ${
                       status === "blocked" ? "border-red-200 bg-red-50" :
-                      status === "booked" ? "border-blue-200 bg-blue-50" :
+                      status === "partial" ? "border-yellow-200 bg-yellow-50" :
                       "border-emerald-200 bg-emerald-50"
                     }`}>
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-semibold text-sm text-gray-900">{boat.name}</span>
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                           status === "blocked" ? "bg-red-200 text-red-800" :
-                          status === "booked" ? "bg-blue-200 text-blue-800" :
+                          status === "partial" ? "bg-yellow-200 text-yellow-800" :
                           "bg-emerald-200 text-emerald-800"
                         }`}>
-                          {status === "blocked" ? "Blocked" : status === "booked" ? "Booked" : "Available"}
+                          {status === "blocked" ? "Fully Blocked" : status === "partial" ? `${availableRooms}/${totalRooms} Available` : `${totalRooms}/${totalRooms} Available`}
                         </span>
+                      </div>
+
+                      {/* Room-level status */}
+                      <div className="space-y-1.5 mb-3">
+                        {Array.from({ length: totalRooms }, (_, ri) => {
+                          const roomNum = ri + 1;
+                          const roomBlockId = `${boat.id}-room`;
+                          const roomBlocked = blockedDates.find(
+                            bd => bd.date === selectedDate && bd.roomType === roomBlockId && bd.reason.includes(`Room ${roomNum}`)
+                          );
+                          const roomBooked = dayBookings.length > ri;
+
+                          return (
+                            <div key={ri} className={`flex items-center justify-between px-2 py-1 rounded text-xs ${
+                              roomBlocked ? "bg-red-100 text-red-700" :
+                              roomBooked ? "bg-blue-100 text-blue-700" :
+                              blocked ? "bg-red-100 text-red-700" :
+                              "bg-emerald-50 text-emerald-700"
+                            }`}>
+                              <span>Room {roomNum}</span>
+                              <span className="font-medium">
+                                {roomBlocked ? "Blocked" : roomBooked ? "Booked" : blocked ? "Blocked" : "Available"}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
 
                       {/* Bookings for this boat */}
@@ -323,16 +359,51 @@ export default function CalendarPage() {
                         </p>
                       ))}
 
-                      {/* Block/Unblock button */}
-                      {blocked ? (
+                      {/* Block individual rooms */}
+                      {!blocked && (
+                        <div className="mt-2 space-y-1">
+                          {Array.from({ length: totalRooms }, (_, ri) => {
+                            const roomNum = ri + 1;
+                            const roomBlockId = `${boat.id}-room`;
+                            const roomBlocked = blockedDates.find(
+                              bd => bd.date === selectedDate && bd.roomType === roomBlockId && bd.reason.includes(`Room ${roomNum}`)
+                            );
+
+                            return (
+                              <div key={ri} className="flex items-center gap-1">
+                                {roomBlocked ? (
+                                  <button onClick={() => unblockDate(roomBlocked.id)}
+                                    className="flex-1 py-1 bg-white border border-red-200 text-red-600 text-[10px] font-medium rounded hover:bg-red-50 transition-colors">
+                                    Unblock Room {roomNum}
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="flex-1 py-1 bg-orange-500 text-white text-[10px] font-medium rounded hover:bg-orange-600 transition-colors"
+                                    onClick={() => {
+                                      fetch("/api/blocked-dates", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json", "x-admin-password": storedPwd },
+                                        body: JSON.stringify({ dates: [selectedDate], roomType: `${boat.id}-room`, reason: `Room ${roomNum} - ${blockReason}` }),
+                                      }).then(() => loadData());
+                                    }}>
+                                    Block Room {roomNum}
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })}
+                          <button onClick={() => blockDate(selectedDate, boat.id)}
+                            className="w-full py-1.5 bg-red-500 text-white text-xs font-medium rounded-lg hover:bg-red-600 transition-colors mt-2">
+                            Block Entire Boat
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Unblock full boat */}
+                      {blocked && (
                         <button onClick={() => unblockDate(blocked.id)}
                           className="mt-2 w-full py-1.5 bg-white border border-red-200 text-red-600 text-xs font-medium rounded-lg hover:bg-red-50 transition-colors">
-                          Unblock this date
-                        </button>
-                      ) : (
-                        <button onClick={() => blockDate(selectedDate, boat.id)}
-                          className="mt-2 w-full py-1.5 bg-red-500 text-white text-xs font-medium rounded-lg hover:bg-red-600 transition-colors">
-                          Block this date
+                          Unblock Entire Boat
                         </button>
                       )}
                     </div>
