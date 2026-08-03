@@ -126,8 +126,10 @@ function BookingContent() {
       if (result.success) {
         // Calculate pricing for emails
         const emailRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-        const emailPackageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-        const emailRoomRate = emailPackageRate * formData.numberOfRooms;
+        const emailCheckInDate = formData.checkIn ? new Date(formData.checkIn) : null;
+        const emailIsWeekend = emailCheckInDate ? (emailCheckInDate.getDay() === 5 || emailCheckInDate.getDay() === 6) : false;
+        const emailRoomPrice = emailIsWeekend ? (emailRoom.weekendPrice || emailRoom.price) : emailRoom.price;
+        const emailRoomRate = emailRoomPrice * formData.numberOfRooms;
         const emailPackageExtra = 0;
         const emailChildrenCharge = formData.children * 1000;
         const emailExtraBedCharge = formData.extraBed * 1000;
@@ -171,8 +173,10 @@ function BookingContent() {
         // If online payment selected, redirect to PayU
         if (formData.paymentPreference === "online-payment") {
           const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-          const roomRate = packageRate * formData.numberOfRooms;
+          const checkInDate = formData.checkIn ? new Date(formData.checkIn) : null;
+          const isWeekend = checkInDate ? (checkInDate.getDay() === 5 || checkInDate.getDay() === 6) : false;
+          const roomPrice = isWeekend ? (currentRoom.weekendPrice || currentRoom.price) : currentRoom.price;
+          const roomRate = roomPrice * formData.numberOfRooms;
           const childrenCharge = formData.children * 1000;
           const extraBedCharge = formData.extraBed * 1000;
           const subtotal = roomRate + childrenCharge + extraBedCharge;
@@ -181,16 +185,17 @@ function BookingContent() {
 
           router.push(`/payment?bookingId=${result.bookingId}&amount=${total}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}`);
         } else if (formData.paymentPreference === "pay-at-property") {
-          // 20% advance payment via PayU
           const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-          const roomRate = packageRate * formData.numberOfRooms;
+          const checkInDate = formData.checkIn ? new Date(formData.checkIn) : null;
+          const isWeekend = checkInDate ? (checkInDate.getDay() === 5 || checkInDate.getDay() === 6) : false;
+          const roomPrice = isWeekend ? (currentRoom.weekendPrice || currentRoom.price) : currentRoom.price;
+          const roomRate = roomPrice * formData.numberOfRooms;
           const childrenCharge = formData.children * 1000;
           const extraBedCharge = formData.extraBed * 1000;
           const subtotal = roomRate + childrenCharge + extraBedCharge;
           const gst = Math.round(subtotal * 0.18);
           const total = subtotal + gst;
-          const advance = Math.round(total * 0.2); // 20% advance
+          const advance = Math.round(total * 0.2);
 
           router.push(`/payment?bookingId=${result.bookingId}&amount=${advance}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}&type=advance`);
         } else {
@@ -676,8 +681,12 @@ function BookingContent() {
               <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Booking Summary</h3>
               {(() => {
                 const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+                // Check if check-in is weekend (Fri=5, Sat=6)
+                const checkInDate = formData.checkIn ? new Date(formData.checkIn) : null;
+                const isWeekend = checkInDate ? (checkInDate.getDay() === 5 || checkInDate.getDay() === 6) : false;
+                const roomPrice = isWeekend ? (currentRoom.weekendPrice || currentRoom.price) : currentRoom.price;
                 const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-                const roomRate = packageRate * formData.numberOfRooms;
+                const roomRate = roomPrice * formData.numberOfRooms;
                 const packageExtra = 0;
                 const childrenCharge = formData.children * 1000;
                 const extraBedCharge = formData.extraBed * 1000;
@@ -697,7 +706,10 @@ function BookingContent() {
                   </div>
                   <div className="space-y-2.5 text-sm border-t border-gray-100 pt-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{formData.packageType === "luxury" ? "Semi Luxury" : formData.packageType === "premium" ? "Premium" : "Standard"} Package {formData.numberOfRooms > 1 ? `(₹${packageRate.toLocaleString()} × ${formData.numberOfRooms} rooms)` : ""}</span>
+                      <span className="text-gray-500">
+                        Room Rate {isWeekend && <span className="text-orange-500 text-xs">(Weekend)</span>}
+                        {formData.numberOfRooms > 1 ? ` (₹${roomPrice.toLocaleString()} × ${formData.numberOfRooms})` : ""}
+                      </span>
                       <span className="font-medium">{formatPrice(roomRate)}</span>
                     </div>
                     {packageExtra > 0 && (

@@ -94,8 +94,9 @@ export default function Rooms() {
                     <span className="text-3xl font-bold text-gray-900">
                       {formatPrice(room.price)}
                     </span>
-                    <span className="text-sm text-gray-500">/night</span>
+                    <span className="text-sm text-gray-500">/room/night</span>
                   </div>
+                  <p className="text-xs text-gray-400 mt-1">Weekend (Fri-Sat): {formatPrice(room.weekendPrice || room.price)}/room</p>
                 </div>
 
                 {/* Amenities */}

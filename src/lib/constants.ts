@@ -24,7 +24,8 @@ export const ROOMS = [
     id: "standard-cabin",
     name: "3 Bedroom Houseboat",
     slug: "standard-cabin-on-boat",
-    price: 16500,
+    price: 17500,
+    weekendPrice: 20000,
     originalPrice: 19800,
     description:
       "Our spacious 3 bedroom houseboat is perfect for families and groups. Choose 1, 2, or all 3 bedrooms on the same boat. Each room features premium linens, private bathroom, and stunning backwater views.",
@@ -84,7 +85,8 @@ export const ROOMS = [
     id: "double-twin-room",
     name: "2 Bedroom Houseboat",
     slug: "double-twin-room-lake-view",
-    price: 15300,
+    price: 16500,
+    weekendPrice: 18500,
     originalPrice: 18400,
     description:
       "A beautiful 2 bedroom houseboat with lake views. Choose 1 or both bedrooms on the same boat. Features private bathrooms, kitchen, and a stunning terrace overlooking the backwaters.",
@@ -133,7 +135,8 @@ export const ROOMS = [
     id: "suite-river-view",
     name: "Single Bedroom Houseboat",
     slug: "suite-with-river-view",
-    price: 16200,
+    price: 17500,
+    weekendPrice: 20000,
     originalPrice: 20000,
     description:
       "An intimate single bedroom houseboat ideal for couples. Enjoy complete privacy with panoramic river views, a luxury bedroom, and all modern amenities on your own private boat.",
