@@ -36,6 +36,11 @@ const PRICING: Record<string, Record<string, MonthConfig>> = {
         { from: 1, to: 31, weekday: 20000, weekend: 20000 },
       ],
     },
+    "2026-11": {
+      ranges: [
+        { from: 1, to: 30, weekday: 20000, weekend: 20000 },
+      ],
+    },
   },
   "double-twin-room": {
     // 2 Bedroom Houseboat
@@ -56,6 +61,11 @@ const PRICING: Record<string, Record<string, MonthConfig>> = {
         { from: 18, to: 31, weekday: 19000, weekend: 19000 },
       ],
     },
+    "2026-11": {
+      ranges: [
+        { from: 1, to: 30, weekday: 18500, weekend: 18500 },
+      ],
+    },
   },
   "suite-river-view": {
     // Single Bedroom Houseboat
@@ -74,6 +84,11 @@ const PRICING: Record<string, Record<string, MonthConfig>> = {
       ranges: [
         { from: 1, to: 17, weekday: 18500, weekend: 20000 },
         { from: 18, to: 31, weekday: 20000, weekend: 20000 },
+      ],
+    },
+    "2026-11": {
+      ranges: [
+        { from: 1, to: 30, weekday: 20000, weekend: 20000 },
       ],
     },
   },
