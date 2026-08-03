@@ -38,6 +38,7 @@ export default function AdminDashboard() {
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [stats, setStats] = useState({ total: 0, pending: 0, confirmed: 0, cancelled: 0 });
   const [loginError, setLoginError] = useState("");
+  const [blockedDatesList, setBlockedDatesList] = useState<{id: string; date: string; roomType: string; reason: string}[]>([]);
 
   async function loadBookings(pwd: string, filter?: string, searchTerm?: string) {
     setLoading(true);
@@ -86,8 +87,23 @@ export default function AdminDashboard() {
     if (success) {
       setStoredPassword(password);
       setIsAuthenticated(true);
+      loadBlockedDates(password);
     }
   };
+
+  async function loadBlockedDates(pwd?: string) {
+    try {
+      const res = await fetch("/api/blocked-dates", {
+        headers: { "x-admin-password": pwd || storedPassword },
+      });
+      const data = await res.json();
+      if (data.success && data.raw) {
+        setBlockedDatesList(data.raw);
+      }
+    } catch (err) {
+      console.error("Failed to load blocked dates:", err);
+    }
+  }
 
   const handleSearch = () => {
     loadBookings(storedPassword, statusFilter, search);
@@ -287,6 +303,116 @@ export default function AdminDashboard() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Block Dates Section */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 border-t border-gray-200">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 className="font-display text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            📅 Block / Unblock Dates
+            <span className="text-xs font-normal text-gray-500">(Block dates when booked on Booking.com)</span>
+          </h2>
+
+          {/* Add Block Dates */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">From Date</label>
+              <input type="date" id="blockFromDate"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">To Date</label>
+              <input type="date" id="blockToDate"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Houseboat</label>
+              <select id="blockRoomType"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
+                <option value="all">All Boats</option>
+                <option value="standard-cabin">3 Bedroom Houseboat</option>
+                <option value="double-twin-room">2 Bedroom Houseboat</option>
+                <option value="suite-river-view">Single Bedroom Houseboat</option>
+              </select>
+            </div>
+            <div className="flex items-end">
+              <button
+                onClick={async () => {
+                  const fromEl = document.getElementById("blockFromDate") as HTMLInputElement;
+                  const toEl = document.getElementById("blockToDate") as HTMLInputElement;
+                  const roomEl = document.getElementById("blockRoomType") as HTMLSelectElement;
+                  if (!fromEl.value || !toEl.value) { alert("Select both dates"); return; }
+                  
+                  // Generate date range
+                  const dates: string[] = [];
+                  const start = new Date(fromEl.value);
+                  const end = new Date(toEl.value);
+                  const current = new Date(start);
+                  while (current <= end) {
+                    dates.push(current.toISOString().split("T")[0]);
+                    current.setDate(current.getDate() + 1);
+                  }
+
+                  const res = await fetch("/api/blocked-dates", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "x-admin-password": storedPassword },
+                    body: JSON.stringify({ dates, roomType: roomEl.value, reason: "Booked on Booking.com" }),
+                  });
+                  const data = await res.json();
+                  if (data.success) {
+                    alert(`✅ ${data.message}`);
+                    loadBlockedDates();
+                  } else {
+                    alert("Failed: " + data.error);
+                  }
+                }}
+                className="w-full px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
+              >
+                Block Dates
+              </button>
+            </div>
+          </div>
+
+          {/* Blocked Dates List */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Currently Blocked Dates</h3>
+              <button onClick={loadBlockedDates} className="text-xs text-gold-600 hover:text-gold-700">Refresh</button>
+            </div>
+            {blockedDatesList.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-4">No dates blocked. All dates are available for booking.</p>
+            ) : (
+              <div className="max-h-60 overflow-y-auto space-y-1.5">
+                {blockedDatesList.map((bd) => (
+                  <div key={bd.id} className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-red-500" />
+                      <span className="text-sm font-medium text-gray-800">{bd.date}</span>
+                      <span className="text-xs text-gray-500">
+                        {bd.roomType === "all" ? "All Boats" : bd.roomType === "standard-cabin" ? "3BR" : bd.roomType === "double-twin-room" ? "2BR" : "1BR"}
+                      </span>
+                      <span className="text-xs text-gray-400">— {bd.reason}</span>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        const res = await fetch("/api/blocked-dates", {
+                          method: "DELETE",
+                          headers: { "Content-Type": "application/json", "x-admin-password": storedPassword },
+                          body: JSON.stringify({ id: bd.id }),
+                        });
+                        const data = await res.json();
+                        if (data.success) loadBlockedDates();
+                      }}
+                      className="text-xs text-red-600 hover:text-red-800 font-medium px-2 py-1 hover:bg-red-100 rounded"
+                    >
+                      Unblock
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Booking Detail Modal */}
