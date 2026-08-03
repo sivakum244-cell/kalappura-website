@@ -631,15 +631,6 @@ function BookingContent() {
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="h-fit lg:sticky lg:top-24 space-y-4">
             <div className="bg-white rounded-3xl p-6 shadow-card border border-gray-100">
               <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Booking Summary</h3>
-              <div className="flex items-center gap-3 p-3 bg-sand-50 rounded-xl mb-4">
-                <div className="w-16 h-16 rounded-xl bg-gray-200 overflow-hidden">
-                  <img src={selectedRoom.images[0]} alt={selectedRoom.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900 text-sm">{selectedRoom.name}</p>
-                  <p className="text-xs text-gray-500">{selectedRoom.beds} • {selectedRoom.size}</p>
-                </div>
-              </div>
               {(() => {
                 const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
                 const roomRate = currentRoom.price * formData.numberOfRooms;
@@ -649,7 +640,17 @@ function BookingContent() {
                 const subtotal = roomRate + packageExtra + childrenCharge + extraBedCharge;
                 const gst = Math.round(subtotal * 0.18);
                 const total = subtotal + gst;
-                return (
+                return (<>
+                  <div className="flex items-center gap-3 p-3 bg-sand-50 rounded-xl mb-4">
+                    <div className="w-16 h-16 rounded-xl bg-gray-200 overflow-hidden">
+                      <img src={currentRoom.images[0]} alt={currentRoom.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">{currentRoom.name}</p>
+                      <p className="text-xs text-gray-500">{formData.numberOfRooms} Room{formData.numberOfRooms > 1 ? "s" : ""} • {currentRoom.size}</p>
+                      <p className="text-xs text-emerald-600 font-medium mt-0.5">{formData.packageType === "luxury" ? "Semi Luxury" : formData.packageType === "premium" ? "Premium" : "Standard"} Package</p>
+                    </div>
+                  </div>
                   <div className="space-y-2.5 text-sm border-t border-gray-100 pt-4">
                     <div className="flex justify-between">
                       <span className="text-gray-500">Room Rate {formData.numberOfRooms > 1 ? `(₹${currentRoom.price.toLocaleString()} × ${formData.numberOfRooms} rooms)` : ""}</span>
@@ -698,7 +699,7 @@ function BookingContent() {
                       </>
                     )}
                   </div>
-                );
+                </>);
               })()}
               <p className="text-xs text-gray-400 mt-3 text-center">Per night • All meals included • GST inclusive</p>
             </div>
