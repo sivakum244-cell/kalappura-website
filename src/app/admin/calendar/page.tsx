@@ -39,11 +39,24 @@ export default function CalendarPage() {
   const [blockReason, setBlockReason] = useState("Booked on Booking.com");
   const [loading, setLoading] = useState(false);
 
+  // Auto-login from localStorage if already authenticated on /admin
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("adminPwd");
+      if (saved) {
+        setStoredPwd(saved);
+        setIsAuth(true);
+        loadData(saved);
+      }
+    }
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setStoredPwd(password);
     setIsAuth(true);
     loadData(password);
+    if (typeof window !== "undefined") localStorage.setItem("adminPwd", password);
   };
 
   async function loadData(pwd?: string) {
