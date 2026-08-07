@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomName, formatBookingDate, formatDateTime, STATUS_COLORS, type BookingStatus } from "@/lib/booking-utils";
 
@@ -39,19 +39,6 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ total: 0, pending: 0, confirmed: 0, cancelled: 0 });
   const [loginError, setLoginError] = useState("");
   const [blockedDatesList, setBlockedDatesList] = useState<{id: string; date: string; roomType: string; reason: string}[]>([]);
-
-  // Auto-login from localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("adminPwd");
-      if (saved) {
-        setStoredPassword(saved);
-        setIsAuthenticated(true);
-        loadBookings(saved);
-        loadBlockedDates(saved);
-      }
-    }
-  }, []);
 
   async function loadBookings(pwd: string, filter?: string, searchTerm?: string) {
     setLoading(true);
@@ -101,8 +88,6 @@ export default function AdminDashboard() {
       setStoredPassword(password);
       setIsAuthenticated(true);
       loadBlockedDates(password);
-      // Store in localStorage so calendar page can access
-      if (typeof window !== "undefined") localStorage.setItem("adminPwd", password);
     }
   };
 
