@@ -323,6 +323,79 @@ export default function AdminDashboard() {
         )}
       </div>
 
+      {/* Rate Management Section */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 border-t border-gray-200">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 className="font-display text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            💰 Rate Management
+            <span className="text-xs font-normal text-gray-500">(Change rates — syncs to booking page instantly)</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">From Date</label>
+              <input type="date" id="rateFromDate"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">To Date</label>
+              <input type="date" id="rateToDate"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Houseboat</label>
+              <select id="rateRoomType"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
+                <option value="standard-cabin">3 Bedroom</option>
+                <option value="double-twin-room">2 Bedroom</option>
+                <option value="suite-river-view">1 Bedroom</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Price (₹)</label>
+              <input type="number" id="ratePrice" placeholder="17500"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+            </div>
+            <div className="flex items-end">
+              <button
+                onClick={async () => {
+                  const fromEl = document.getElementById("rateFromDate") as HTMLInputElement;
+                  const toEl = document.getElementById("rateToDate") as HTMLInputElement;
+                  const roomEl = document.getElementById("rateRoomType") as HTMLSelectElement;
+                  const priceEl = document.getElementById("ratePrice") as HTMLInputElement;
+                  
+                  if (!fromEl.value || !toEl.value || !priceEl.value) { alert("Fill all fields"); return; }
+                  
+                  const res = await fetch("/api/rates", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "x-admin-password": storedPassword },
+                    body: JSON.stringify({
+                      dates: { from: fromEl.value, to: toEl.value },
+                      roomType: roomEl.value,
+                      price: Number(priceEl.value),
+                    }),
+                  });
+                  const data = await res.json();
+                  if (data.success) {
+                    alert(`✅ ${data.message} — Rate ₹${priceEl.value} set for ${roomEl.options[roomEl.selectedIndex].text}`);
+                    priceEl.value = "";
+                  } else {
+                    alert("Failed: " + data.error);
+                  }
+                }}
+                className="w-full px-4 py-2 bg-gold-500 text-white text-sm font-medium rounded-lg hover:bg-gold-600 transition-colors"
+              >
+                Set Rate
+              </button>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-400">
+            Set custom rates for any date range. These override the default rates and are used on the booking page automatically.
+          </p>
+        </div>
+      </div>
+
       {/* Block Dates Section */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 border-t border-gray-200">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

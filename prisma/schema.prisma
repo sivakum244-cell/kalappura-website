@@ -63,3 +63,16 @@ model BlockedDate {
   @@index([date])
   @@index([roomType])
 }
+
+model RoomRate {
+  id        String   @id @default(cuid())
+  date      String   // YYYY-MM-DD
+  roomType  String   // standard-cabin, double-twin-room, suite-river-view
+  price     Int      // Price in INR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([date, roomType])
+  @@index([date])
+  @@index([roomType])
+}

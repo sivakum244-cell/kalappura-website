@@ -18,6 +18,7 @@ function BookingContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const { data: availabilityData } = useAvailability();
+  const dbRates = availabilityData?.rates as Record<string, number> | undefined;
 
   const [formData, setFormData] = useState({
     guestName: "",
@@ -127,7 +128,7 @@ function BookingContent() {
       if (result.success) {
         // Calculate pricing for emails
         const emailRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-        const emailRoomPrice = getRoomPrice(formData.roomType, formData.checkIn);
+        const emailRoomPrice = getRoomPrice(formData.roomType, formData.checkIn, dbRates);
         const emailRoomRate = emailRoomPrice * formData.numberOfRooms;
         const emailPackageExtra = 0;
         const emailChildrenCharge = formData.children * 1000;
@@ -676,7 +677,7 @@ function BookingContent() {
               <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Booking Summary</h3>
               {(() => {
                 const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-                const roomPrice = getRoomPrice(formData.roomType, formData.checkIn);
+                const roomPrice = getRoomPrice(formData.roomType, formData.checkIn, dbRates);
                 const isWeekend = isWeekendDate(formData.checkIn);
                 const roomRate = roomPrice * formData.numberOfRooms;
                 const packageExtra = 0;

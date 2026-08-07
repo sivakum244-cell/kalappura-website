@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 interface AvailabilityData {
   blockedDates: Record<string, string[]>;
+  rates: Record<string, number>;
   lastUpdated: string;
 }
 

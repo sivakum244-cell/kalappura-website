@@ -2,48 +2,51 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 // ============================================================================
-// AVAILABILITY API - Returns blocked dates from admin panel
-// Used by the booking form to show available/unavailable status
+// AVAILABILITY API - Returns blocked dates + rates from database
 // ============================================================================
 
 export async function GET() {
   try {
-    const blockedDates = await prisma.blockedDate.findMany({
-      orderBy: { date: "asc" },
-    });
+    const [blockedDatesData, ratesData] = await Promise.all([
+      prisma.blockedDate.findMany({ orderBy: { date: "asc" } }),
+      prisma.roomRate.findMany({ orderBy: { date: "asc" } }),
+    ]);
 
-    // Group by room type
-    const grouped: Record<string, string[]> = {
+    // Group blocked dates by room type
+    const blockedDates: Record<string, string[]> = {
       "suite-river-view": [],
       "double-twin-room": [],
       "standard-cabin": [],
     };
 
-    for (const bd of blockedDates) {
+    for (const bd of blockedDatesData) {
       if (bd.roomType === "all") {
-        grouped["suite-river-view"].push(bd.date);
-        grouped["double-twin-room"].push(bd.date);
-        grouped["standard-cabin"].push(bd.date);
-      } else if (grouped[bd.roomType]) {
-        grouped[bd.roomType].push(bd.date);
+        blockedDates["suite-river-view"].push(bd.date);
+        blockedDates["double-twin-room"].push(bd.date);
+        blockedDates["standard-cabin"].push(bd.date);
+      } else if (blockedDates[bd.roomType]) {
+        blockedDates[bd.roomType].push(bd.date);
       }
+    }
+
+    // Convert rates to a lookup map: { "2026-08-15_standard-cabin": 17500 }
+    const rates: Record<string, number> = {};
+    for (const r of ratesData) {
+      rates[`${r.date}_${r.roomType}`] = r.price;
     }
 
     return NextResponse.json({
       success: true,
-      blockedDates: grouped,
+      blockedDates,
+      rates,
       lastUpdated: new Date().toISOString(),
     });
   } catch (error) {
     console.error("[AVAILABILITY] Error:", error);
-    // Return empty if DB fails (don't block bookings)
     return NextResponse.json({
       success: true,
-      blockedDates: {
-        "suite-river-view": [],
-        "double-twin-room": [],
-        "standard-cabin": [],
-      },
+      blockedDates: { "suite-river-view": [], "double-twin-room": [], "standard-cabin": [] },
+      rates: {},
       lastUpdated: new Date().toISOString(),
     });
   }
