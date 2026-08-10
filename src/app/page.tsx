@@ -26,11 +26,11 @@ export default function Home() {
       <PropertyOverview />
       <Gallery />
       <Rooms />
+      <Packages />
       <Experiences />
       <Amenities />
       <Location />
       <Reviews />
-      <Packages />
       <HostSection />
       <FAQ />
       <Footer />
