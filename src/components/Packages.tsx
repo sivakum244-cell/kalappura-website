@@ -244,7 +244,7 @@ export default function Packages() {
                     <span className="inline-block px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full mb-2">
                       {activePackage.badge}
                     </span>
-                    <p className="text-white/70 text-xs">For 3 Boats (All Rooms)</p>
+                    <p className="text-white/70 text-xs">Per Room / Per Night</p>
                     <p className="text-3xl font-bold text-white">₹{activePackage.price?.toLocaleString("en-IN")}</p>
                     <p className="text-emerald-200 text-xs">+ 18% GST per night</p>
                   </div>
