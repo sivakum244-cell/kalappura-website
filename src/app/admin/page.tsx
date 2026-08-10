@@ -489,6 +489,93 @@ export default function AdminDashboard() {
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <input type="text" placeholder="Search by name, booking ID, phone..." value={search}
+            onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50" />
+          <select value={statusFilter} onChange={(e) => handleFilterChange(e.target.value)}
+            className="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
+            <option value="all">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <button onClick={handleSearch} className="px-5 py-2.5 bg-gold-500 text-white rounded-xl text-sm font-medium hover:bg-gold-600 transition-colors">
+            Search
+          </button>
+        </div>
+
+        {/* Bookings Table */}
+        {loading ? (
+          <div className="text-center py-12 text-gray-400">Loading bookings...</div>
+        ) : bookings.length === 0 ? (
+          <div className="text-center py-12 text-gray-400">
+            <p className="text-lg">No bookings found</p>
+            <p className="text-sm mt-1">Bookings will appear here when guests submit the form.</p>
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 border-b border-gray-100">
+                  <tr>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600">Booking ID</th>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600">Guest</th>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600 hidden md:table-cell">Room</th>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600 hidden lg:table-cell">Check-in</th>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
+                    <th className="text-left px-4 py-3 font-medium text-gray-600">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {bookings.map((booking) => (
+                    <tr key={booking.id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-4 py-3">
+                        <button onClick={() => setSelectedBooking(booking)} className="text-gold-600 font-mono text-xs font-semibold hover:underline">
+                          {booking.bookingId}
+                        </button>
+                        <p className="text-[10px] text-gray-400 mt-0.5">{formatDateTime(booking.createdAt)}</p>
+                      </td>
+                      <td className="px-4 py-3">
+                        <p className="font-medium text-gray-900">{booking.guestName}</p>
+                        <p className="text-xs text-gray-500">{booking.mobile}</p>
+                      </td>
+                      <td className="px-4 py-3 hidden md:table-cell">
+                        <p className="text-gray-700">{getRoomName(booking.roomType)}</p>
+                        <p className="text-xs text-gray-400">{booking.numberOfRooms} room(s)</p>
+                      </td>
+                      <td className="px-4 py-3 hidden lg:table-cell text-gray-700">
+                        {formatBookingDate(booking.checkIn)}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[booking.status as BookingStatus] || "bg-gray-100 text-gray-600"}`}>
+                          {booking.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1">
+                          <button onClick={() => setSelectedBooking(booking)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600" title="View">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          </button>
+                          {booking.status === "Pending" && (
+                            <button onClick={() => updateStatus(booking.id, "Confirmed")} className="p-1.5 rounded-lg hover:bg-emerald-50 text-emerald-600" title="Confirm">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+                            </button>
+                          )}
+                          <button onClick={() => deleteBooking(booking.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Booking Detail Modal */}
       <AnimatePresence>
         {selectedBooking && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
