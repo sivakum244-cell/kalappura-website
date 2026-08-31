@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ROOMS } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
@@ -41,11 +42,13 @@ export default function Rooms() {
             >
               {/* Image */}
               <div className="relative h-56 overflow-hidden">
-                <img
+                <Image
                   src={room.images[0]}
-                  alt={room.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  alt={`${room.name} — private houseboat in Alleppey, Kerala with ${room.bedrooms} bedroom${room.bedrooms > 1 ? "s" : ""}`}
+                  fill
                   loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 {/* Badge */}
                 <div className="absolute top-4 left-4 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gold-700">

@@ -1,3 +1,13 @@
+// ============================================================================
+// CANONICAL SITE URL
+// The single preferred, indexable origin for the whole site.
+// All URL variants (http://, http://www, https://, https://www) must resolve
+// here. Do NOT include a trailing slash on the origin (Next.js appends paths).
+// Overridable via NEXT_PUBLIC_SITE_URL, but that env var MUST be set to the
+// preferred www HTTPS origin in production (see .env.example).
+// ============================================================================
+export const SITE_URL = "https://www.alleppeyhouseboat.online";
+
 export const SITE_CONFIG = {
   name: "Kalappura Houseboats & Tours",
   tagline: "Experience Kerala's Most Beautiful Backwaters",

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 const features = [
   { icon: "❄️", label: "Air Conditioning" },
@@ -35,10 +36,12 @@ export default function PropertyOverview() {
               Comfortable Luxury Accommodation
             </h2>
             <p className="text-gray-600 leading-relaxed mb-8">
-              Located in Alleppey, Kalappura Houseboats & Tours offers handcrafted
-              traditional Kerala houseboats featuring modern luxury amenities. Our
-              houseboats are the perfect blend of heritage architecture and
-              contemporary comfort, cruising through the serene backwaters of Kerala.
+              Located in Alleppey (Alappuzha), Kalappura Houseboats & Tours offers
+              handcrafted traditional Kerala houseboats featuring modern luxury
+              amenities. Our houseboats cruise through the serene backwaters —
+              from the vast Vembanad Lake to narrow coconut-lined canals of the
+              Kuttanad region, passing paddy fields, toddy shops, and fishing
+              villages that define authentic Kerala life.
             </p>
 
             {/* Features Grid */}
@@ -69,34 +72,46 @@ export default function PropertyOverview() {
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
-                <div className="h-48 rounded-2xl overflow-hidden">
-                  <img
+                <div className="h-48 rounded-2xl overflow-hidden relative">
+                  <Image
                     src="/images/gallery/drone-1.jpg"
-                    alt="Kerala backwaters aerial view"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    alt="Aerial view of houseboat cruising through Alleppey backwaters"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
-                <div className="h-64 rounded-2xl overflow-hidden">
-                  <img
+                <div className="h-64 rounded-2xl overflow-hidden relative">
+                  <Image
                     src="/images/rooms/standard-cabin/1.jpg"
-                    alt="Houseboat interior"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    alt="Interior of 3 bedroom houseboat with modern amenities in Alleppey"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
               </div>
               <div className="space-y-4 pt-8">
-                <div className="h-64 rounded-2xl overflow-hidden">
-                  <img
+                <div className="h-64 rounded-2xl overflow-hidden relative">
+                  <Image
                     src="/images/rooms/double-twin-room/1.jpg"
-                    alt="Luxury bedroom"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    alt="Luxury bedroom in 2 bedroom houseboat with lake view, Alleppey"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
-                <div className="h-48 rounded-2xl overflow-hidden">
-                  <img
+                <div className="h-48 rounded-2xl overflow-hidden relative">
+                  <Image
                     src="/images/gallery/sunset-1.jpg"
-                    alt="Sunset view"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    alt="Sunset over Kerala backwaters viewed from houseboat deck"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
               </div>

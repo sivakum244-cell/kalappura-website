@@ -65,7 +65,7 @@ function PaymentContent() {
     <div className="min-h-screen bg-gradient-luxury flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-luxury text-center">
         <div className="w-16 h-16 rounded-full bg-gold-100 flex items-center justify-center mx-auto mb-4">
-          <svg className="animate-spin w-8 h-8 text-gold-600" viewBox="0 0 24 24" fill="none">
+          <svg aria-hidden="true" focusable="false" className="animate-spin w-8 h-8 text-gold-600" viewBox="0 0 24 24" fill="none">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
           </svg>

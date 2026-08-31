@@ -1,0 +1,15 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Kalappura Houseboats",
+  "name_for_model": "kalappura_houseboats",
+  "description_for_human": "Book private luxury houseboats in Alleppey (Alappuzha), Kerala. 1, 2 & 3 bedroom AC houseboats with all meals and backwater cruise included.",
+  "description_for_model": "Kalappura Houseboats offers private houseboat stays in Alleppey, Kerala, India. Provides 1 bedroom (couples, up to 3 guests), 2 bedroom (small families, up to 6 guests), and 3 bedroom (groups, up to 9 guests) houseboats. All bookings include overnight stay, all meals, AC bedrooms, onboard crew, and backwater cruise through Vembanad Lake. Prices start at INR 15,000 per room per night for Standard package. Check-in 12 PM, check-out 9 AM next day.",
+  "auth": { "type": "none" },
+  "api": {
+    "type": "openapi",
+    "url": "https://alleppeyhouseboat.online/api/availability"
+  },
+  "logo_url": "https://alleppeyhouseboat.online/images/gallery/drone-1.jpg",
+  "contact_email": "info@kalappurahouseboats.com",
+  "legal_info_url": "https://alleppeyhouseboat.online"
+}

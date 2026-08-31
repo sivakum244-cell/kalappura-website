@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+/*
+ * Fonts are now self-hosted via next/font/google (see src/lib/fonts.ts) and
+ * exposed as the CSS variables --font-display, --font-body, --font-accent.
+ * The previous render-blocking @import of Google Fonts was removed to fix the
+ * "Font Display" / render-blocking audit findings.
+ */
 
 @layer base {
   * {
@@ -63,15 +68,15 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-28 lg:py-32 px-4 md:px-8 lg:px-16;
+    @apply py-16 md:py-24 lg:py-32 px-5 md:px-8 lg:px-16;
   }
 
   .section-title {
-    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-2;
   }
 
   .section-subtitle {
-    @apply font-body text-lg md:text-xl text-gray-600 mt-4 max-w-2xl;
+    @apply font-body text-base md:text-lg lg:text-xl text-gray-600 mt-3 md:mt-4 max-w-2xl leading-relaxed;
   }
 
   .card-hover {

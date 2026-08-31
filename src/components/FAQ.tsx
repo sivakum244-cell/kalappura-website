@@ -49,7 +49,7 @@ export default function FAQ() {
                   transition={{ duration: 0.3 }}
                   className="flex-shrink-0 w-8 h-8 rounded-full bg-gold-50 flex items-center justify-center text-gold-600"
                 >
-                  <svg
+                  <svg aria-hidden="true" focusable="false"
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"

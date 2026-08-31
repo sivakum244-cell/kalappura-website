@@ -12,8 +12,8 @@ function createTransporter() {
     port: Number(process.env.SMTP_PORT) || 587,
     secure: false,
     auth: {
-      user: process.env.SMTP_USER || "sivakum244@gmail.com",
-      pass: process.env.SMTP_PASSWORD || "fsmmlsrsbldlkjjy",
+      user: process.env.SMTP_USER || "",
+      pass: process.env.SMTP_PASSWORD || "",
     },
     connectionTimeout: 5000,
     greetingTimeout: 3000,
@@ -26,8 +26,8 @@ function createTransporter() {
 // ============================================================================
 
 async function sendEmail(to: string, subject: string, html: string) {
-  const smtpUser = process.env.SMTP_USER || "sivakum244@gmail.com";
-  const smtpPass = process.env.SMTP_PASSWORD || "fsmmlsrsbldlkjjy";
+  const smtpUser = process.env.SMTP_USER || "";
+  const smtpPass = process.env.SMTP_PASSWORD || "";
 
   if (!smtpUser || !smtpPass) {
     console.log("[EMAIL] SMTP not configured. Skipping email to:", to);
@@ -38,7 +38,7 @@ async function sendEmail(to: string, subject: string, html: string) {
   try {
     const transporter = createTransporter();
     const fromName = process.env.SMTP_FROM_NAME || "Kalappura Houseboats";
-    const fromEmail = process.env.SMTP_FROM_EMAIL || "sivakum244@gmail.com";
+    const fromEmail = process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER || "";
 
     await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
@@ -91,7 +91,7 @@ interface BookingEmailData {
 // ============================================================================
 
 export async function sendAdminNotification(data: BookingEmailData) {
-  const adminEmail = "josejkalappurackal@gmail.com,sivakum244@gmail.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "info@kalappurahouseboats.com";
   const subject = `🏠 New Booking: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
@@ -301,7 +301,7 @@ export async function sendGuestConfirmation(data: BookingEmailData) {
 // ============================================================================
 
 export async function sendAdminConfirmedNotification(data: BookingEmailData) {
-  const adminEmail = "josejkalappurackal@gmail.com,sivakum244@gmail.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "info@kalappurahouseboats.com";
   const subject = `✅ Booking CONFIRMED: ${data.bookingId} - ${data.guestName}`;
 
   const html = `
@@ -416,6 +416,93 @@ export async function sendGuestBookingConfirmed(data: BookingEmailData) {
         <p style="font-size:13px;color:#6b7280;margin:0;font-weight:600;">Kalappura Houseboats & Tours</p>
         <p style="font-size:12px;color:#9ca3af;margin:4px 0;">Mullackal Ward, Iron Bridge P.O, Alleppey, Kerala 688011</p>
         <p style="font-size:14px;color:#059669;margin:12px 0 0;font-weight:600;">See you soon! 🌊</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  return sendEmail(data.email, subject, html);
+}
+
+
+// ============================================================================
+// POST-CHECKOUT THANK YOU EMAIL
+// Sent when booking status is changed to "Completed"
+// ============================================================================
+
+export async function sendPostCheckoutEmail(data: BookingEmailData) {
+  if (!data.email) {
+    console.log("[EMAIL] No guest email for post-checkout, skipping.");
+    return { success: true, skipped: true };
+  }
+
+  const subject = `Thank You for Staying with Us! | Kalappura Houseboats`;
+  const googleReviewLink = "https://share.google/LL9CYpnrF42QigoXG";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://alleppeyhouseboat.online";
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;background-color:#f5f0e8;font-family:Arial,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:20px;">
+    
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#d4a853,#fbbf24);border-radius:16px 16px 0 0;padding:40px 30px;text-align:center;">
+      <h1 style="color:#fff;margin:0;font-size:26px;">Thank You, ${data.guestName}!</h1>
+      <p style="color:#fff;margin:10px 0 0;opacity:0.9;font-size:14px;">We hope you had a wonderful experience</p>
+    </div>
+
+    <!-- Body -->
+    <div style="background:#fff;padding:30px;border-radius:0 0 16px 16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+      
+      <p style="font-size:15px;color:#374151;line-height:1.7;margin-bottom:20px;">
+        Thank you for choosing Kalappura Houseboats for your stay on the Kerala backwaters. We truly enjoyed hosting you and hope the experience was everything you imagined.
+      </p>
+
+      <!-- Review Request -->
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:24px;text-align:center;margin:24px 0;">
+        <p style="font-size:14px;color:#166534;margin:0 0 12px;font-weight:600;">Would you share your experience?</p>
+        <p style="font-size:13px;color:#4b5563;margin:0 0 16px;">Your review helps other travellers discover us and means the world to our small team.</p>
+        <a href="${googleReviewLink}" target="_blank" style="display:inline-block;padding:12px 28px;background:#d4a853;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">
+          ⭐ Leave a Google Review
+        </a>
+      </div>
+
+      <!-- Share Photos -->
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:20px;text-align:center;margin:24px 0;">
+        <p style="font-size:14px;color:#1e40af;margin:0 0 8px;font-weight:600;">📷 Got great photos?</p>
+        <p style="font-size:13px;color:#4b5563;margin:0 0 12px;">Share your backwater photos in our guest gallery!</p>
+        <a href="${siteUrl}/guest-photos" target="_blank" style="display:inline-block;padding:10px 20px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:13px;">
+          Share Your Photos
+        </a>
+      </div>
+
+      <!-- Next Visit Offer -->
+      <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center;margin:24px 0;">
+        <p style="font-size:14px;color:#92400e;margin:0 0 8px;font-weight:600;">🎁 Come Back Soon!</p>
+        <p style="font-size:13px;color:#4b5563;margin:0;">Returning guests are always welcome. Contact us directly for special returning-guest rates on your next backwater holiday.</p>
+      </div>
+
+      <!-- Booking Summary -->
+      <div style="border-top:1px solid #e5e7eb;padding-top:20px;margin-top:24px;">
+        <p style="font-size:12px;color:#9ca3af;margin:0;">Your stay details:</p>
+        <p style="font-size:13px;color:#6b7280;margin:6px 0 0;">
+          Booking: ${data.bookingId} • ${getRoomName(data.roomType)} • ${formatBookingDate(data.checkIn)} – ${formatBookingDate(data.checkOut)}
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div style="margin-top:30px;text-align:center;">
+        <p style="font-size:13px;color:#6b7280;margin:0;">Warm regards,</p>
+        <p style="font-size:14px;color:#1f2937;font-weight:600;margin:4px 0;">Team Kalappura Houseboats</p>
+        <p style="font-size:12px;color:#9ca3af;margin:8px 0 0;">
+          📞 +91 98950 53528 • 📧 info@kalappurahouseboats.com
+        </p>
       </div>
     </div>
   </div>

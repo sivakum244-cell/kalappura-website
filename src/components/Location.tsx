@@ -82,7 +82,7 @@ export default function Location() {
                 className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-gold-600 hover:text-gold-700 transition-colors"
               >
                 <span>Get Directions</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
                 </svg>
               </a>

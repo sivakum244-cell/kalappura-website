@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { sendAdminConfirmedNotification, sendGuestBookingConfirmed } from "@/lib/email";
+import { sendAdminConfirmedNotification, sendGuestBookingConfirmed, sendPostCheckoutEmail } from "@/lib/email";
 
 // ============================================================================
 // PATCH /api/bookings/[id] - Update booking status or details
@@ -105,6 +105,36 @@ export async function PATCH(
         ]);
       } catch (emailErr) {
         console.error("[BOOKING] Email preparation failed:", emailErr);
+      }
+    }
+
+    // Send post-checkout thank you email when status changes to "Completed"
+    if (body.status === "Completed" && existing.status !== "Completed") {
+      try {
+        const emailData = {
+          bookingId: updated.bookingId,
+          guestName: updated.guestName,
+          mobile: updated.mobile,
+          email: updated.email || "",
+          country: updated.country,
+          checkIn: updated.checkIn,
+          checkOut: updated.checkOut,
+          eta: updated.eta,
+          adults: updated.adults,
+          children: updated.children,
+          infants: updated.infants,
+          roomType: updated.roomType,
+          numberOfRooms: updated.numberOfRooms,
+          foodRequirements: updated.foodRequirements,
+          specialRequests: updated.specialRequests,
+          additionalNotes: updated.additionalNotes,
+          paymentPreference: updated.paymentPreference,
+          createdAt: new Date(updated.createdAt).toISOString(),
+        };
+
+        await sendPostCheckoutEmail(emailData);
+      } catch (emailErr) {
+        console.error("[BOOKING] Post-checkout email failed:", emailErr);
       }
     }
 

@@ -1,0 +1,17 @@
+import { NextResponse } from "next/server";
+
+// ============================================================================
+// POST /api/admin/logout - Clear admin session cookie
+// ============================================================================
+
+export async function POST() {
+  const response = NextResponse.json({ success: true, message: "Logged out" });
+  response.cookies.set("admin_session", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 0,
+    path: "/",
+  });
+  return response;
+}

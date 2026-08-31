@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE_CONFIG } from "@/lib/constants";
+import { LanguageSwitcherCompact } from "@/components/LanguageSwitcher";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,6 +25,7 @@ export default function Header() {
     { name: "Experiences", href: "#experiences" },
     { name: "Reviews", href: "#reviews" },
     { name: "Offers", href: "#offers" },
+    { name: "Blog", href: "/blog" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -48,7 +51,7 @@ export default function Header() {
                   : "bg-white/20 backdrop-blur-sm text-white border border-white/30"
               }`}
             >
-              <svg
+              <svg aria-hidden="true" focusable="false"
                 width="20"
                 height="20"
                 viewBox="0 0 24 24"
@@ -102,6 +105,9 @@ export default function Header() {
 
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-3">
+            {/* Language Switcher */}
+            {isScrolled ? <LanguageSwitcherCompact /> : <LanguageSwitcher />}
+
             <div
               className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
                 isScrolled
@@ -134,7 +140,7 @@ export default function Header() {
               }`}
               aria-label="Toggle menu"
             >
-              <svg
+              <svg aria-hidden="true" focusable="false"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"

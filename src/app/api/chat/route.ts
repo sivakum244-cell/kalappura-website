@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
 // ============================================================================
 // AI CHATBOT API ROUTE - Powered by Google Gemini
@@ -41,6 +42,13 @@ Guidelines:
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: max 20 messages per IP per 5 minutes
+    const ip = getClientIP(request);
+    const { limited } = rateLimit(`chat:${ip}`, 20, 5 * 60 * 1000);
+    if (limited) {
+      return NextResponse.json({ reply: "You're sending messages too quickly. Please wait a moment." }, { status: 429 });
+    }
+
     const { message } = await request.json();
 
     if (!message) {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRoomName, formatBookingDate, formatDateTime, STATUS_COLORS, type BookingStatus } from "@/lib/booking-utils";
+import { downloadInvoice } from "@/lib/invoice";
 
 interface Booking {
   id: string;
@@ -186,6 +187,15 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-3">
             <a href="/admin/calendar" className="px-3 py-2 bg-emerald-50 text-emerald-700 text-sm font-medium rounded-lg hover:bg-emerald-100 transition-colors">
               📅 Calendar
+            </a>
+            <a href="/admin/analytics" className="px-3 py-2 bg-blue-50 text-blue-700 text-sm font-medium rounded-lg hover:bg-blue-100 transition-colors">
+              📊 Analytics
+            </a>
+            <a href="/admin/blog" className="px-3 py-2 bg-purple-50 text-purple-700 text-sm font-medium rounded-lg hover:bg-purple-100 transition-colors">
+              📝 Blog
+            </a>
+            <a href="/admin/photos" className="px-3 py-2 bg-amber-50 text-amber-700 text-sm font-medium rounded-lg hover:bg-amber-100 transition-colors">
+              📷 Photos
             </a>
             <button onClick={() => loadBookings(storedPassword)} className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="Refresh">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -591,6 +601,27 @@ export default function AdminDashboard() {
                   <p className="text-xs text-gray-500">Created: {formatDateTime(selectedBooking.createdAt)}</p>
                 </div>
                 <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => downloadInvoice({
+                      bookingId: selectedBooking.bookingId,
+                      guestName: selectedBooking.guestName,
+                      mobile: selectedBooking.mobile,
+                      email: selectedBooking.email,
+                      country: selectedBooking.country,
+                      checkIn: selectedBooking.checkIn,
+                      checkOut: selectedBooking.checkOut,
+                      roomType: selectedBooking.roomType,
+                      numberOfRooms: selectedBooking.numberOfRooms,
+                      adults: selectedBooking.adults,
+                      children: selectedBooking.children,
+                      infants: selectedBooking.infants,
+                      paymentPreference: selectedBooking.paymentPreference,
+                      createdAt: selectedBooking.createdAt,
+                    })}
+                    className="px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    📄 Receipt
+                  </button>
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[selectedBooking.status as BookingStatus] || "bg-gray-100"}`}>
                     {selectedBooking.status}
                   </span>

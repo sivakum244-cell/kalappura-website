@@ -25,10 +25,15 @@ export default function BookingEngine() {
         <div className="space-y-4">
           {/* Check In */}
           <div>
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block">
+            <label
+              htmlFor="qb-checkin"
+              className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block"
+            >
               Check In
             </label>
             <input
+              id="qb-checkin"
+              name="checkin"
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
@@ -38,10 +43,15 @@ export default function BookingEngine() {
 
           {/* Check Out */}
           <div>
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block">
+            <label
+              htmlFor="qb-checkout"
+              className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block"
+            >
               Check Out
             </label>
             <input
+              id="qb-checkout"
+              name="checkout"
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
@@ -51,10 +61,15 @@ export default function BookingEngine() {
 
           {/* Guests */}
           <div>
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block">
+            <label
+              htmlFor="qb-guests"
+              className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1 block"
+            >
               Guests
             </label>
             <select
+              id="qb-guests"
+              name="guests"
               value={guests}
               onChange={(e) => setGuests(Number(e.target.value))}
               className="w-full px-4 py-3 bg-white/10 border border-white/15 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none cursor-pointer"

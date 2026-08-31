@@ -57,7 +57,7 @@ export default function Amenities() {
               className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-white border border-gray-100 hover:border-gold-200 hover:shadow-card transition-all duration-300 cursor-default"
             >
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-gold-50 to-sand-100 flex items-center justify-center text-gold-600 group-hover:scale-110 transition-transform duration-300">
-                <svg
+                <svg aria-hidden="true" focusable="false"
                   className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"

@@ -83,9 +83,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["Playfair Display", "serif"],
-        body: ["Inter", "sans-serif"],
-        accent: ["Cormorant Garamond", "serif"],
+        display: ["var(--font-display)", "Playfair Display", "serif"],
+        body: ["var(--font-body)", "Inter", "sans-serif"],
+        accent: ["var(--font-accent)", "Cormorant Garamond", "serif"],
       },
       backgroundImage: {
         "gradient-luxury":
