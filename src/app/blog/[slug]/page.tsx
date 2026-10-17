@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { Metadata } from "next";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
@@ -45,7 +44,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export const dynamic = "force-dynamic";
+// ISR: render each post on-demand on first request, then cache and regenerate
+// hourly (so edits appear without a redeploy). We intentionally do NOT use
+// generateStaticParams here — build-time prerendering of every post is both
+// slow and unsafe for this page, so posts render lazily and then cache.
+export const revalidate = 3600;
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
@@ -59,6 +62,33 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post || !post.published) {
     notFound();
+  }
+
+  // Related guides: up to 3 other published posts in the same category (fall back
+  // to any recent posts if the category is thin). Strengthens internal linking
+  // and topical clustering for both readers and AI/search engines.
+  let relatedPosts: { slug: string; title: string; category: string }[] = [];
+  try {
+    relatedPosts = await prisma.blogPost.findMany({
+      where: { published: true, category: post.category, slug: { not: post.slug } },
+      select: { slug: true, title: true, category: true },
+      orderBy: { publishedAt: "desc" },
+      take: 3,
+    });
+    if (relatedPosts.length < 3) {
+      const fillers = await prisma.blogPost.findMany({
+        where: {
+          published: true,
+          slug: { notIn: [post.slug, ...relatedPosts.map((p) => p.slug)] },
+        },
+        select: { slug: true, title: true, category: true },
+        orderBy: { publishedAt: "desc" },
+        take: 3 - relatedPosts.length,
+      });
+      relatedPosts = [...relatedPosts, ...fillers];
+    }
+  } catch {
+    relatedPosts = [];
   }
 
   const articleJsonLd = {
@@ -89,10 +119,53 @@ export default async function BlogPostPage({ params }: Props) {
     ],
   };
 
+  // Extract FAQ pairs from the content: an <h3>Question</h3> followed by one or
+  // more <p>Answer</p> paragraphs (up to the next heading). Emits FAQPage schema
+  // so the post's Q&A is eligible for rich results. Purely additive.
+  const faqItems: { question: string; answer: string }[] = [];
+  const stripTags = (html: string) =>
+    html
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const h3Regex = /<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h[1-3][^>]*>|$)/gi;
+  let m: RegExpExecArray | null;
+  while ((m = h3Regex.exec(post.content)) !== null) {
+    const question = stripTags(m[1]);
+    // Only treat it as an FAQ if the question looks like a question.
+    if (!question.includes("?")) continue;
+    const paras = m[2].match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
+    const answer = paras.map((p) => stripTags(p)).join(" ").trim();
+    if (question && answer) {
+      faqItems.push({ question, answer });
+    }
+  }
+
+  const faqJsonLd =
+    faqItems.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        }
+      : null;
+
   return (
     <main id="main-content" className="min-h-screen bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
 
       {/* Cover Image */}
       {post.coverImage && (
@@ -163,6 +236,25 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         )}
 
+        {/* Related guides — internal linking + topical clustering */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-10 pt-6 border-t border-gray-100">
+            <h2 className="font-display text-lg font-bold text-gray-900 mb-4">Related guides</h2>
+            <ul className="space-y-2">
+              {relatedPosts.map((rp) => (
+                <li key={rp.slug}>
+                  <Link
+                    href={`/blog/${rp.slug}`}
+                    className="text-gold-600 hover:text-gold-700 hover:underline text-sm font-medium"
+                  >
+                    {rp.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* CTA */}
         <div className="mt-10 p-6 bg-sand-50 rounded-2xl text-center">
           <h3 className="font-display text-lg font-bold text-gray-900 mb-2">
@@ -179,6 +271,10 @@ export default async function BlogPostPage({ params }: Props) {
               View Houseboats
             </Link>
           </div>
+          <p className="text-xs text-gray-500 mt-4">
+            Already stayed with us?{" "}
+            <Link href="/review" className="text-gold-600 hover:underline">Leave a review</Link>{" "}— it means a lot to our small team.
+          </p>
         </div>
       </article>
     </main>

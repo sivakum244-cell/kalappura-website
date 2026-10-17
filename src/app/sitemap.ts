@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import prisma from "@/lib/prisma";
 
 // ============================================================================
 // SITEMAP FOR GOOGLE SEARCH CONSOLE
@@ -7,10 +8,37 @@ import type { MetadataRoute } from "next";
 // URL: https://www.alleppeyhouseboat.online/sitemap.xml
 // ============================================================================
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Regenerate hourly so newly published blog posts appear without a redeploy.
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.alleppeyhouseboat.online";
 
-  return [
+  // Pull every published blog post so each article is submitted to Google.
+  // Wrapped in try/catch: if the DB is unreachable at build time, the static
+  // routes below are still returned and the build never breaks.
+  let blogEntries: MetadataRoute.Sitemap = [];
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+      orderBy: { publishedAt: "desc" },
+    });
+    // Blog posts are kept at LOW priority so Google focuses its limited crawl
+    // budget on the commercial "money" pages (home, booking, prices, rooms,
+    // cruises, pillar) rather than spreading it thin across ~150 articles.
+    // This directly addresses the "Discovered – currently not indexed" issue.
+    blogEntries = posts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.updatedAt,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    }));
+  } catch {
+    blogEntries = [];
+  }
+
+  const staticRoutes: MetadataRoute.Sitemap = [
     // Homepage - highest priority
     {
       url: baseUrl,
@@ -65,6 +93,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/alleppey-backwaters`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/budget-houseboat-alleppey`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/houseboat-packages`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -77,6 +117,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/houseboat-cost-calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/luxury-houseboats`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -87,6 +133,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/day-cruise-houseboat-alleppey`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/honeymoon-houseboat-alleppey`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
     // Blog
     {
@@ -104,6 +162,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/alleppey-vs-kumarakom`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/vembanad-lake-houseboat`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/kuttanad-houseboat`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/kainakari-houseboat`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
@@ -139,6 +215,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${baseUrl}/cancellation-refund`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/shipping`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
+
+  return [...staticRoutes, ...blogEntries];
 }
 

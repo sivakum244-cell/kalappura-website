@@ -14,14 +14,17 @@ export default function Footer() {
     { name: "How to Reach", href: "/how-to-reach" },
     { name: "FAQ", href: "/faq" },
     { name: "Blog", href: "/blog" },
+    { name: "Reviews", href: "/review" },
     { name: "Book Now", href: "/booking" },
   ];
 
   const policies = [
     { name: "About Us", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Contact Us", href: "/contact" },
     { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
+    { name: "Terms & Conditions", href: "/terms" },
+    { name: "Cancellation & Refund", href: "/cancellation-refund" },
+    { name: "Shipping & Delivery", href: "/shipping" },
     { name: "FAQ", href: "/faq" },
   ];
 

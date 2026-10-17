@@ -8,6 +8,15 @@
 // ============================================================================
 export const SITE_URL = "https://www.alleppeyhouseboat.online";
 
+// ============================================================================
+// TEMPORARY: WhatsApp booking mode.
+// When true, the booking form still saves the enquiry AND sends the confirmation
+// email exactly as before, then redirects the guest to WhatsApp (with their
+// details pre-filled) instead of going to the payment page.
+// Set back to false to re-enable the normal payment flow.
+// ============================================================================
+export const WHATSAPP_BOOKING_MODE = true;
+
 export const SITE_CONFIG = {
   name: "Kalappura Houseboats & Tours",
   tagline: "Experience Kerala's Most Beautiful Backwaters",
@@ -22,11 +31,19 @@ export const SITE_CONFIG = {
     country: "India",
   },
   phone: "+91-9895053528",
+  // Secondary/alternate contact line. The PRIMARY phone above is the canonical
+  // NAP number used in schema telephone + all citations — keep it consistent.
+  phoneSecondary: "+91-9895133528",
   whatsapp: "+919895053528",
   email: "info@kalappurahouseboats.com",
   rating: 9.7,
   reviewCount: 275,
   locationRating: 9.8,
+  // Verifiable third-party review source (TripAdvisor listing for Kalappura Houseboats, Alappuzha).
+  tripAdvisorUrl:
+    "https://www.tripadvisor.com/Attraction_Review-g608471-d13482570-Reviews-Kalappura_Houseboats-Alappuzha_Alappuzha_District_Kerala.html",
+  // Official Google Business Profile review link (Kalappura HomeStay & HouseBoats).
+  googleReviewUrl: "https://share.google/wtfPm5TWcMUYykHw4",
 };
 
 export const ROOMS = [

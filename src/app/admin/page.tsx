@@ -40,6 +40,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ total: 0, pending: 0, confirmed: 0, cancelled: 0 });
   const [loginError, setLoginError] = useState("");
   const [blockedDatesList, setBlockedDatesList] = useState<{id: string; date: string; roomType: string; reason: string}[]>([]);
+  const [ratesList, setRatesList] = useState<{id: string; date: string; roomType: string; price: number}[]>([]);
 
   async function loadBookings(pwd: string, filter?: string, searchTerm?: string) {
     setLoading(true);
@@ -89,8 +90,21 @@ export default function AdminDashboard() {
       setStoredPassword(password);
       setIsAuthenticated(true);
       loadBlockedDates(password);
+      loadRates();
     }
   };
+
+  async function loadRates() {
+    try {
+      const res = await fetch("/api/rates");
+      const data = await res.json();
+      if (data.success && Array.isArray(data.rates)) {
+        setRatesList(data.rates);
+      }
+    } catch (err) {
+      console.error("Failed to load rates:", err);
+    }
+  }
 
   async function loadBlockedDates(pwd?: string) {
     try {
@@ -272,7 +286,7 @@ export default function AdminDashboard() {
                     body: JSON.stringify({ dates: { from: fromEl.value, to: toEl.value }, roomType: roomEl.value, price: Number(priceEl.value) }),
                   });
                   const data = await res.json();
-                  if (data.success) { alert(`✅ ${data.message}`); priceEl.value = ""; }
+                  if (data.success) { alert(`✅ ${data.message}`); priceEl.value = ""; loadRates(); }
                   else { alert("Failed: " + data.error); }
                 }}
                 className="w-full px-4 py-2 bg-gold-500 text-white text-sm font-medium rounded-lg hover:bg-gold-600 transition-colors">
@@ -281,6 +295,66 @@ export default function AdminDashboard() {
             </div>
           </div>
           <p className="text-xs text-gray-400">Set custom rates for any date range. Changes reflect on booking page instantly.</p>
+
+          {/* Currently set custom rates */}
+          <div className="mt-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Currently Set Custom Rates ({ratesList.length} dates)</h3>
+              <button onClick={() => loadRates()} className="text-xs text-gold-600 hover:text-gold-700">Refresh</button>
+            </div>
+            {ratesList.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-4">No custom rates set. Default seasonal pricing applies.</p>
+            ) : (
+              <div className="max-h-72 overflow-y-auto rounded-lg border border-gray-100">
+                {(() => {
+                  // Group consecutive same-price dates per room type into ranges for a clean view.
+                  const roomLabel: Record<string, string> = {
+                    "standard-cabin": "3 Bedroom",
+                    "double-twin-room": "2 Bedroom",
+                    "suite-river-view": "1 Bedroom",
+                  };
+                  const sorted = [...ratesList].sort((a, b) =>
+                    a.roomType === b.roomType ? a.date.localeCompare(b.date) : a.roomType.localeCompare(b.roomType)
+                  );
+                  type Grp = { roomType: string; price: number; from: string; to: string };
+                  const groups: Grp[] = [];
+                  const addDays = (d: string, n: number) => { const dt = new Date(d + "T00:00:00Z"); dt.setUTCDate(dt.getUTCDate() + n); return dt.toISOString().split("T")[0]; };
+                  for (const r of sorted) {
+                    const last = groups[groups.length - 1];
+                    if (last && last.roomType === r.roomType && last.price === r.price && addDays(last.to, 1) === r.date) {
+                      last.to = r.date;
+                    } else {
+                      groups.push({ roomType: r.roomType, price: r.price, from: r.date, to: r.date });
+                    }
+                  }
+                  return groups.map((g, i) => (
+                    <div key={i} className="flex items-center justify-between p-2.5 border-b border-gray-50 last:border-0 hover:bg-gray-50/50">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-semibold text-gray-800 bg-gold-50 text-gold-700 px-2 py-0.5 rounded">₹{g.price.toLocaleString("en-IN")}</span>
+                        <span className="text-sm text-gray-700">{roomLabel[g.roomType] || g.roomType}</span>
+                        <span className="text-xs text-gray-500">{g.from}{g.to !== g.from ? ` → ${g.to}` : ""}</span>
+                      </div>
+                      <button
+                        onClick={async () => {
+                          if (!confirm(`Remove the ₹${g.price.toLocaleString("en-IN")} rate for ${roomLabel[g.roomType] || g.roomType} (${g.from}${g.to !== g.from ? " to " + g.to : ""})?`)) return;
+                          const res = await fetch("/api/rates", {
+                            method: "DELETE",
+                            headers: { "Content-Type": "application/json", "x-admin-password": storedPassword },
+                            body: JSON.stringify({ roomType: g.roomType, from: g.from, to: g.to }),
+                          });
+                          const data = await res.json();
+                          if (data.success) { loadRates(); } else { alert("Failed: " + data.error); }
+                        }}
+                        className="text-xs text-red-600 hover:text-red-800 font-medium px-2 py-1 hover:bg-red-100 rounded flex-shrink-0"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ));
+                })()}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

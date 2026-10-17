@@ -94,7 +94,68 @@ export function isWeekendDate(dateStr: string): boolean {
   return day === 5 || day === 6;
 }
 
+// ---------------------------------------------------------------------------
+// PACKAGE UPGRADE DELTAS
+// Package choice adds a premium ON TOP of the per-room nightly rate.
+// Deltas are derived from the historic flat prices (15000 / 19000 / 24000):
+//   Standard = base, Premium = +4000, Semi Luxury = +9000.
+// This keeps package pricing intact while letting the admin's per-date rate
+// (or the seasonal fallback) drive the base price.
+// ---------------------------------------------------------------------------
+export const PACKAGE_UPGRADE: Record<string, number> = {
+  standard: 0,
+  premium: 4000,
+  luxury: 9000,
+};
+
+export function getPackageUpgrade(packageType: string): number {
+  return PACKAGE_UPGRADE[packageType] ?? 0;
+}
+
+// The single source of truth for the per-room, per-night price a guest pays.
+// Combines: admin DB rate (or seasonal fallback) for the date + package upgrade.
+export function getNightlyRate(
+  roomType: string,
+  packageType: string,
+  checkInDate: string,
+  dbRates?: Record<string, number>
+): number {
+  return getRoomPrice(roomType, checkInDate, dbRates) + getPackageUpgrade(packageType);
+}
+
 export function getDisplayRates(roomType: string): { from: number; weekend: number } {
   const def = DEFAULT_PRICING[roomType] || { weekday: 17500, weekend: 20000 };
   return { from: def.weekday, weekend: def.weekend };
+}
+
+// ---------------------------------------------------------------------------
+// "STARTING FROM" PRICE (date-independent display price)
+// Used on room cards, homepage, and room detail pages where no specific date
+// is selected. Reflects the admin's rate changes by taking the LOWEST rate the
+// admin has set for any UPCOMING date for that room. Falls back to the room's
+// default weekday rate when the admin hasn't set any future overrides.
+// ---------------------------------------------------------------------------
+export function getStartingFromPrice(
+  roomType: string,
+  dbRates?: Record<string, number>
+): number {
+  const fallback = getFallbackPrice(roomType, "");
+  if (!dbRates) return fallback;
+
+  const today = new Date().toISOString().split("T")[0];
+  let lowest: number | null = null;
+  for (const key of Object.keys(dbRates)) {
+    // keys look like "2026-08-15_standard-cabin"
+    const sep = key.indexOf("_");
+    if (sep === -1) continue;
+    const date = key.slice(0, sep);
+    const room = key.slice(sep + 1);
+    if (room !== roomType) continue;
+    if (date < today) continue; // only future/today rates count
+    const price = dbRates[key];
+    if (lowest === null || price < lowest) lowest = price;
+  }
+
+  // Use the lowest upcoming admin rate if it exists, else the default.
+  return lowest !== null ? lowest : fallback;
 }

@@ -4,12 +4,13 @@ import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ROOMS } from "@/lib/constants";
+import { ROOMS, WHATSAPP_BOOKING_MODE } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
-import { getRoomPrice, isWeekendDate } from "@/lib/pricing";
+import { getNightlyRate, isWeekendDate } from "@/lib/pricing";
 import AvailabilityBadge, { useAvailability, isDateBlocked } from "@/components/AvailabilityBadge";
 import { captureUtmParams, getUtmData, getSourceLabel } from "@/lib/utm-tracking";
-import { trackConversion, trackInitiateCheckout } from "@/components/ConversionPixels";
+import { trackConversion, trackInitiateCheckout, trackLead } from "@/components/ConversionPixels";
+import { startRazorpayCheckout } from "@/lib/razorpay-checkout";
 
 function BookingContent() {
   const router = useRouter();
@@ -21,6 +22,13 @@ function BookingContent() {
   const [error, setError] = useState("");
   const { data: availabilityData } = useAvailability();
   const dbRates = availabilityData?.rates as Record<string, number> | undefined;
+
+  // Per-boat capacity rules (2 adults + up to 3 kids per bedroom; 1 extra bed total per boat).
+  // 1BR: 2 adults / 3 kids · 2BR: 4 adults / 6 kids · 3BR: 6 adults / 9 kids.
+  function getBoatLimits(roomId: string) {
+    const bedrooms = roomId === "standard-cabin" ? 3 : roomId === "double-twin-room" ? 2 : 1;
+    return { maxAdults: bedrooms * 2, maxChildren: bedrooms * 3, maxExtraBed: 1 };
+  }
 
   // Capture marketing attribution (UTM) params + fire begin-checkout tracking
   useEffect(() => {
@@ -56,24 +64,40 @@ function BookingContent() {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
       
-      // Auto-reset room type when PAX changes and current selection becomes unavailable
+      // Auto-reset room type when adults change and the current boat can't fit them.
+      // Adult capacity per boat: 1BR=2, 2BR=4, 3BR=6.
       if (field === "adults") {
         const pax = value as number;
-        if (pax >= 4 && prev.roomType !== "standard-cabin") {
-          updated.roomType = "standard-cabin";
-          updated.numberOfRooms = 1;
-        } else if (pax === 3 && prev.roomType === "suite-river-view") {
-          updated.roomType = "standard-cabin";
-          updated.numberOfRooms = 1;
+        // Rooms are determined by adults: 2 adults per room (ceil).
+        const roomsNeeded = Math.max(1, Math.ceil(pax / 2));
+        let targetRoom = prev.roomType;
+        if (pax > getBoatLimits(prev.roomType).maxAdults) {
+          // Pick the smallest boat that still fits this many adults.
+          const fits = [...ROOMS]
+            .sort((a, b) => getBoatLimits(a.id).maxAdults - getBoatLimits(b.id).maxAdults)
+            .find((r) => pax <= getBoatLimits(r.id).maxAdults);
+          if (fits) {
+            targetRoom = fits.id;
+            updated.roomType = fits.id;
+            const limits = getBoatLimits(fits.id);
+            if (prev.children > limits.maxChildren) updated.children = limits.maxChildren;
+            if (prev.extraBed > limits.maxExtraBed) updated.extraBed = limits.maxExtraBed;
+          }
         }
+        // Auto-set rooms from adult count, capped at the boat's bedroom count.
+        const maxRooms = targetRoom === "standard-cabin" ? 3 : targetRoom === "double-twin-room" ? 2 : 1;
+        updated.numberOfRooms = Math.min(roomsNeeded, maxRooms);
       }
       
-      // Auto-reset numberOfRooms when room type changes
+      // When the boat changes, recompute rooms from adults and clamp children/extra-bed.
       if (field === "roomType") {
-        const maxRooms = value === "standard-cabin" ? 3 : value === "double-twin-room" ? 2 : 1;
-        if (prev.numberOfRooms > maxRooms) {
-          updated.numberOfRooms = 1;
-        }
+        const roomId = value as string;
+        const maxRooms = roomId === "standard-cabin" ? 3 : roomId === "double-twin-room" ? 2 : 1;
+        const roomsNeeded = Math.max(1, Math.ceil(prev.adults / 2));
+        updated.numberOfRooms = Math.min(roomsNeeded, maxRooms);
+        const limits = getBoatLimits(roomId);
+        if (prev.children > limits.maxChildren) updated.children = limits.maxChildren;
+        if (prev.extraBed > limits.maxExtraBed) updated.extraBed = limits.maxExtraBed;
       }
       
       return updated;
@@ -146,7 +170,7 @@ function BookingContent() {
       if (result.success) {
         // Calculate pricing for emails
         const emailRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-        const emailPkgRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
+        const emailPkgRate = getNightlyRate(formData.roomType, formData.packageType, formData.checkIn, dbRates);
         const emailRoomRate = emailPkgRate * formData.numberOfRooms;
         const emailPackageExtra = 0;
         const emailChildrenCharge = formData.children * 1000;
@@ -190,31 +214,81 @@ function BookingContent() {
             packageExtra: emailPackageExtra,
           }),
         }).catch(() => {}); // Fire and forget
-        
-        // If online payment selected, redirect to PayU
-        if (formData.paymentPreference === "online-payment") {
-          const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const pkgRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-          const roomRate = pkgRate * formData.numberOfRooms;
-          const childrenCharge = formData.children * 1000;
-          const extraBedCharge = formData.extraBed * 1000;
-          const subtotal = roomRate + childrenCharge + extraBedCharge;
-          const gst = Math.round(subtotal * 0.18);
-          const total = subtotal + gst;
 
-          router.push(`/payment?bookingId=${result.bookingId}&amount=${total}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}`);
-        } else if (formData.paymentPreference === "pay-at-property") {
-          const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-          const pkgRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-          const roomRate = pkgRate * formData.numberOfRooms;
-          const childrenCharge = formData.children * 1000;
-          const extraBedCharge = formData.extraBed * 1000;
-          const subtotal = roomRate + childrenCharge + extraBedCharge;
-          const gst = Math.round(subtotal * 0.18);
-          const total = subtotal + gst;
-          const advance = Math.round(total * 0.2);
+        // TEMPORARY: WhatsApp booking mode — skip PayU/payment and send the guest
+        // to WhatsApp with their enquiry pre-filled. The booking is already saved
+        // above (admin + email). Toggle WHATSAPP_BOOKING_MODE in constants.ts to revert.
+        if (WHATSAPP_BOOKING_MODE) {
+          const waRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+          const waPkg = formData.packageType === "premium" ? "Premium" : formData.packageType === "luxury" ? "Semi Luxury" : "Standard";
+          const waMsg =
+            `Hi! I've submitted a houseboat booking enquiry.%0A%0A` +
+            `*Booking ID:* ${result.bookingId}%0A` +
+            `*Name:* ${formData.guestName}%0A` +
+            `*Mobile:* ${formData.mobile}%0A` +
+            `*Houseboat:* ${waRoom.name}%0A` +
+            `*Package:* ${waPkg}%0A` +
+            `*Rooms:* ${formData.numberOfRooms}%0A` +
+            `*Check-in:* ${formData.checkIn}%0A` +
+            `*Check-out:* ${formData.checkOut}%0A` +
+            `*Guests:* ${formData.adults} adults` +
+            `${formData.children ? `, ${formData.children} children` : ""}` +
+            `${formData.extraBed ? `, ${formData.extraBed} extra bed(s)` : ""}%0A` +
+            `*Estimated Total:* ${formatPrice(emailTotal)} (incl. GST)%0A%0A` +
+            `Please confirm availability and payment details.`;
+          // Measure the WhatsApp booking handoff as a lead — this is the actual
+          // booking mechanism in WhatsApp mode, so it's the key action to track.
+          trackLead("whatsapp_booking");
+          // Booking enquiries route to this WhatsApp number during WhatsApp booking mode.
+          const waNumber = "918590957146";
+          window.location.href = `https://wa.me/${waNumber}?text=${waMsg}`;
+          return;
+        }
 
-          router.push(`/payment?bookingId=${result.bookingId}&amount=${advance}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}&type=advance`);
+        // Online payment paths. Compute the amount to charge:
+        //  - "online-payment": full total
+        //  - "pay-at-property": 20% advance
+        const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
+        const pkgRate = getNightlyRate(formData.roomType, formData.packageType, formData.checkIn, dbRates);
+        const roomRate = pkgRate * formData.numberOfRooms;
+        const childrenCharge = formData.children * 1000;
+        const extraBedCharge = formData.extraBed * 1000;
+        const subtotal = roomRate + childrenCharge + extraBedCharge;
+        const gst = Math.round(subtotal * 0.18);
+        const total = subtotal + gst;
+        const advance = Math.round(total * 0.2);
+
+        const needsOnlinePayment =
+          formData.paymentPreference === "online-payment" ||
+          formData.paymentPreference === "pay-at-property";
+
+        if (needsOnlinePayment) {
+          const payAmount = formData.paymentPreference === "pay-at-property" ? advance : total;
+          const razorpayConfigured = !!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+
+          if (razorpayConfigured) {
+            // Razorpay Standard Checkout (preferred gateway).
+            setIsSubmitting(false); // allow the modal to take over
+            await startRazorpayCheckout({
+              amount: payAmount,
+              bookingId: result.bookingId,
+              roomType: currentRoom.name,
+              name: formData.guestName,
+              email: formData.email,
+              phone: formData.mobile,
+              description: `${currentRoom.name} — ${formData.paymentPreference === "pay-at-property" ? "20% advance" : "full payment"}`,
+              onSuccess: () => {
+                trackConversion(result.bookingId, emailTotal, currentRoom.name);
+                router.push(`/booking/success?id=${result.bookingId}`);
+              },
+              onFailure: (msg) => setError(msg),
+              onDismiss: () => setError("Payment was cancelled. Your enquiry is saved — you can try again or contact us to pay later."),
+            });
+            return;
+          }
+
+          // Fallback: PayU (kept for compatibility if Razorpay keys aren't set).
+          router.push(`/payment?bookingId=${result.bookingId}&amount=${payAmount}&name=${encodeURIComponent(formData.guestName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.mobile)}&room=${encodeURIComponent(currentRoom.name)}${formData.paymentPreference === "pay-at-property" ? "&type=advance" : ""}`);
         } else {
           // Bank transfer - go to success page
           router.push(`/booking/success?id=${result.bookingId}`);
@@ -273,8 +347,8 @@ function BookingContent() {
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2">Complete Your Booking</h1>
-          <p className="text-gray-600">Fill in your details to reserve your houseboat experience</p>
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2">Book Your Alleppey Houseboat</h1>
+          <p className="text-gray-600">Complete your details to reserve a private Kerala backwater houseboat — instant confirmation.</p>
         </motion.div>
 
         {/* Error Banner */}
@@ -359,14 +433,14 @@ function BookingContent() {
                   <label htmlFor="bk-adults" className="text-sm font-medium text-gray-700">Adults *</label>
                   <select id="bk-adults" name="adults" value={formData.adults} onChange={(e) => updateForm("adults", Number(e.target.value))}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {[1,2,3,4,5,6,7,8,9,10].map((n) => (<option key={n} value={n}>{n}</option>))}
+                    {[1,2,3,4,5,6].map((n) => (<option key={n} value={n}>{n}</option>))}
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="bk-children" className="text-sm font-medium text-gray-700">Children (6–11 Years) <span className="text-xs text-gray-400">Max 2 per boat</span></label>
+                  <label htmlFor="bk-children" className="text-sm font-medium text-gray-700">Children (6–11 Years) <span className="text-xs text-gray-400">Max {getBoatLimits(formData.roomType).maxChildren}</span></label>
                   <select id="bk-children" name="children" value={formData.children} onChange={(e) => updateForm("children", Number(e.target.value))}
                     className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                    {[0,1,2].map((n) => (<option key={n} value={n}>{n}</option>))}
+                    {Array.from({ length: getBoatLimits(formData.roomType).maxChildren + 1 }, (_, n) => (<option key={n} value={n}>{n}</option>))}
                   </select>
                 </div>
                 <div>
@@ -388,19 +462,19 @@ function BookingContent() {
               <div className="space-y-3">
                 {[
                   {
-                    id: "standard", name: "Standard Package", rate: 15000,
+                    id: "standard", name: "Standard Package",
                     highlights: ["AC: 8:30 PM – 6:30 AM (Bedroom only)", "Welcome: Lime Juice", "1 Non-Veg option per meal", "5 Cruise Routes"],
                     schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
                     meals: "Lunch + Tea & Snacks + Dinner + Breakfast",
                   },
                   {
-                    id: "premium", name: "Premium Package", rate: 19000,
+                    id: "premium", name: "Premium Package",
                     highlights: ["AC: 5:30 PM – 7:30 AM (Bedroom/Hall)", "Welcome: Tender Coconut", "2 Non-Veg options per meal", "7 Cruise Routes"],
                     schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
                     meals: "Lunch + Tea & Snacks + Dinner + Full Breakfast (all options)",
                   },
                   {
-                    id: "luxury", name: "Semi Luxury Package", rate: 24000,
+                    id: "luxury", name: "Semi Luxury Package",
                     highlights: ["AC: All the time (Bedroom or Hall)", "Welcome: Tender Coconut", "2 Non-Veg options per meal", "7 Cruise Routes"],
                     schedule: "Check-in 12 PM • Lunch Break 1Hr • Anchoring 5 PM • Checkout 9 AM",
                     meals: "Lunch + Tea & Snacks + Dinner + Full Breakfast (all options)",
@@ -425,7 +499,7 @@ function BookingContent() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-emerald-700">₹{pkg.rate.toLocaleString("en-IN")}</p>
+                        <p className="text-2xl font-bold text-emerald-700">₹{getNightlyRate(formData.roomType, pkg.id, formData.checkIn, dbRates).toLocaleString("en-IN")}</p>
                         <p className="text-xs text-gray-400">per room/night</p>
                       </div>
                     </div>
@@ -458,12 +532,7 @@ function BookingContent() {
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Houseboat Type</label>
                   <div className="space-y-2">
-                    {ROOMS.filter((room) => {
-                      const pax = formData.adults;
-                      if (pax <= 2) return true;
-                      if (pax === 3) return room.id === "standard-cabin" || room.id === "double-twin-room";
-                      return room.id === "standard-cabin";
-                    }).map((room) => (
+                    {ROOMS.filter((room) => formData.adults <= getBoatLimits(room.id).maxAdults).map((room) => (
                       <label key={room.id}
                         className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                           formData.roomType === room.id ? "border-gold-500 bg-gold-50" : "border-gray-200 hover:border-gold-200"
@@ -484,28 +553,25 @@ function BookingContent() {
                   </div>
                   {formData.adults >= 3 && (
                     <p className="text-xs text-orange-600 mt-2 bg-orange-50 p-2 rounded-lg">
-                      ℹ️ {formData.adults >= 4 ? "For 4+ guests, only 3 Bedroom Houseboat is available." : "For 3 guests, Single Bedroom Houseboat is not available."}
+                      ℹ️ {formData.adults >= 5
+                        ? "For 5+ adults, only the 3 Bedroom Houseboat (up to 6 adults) is available."
+                        : "For 3–4 adults, the 1 Bedroom Houseboat (max 2 adults) is not available. Choose the 2 or 3 Bedroom boat."}
                     </p>
                   )}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="bk-rooms" className="text-sm font-medium text-gray-700">Number of Rooms</label>
-                    <select id="bk-rooms" name="numberOfRooms" value={formData.numberOfRooms} onChange={(e) => updateForm("numberOfRooms", Number(e.target.value))}
-                      className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                      {formData.roomType === "standard-cabin" 
-                        ? [1,2,3].map((n) => (<option key={n} value={n}>{n} Room{n > 1 ? "s" : ""}</option>))
-                        : formData.roomType === "double-twin-room"
-                        ? [1,2].map((n) => (<option key={n} value={n}>{n} Room{n > 1 ? "s" : ""}</option>))
-                        : [1].map((n) => (<option key={n} value={n}>{n} Room</option>))
-                      }
-                    </select>
+                    <label className="text-sm font-medium text-gray-700">Number of Rooms <span className="text-xs text-gray-400">(auto)</span></label>
+                    <div className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-700">
+                      {formData.numberOfRooms} Room{formData.numberOfRooms > 1 ? "s" : ""}
+                    </div>
+                    <p className="text-[11px] text-gray-400 mt-1">Set automatically — 2 adults per room.</p>
                   </div>
                   <div>
                     <label htmlFor="bk-extrabed" className="text-sm font-medium text-gray-700">Extra Bed (₹1,000/bed)</label>
                     <select id="bk-extrabed" name="extraBed" value={formData.extraBed} onChange={(e) => updateForm("extraBed", Number(e.target.value))}
                       className="w-full mt-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400/50 appearance-none">
-                      {[0,1,2,3].map((n) => (<option key={n} value={n}>{n === 0 ? "No extra bed" : `${n} (+₹${n * 1000})`}</option>))}
+                      {Array.from({ length: getBoatLimits(formData.roomType).maxExtraBed + 1 }, (_, n) => (<option key={n} value={n}>{n === 0 ? "No extra bed" : `${n} (+₹${n * 1000})`}</option>))}
                     </select>
                   </div>
                 </div>
@@ -699,9 +765,8 @@ function BookingContent() {
               <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Booking Summary</h3>
               {(() => {
                 const currentRoom = ROOMS.find(r => r.id === formData.roomType) || selectedRoom;
-                // Use package rate, not room rate from constants
-                const packageRate = formData.packageType === "premium" ? 19000 : formData.packageType === "luxury" ? 24000 : 15000;
-                const roomPrice = packageRate;
+                // Dynamic per-date price: admin DB rate (or seasonal fallback) + package upgrade
+                const roomPrice = getNightlyRate(formData.roomType, formData.packageType, formData.checkIn, dbRates);
                 const isWeekend = isWeekendDate(formData.checkIn);
                 const roomRate = roomPrice * formData.numberOfRooms;
                 const packageExtra = 0;

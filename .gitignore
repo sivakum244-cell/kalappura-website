@@ -35,3 +35,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# local secrets / scratch env notes (never commit)
+env1.txt

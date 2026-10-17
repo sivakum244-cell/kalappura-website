@@ -4,11 +4,15 @@ import { ROOMS, SITE_CONFIG } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboats | Private Houseboats in Alappuzha, Kerala",
+  title: "Alleppey Houseboats & Boat House | Private Booking in Alappuzha",
   description:
-    "Explore private houseboats in Alleppey (Alappuzha), Kerala. Choose from 1, 2 & 3 bedroom AC houseboats with all meals, backwater cruise, and onboard chef. Book direct for best prices. Starting ₹16,500/night.",
+    "Explore and book private houseboats (boat house) in Alleppey (Alappuzha), Kerala. 1, 2 & 3 bedroom AC houseboats with all meals, backwater cruise, and onboard chef. Book direct for best prices.",
   keywords: [
     "Alleppey houseboat",
+    "Alleppey houseboats",
+    "Alleppey boat house",
+    "Alleppey boat house booking",
+    "houseboats in Alleppey",
     "Alappuzha houseboat",
     "private houseboat Alleppey",
     "Kerala houseboat",
@@ -135,6 +139,11 @@ export default function AlleppeyHouseboatsPage() {
           </ul>
           <p>
             All boats can be booked with Standard, Premium, or Semi Luxury packages depending on your preference for food variety and AC availability.
+          </p>
+
+          <h3 className="font-display text-xl font-bold text-gray-900">Alleppey Houseboat Booking Made Simple</h3>
+          <p>
+            Booking an Alleppey houseboat (also called a &quot;boat house&quot; in Kerala) with Kalappura is quick and direct. Pick your dates, choose a boat and package, and confirm online or over WhatsApp with just a 20% advance — the balance is paid at the property. Whether you search for an &quot;Alleppey houseboat booking&quot;, an &quot;Alappuzha boat house&quot;, or a &quot;Kerala houseboat&quot;, you reach the same private, traditional kettuvallam experience. <Link href="/booking">Start your houseboat booking here</Link> or compare rates on our <Link href="/houseboat-prices">houseboat prices page</Link>.
           </p>
         </div>
       </section>

@@ -87,3 +87,34 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false, error: "Failed to update rates" }, { status: 500 });
   }
 }
+
+// DELETE /api/rates - Admin: remove a custom rate (by id, or by date range + roomType)
+export async function DELETE(request: NextRequest) {
+  try {
+    const authHeader = request.headers.get("x-admin-password");
+    const adminPassword = process.env.ADMIN_PASSWORD || "kalappura2025";
+    if (authHeader !== adminPassword) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { id, roomType, from, to } = body;
+
+    if (id) {
+      await prisma.roomRate.delete({ where: { id } });
+      return NextResponse.json({ success: true, message: "Rate removed" });
+    }
+
+    if (roomType && from && to) {
+      const result = await prisma.roomRate.deleteMany({
+        where: { roomType, date: { gte: from, lte: to } },
+      });
+      return NextResponse.json({ success: true, message: `${result.count} rate(s) removed` });
+    }
+
+    return NextResponse.json({ success: false, error: "Provide id, or roomType + from + to" }, { status: 400 });
+  } catch (error) {
+    console.error("[RATES] Error:", error);
+    return NextResponse.json({ success: false, error: "Failed to remove rate" }, { status: 500 });
+  }
+}

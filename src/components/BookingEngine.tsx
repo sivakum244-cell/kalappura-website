@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function BookingEngine() {
+export default function BookingEngine({ showHeading = true }: { showHeading?: boolean }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
@@ -17,10 +17,12 @@ export default function BookingEngine() {
     <form onSubmit={handleSearch} className="w-full">
       <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl">
         {/* Header */}
-        <div className="text-center mb-5">
-          <h3 className="text-white font-display text-lg font-bold">Quick Booking</h3>
-          <p className="text-white/50 text-xs mt-1">Check availability & prices</p>
-        </div>
+        {showHeading && (
+          <div className="text-center mb-5">
+            <h3 className="text-white font-display text-lg font-bold">Quick Booking</h3>
+            <p className="text-white/50 text-xs mt-1">Check availability & prices</p>
+          </div>
+        )}
 
         <div className="space-y-4">
           {/* Check In */}

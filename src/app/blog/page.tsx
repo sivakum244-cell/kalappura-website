@@ -14,7 +14,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
+// ISR: prerender and cache the blog index, regenerating hourly so newly
+// published posts appear without a redeploy (matches sitemap revalidate).
+export const revalidate = 3600;
 
 export default async function BlogPage() {
   let posts: { id: string; slug: string; title: string; excerpt: string; coverImage: string; category: string; publishedAt: Date | null; author: string }[] = [];

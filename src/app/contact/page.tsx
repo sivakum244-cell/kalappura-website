@@ -28,8 +28,26 @@ export default function ContactPage() {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     name: "Kalappura Houseboats & Tours",
-    telephone: "+91-9895053528",
+    // Primary NAP number (kept consistent across site + citations).
+    telephone: SITE_CONFIG.phone,
     email: "info@kalappurahouseboats.com",
+    // Both reservation lines exposed as contact points.
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: SITE_CONFIG.phone,
+        contactType: "reservations",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi", "Malayalam"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: SITE_CONFIG.phoneSecondary,
+        contactType: "reservations",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi", "Malayalam"],
+      },
+    ],
     address: {
       "@type": "PostalAddress",
       streetAddress: "Mullackal Ward, Iron Bridge P.O, Thirumala East Gate Road",
@@ -72,6 +90,7 @@ export default function ContactPage() {
             </div>
             <h3 className="font-semibold text-gray-900 mb-1">Call Us</h3>
             <p className="text-sm text-gold-600 font-medium">{SITE_CONFIG.phone}</p>
+            <p className="text-sm text-gold-600 font-medium mt-0.5">{SITE_CONFIG.phoneSecondary}</p>
           </a>
 
           {/* WhatsApp */}

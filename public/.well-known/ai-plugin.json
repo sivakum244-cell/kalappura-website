@@ -7,9 +7,9 @@
   "auth": { "type": "none" },
   "api": {
     "type": "openapi",
-    "url": "https://alleppeyhouseboat.online/api/availability"
+    "url": "https://www.alleppeyhouseboat.online/api/availability"
   },
-  "logo_url": "https://alleppeyhouseboat.online/images/gallery/drone-1.jpg",
+  "logo_url": "https://www.alleppeyhouseboat.online/images/gallery/drone-1.jpg",
   "contact_email": "info@kalappurahouseboats.com",
-  "legal_info_url": "https://alleppeyhouseboat.online"
+  "legal_info_url": "https://www.alleppeyhouseboat.online"
 }

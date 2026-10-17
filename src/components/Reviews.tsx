@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { REVIEWS, SITE_CONFIG } from "@/lib/constants";
 
 export default function Reviews() {
@@ -17,8 +18,40 @@ export default function Reviews() {
     { name: "Value", score: 9.6 },
   ];
 
+  // Review + AggregateRating structured data (10-point scale) built from the
+  // real REVIEWS + SITE_CONFIG data. Enables star-rating rich results.
+  const reviewJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    name: SITE_CONFIG.name,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: SITE_CONFIG.rating,
+      bestRating: 10,
+      worstRating: 1,
+      reviewCount: SITE_CONFIG.reviewCount,
+    },
+    review: REVIEWS.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.name },
+      datePublished: r.date,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: r.rating,
+        bestRating: 10,
+        worstRating: 1,
+      },
+      name: r.title,
+      reviewBody: r.text,
+    })),
+  };
+
   return (
     <section id="reviews" className="section-padding bg-gradient-luxury" ref={ref}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewJsonLd) }}
+      />
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -83,6 +116,39 @@ export default function Reviews() {
               ))}
             </div>
           </div>
+
+          {/* Verifiable third-party review sources */}
+          <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+            <a
+              href={SITE_CONFIG.googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read and leave Kalappura Houseboats reviews on Google (opens in a new tab)"
+              className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 underline-offset-2 hover:underline"
+            >
+              {/* Google G */}
+              <svg className="w-4 h-4" viewBox="0 0 48 48" aria-hidden="true">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+              </svg>
+              Reviews on Google
+            </a>
+            <a
+              href={SITE_CONFIG.tripAdvisorUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read Kalappura Houseboats reviews on TripAdvisor (opens in a new tab)"
+              className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 hover:text-emerald-800 underline-offset-2 hover:underline"
+            >
+              <span className="text-emerald-600" aria-hidden="true">◉◉</span>
+              Reviews on TripAdvisor
+              <svg aria-hidden="true" focusable="false" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+          </div>
         </motion.div>
 
         {/* Review Cards */}
@@ -137,12 +203,12 @@ export default function Reviews() {
           transition={{ delay: 1 }}
           className="text-center mt-10"
         >
-          <button className="btn-outline inline-flex items-center gap-2">
-            Read All {SITE_CONFIG.reviewCount}+ Reviews
+          <Link href="/review" className="btn-outline inline-flex items-center gap-2">
+            Read &amp; Leave a Review
             <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

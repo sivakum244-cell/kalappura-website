@@ -1,0 +1,83 @@
+#,Category,Website,URL,Relevance,Opportunity Type,Target Page,Suggested Anchor,Priority,Method,Difficulty,Reason
+1,Kerala tourism,Kerala Tourism,https://www.keralatourism.org/,Very High,Operator listing,/,Kalappura Houseboats,HIGH,Application,Medium,Official state tourism authority
+2,Kerala tourism,DTPC Alappuzha,https://www.dtpcalappuzha.com/,High,Listing,/,brand,MEDIUM,Email/apply,Medium,Local district tourism
+3,Kerala tourism,Incredible India,https://www.incredibleindia.gov.in/,High,Listing,/,brand,MEDIUM,Registration,High,National tourism authority
+4,Kerala tourism,Kerala Tourism blog,https://www.keralatourism.org/blog/,High,Editorial,/blog,natural,MEDIUM,Contributor pitch,High,Topical authority
+5,Kerala tourism,Alappuzha district portal,https://alappuzha.nic.in/,Medium,Listing,/,brand,LOW,Email,Medium,Local gov
+6,Alappuzha local,Alappuzha business listings,,Medium,Directory,/,brand,LOW,Submit,Low,Local relevance
+7,Alappuzha local,Local hotel/homestay partners,,High,Reciprocal editorial,/alleppey-houseboats,houseboat cruises in Alleppey,HIGH,Partnership,Low,Genuine local partner links
+8,Alappuzha local,Alleppey transfer/taxi services,,Medium,Partner link,/how-to-reach,getting to Alleppey,MEDIUM,Partnership,Low,Practical cross-referral
+9,Alappuzha local,Alleppey wedding venues,,Medium,Referral,/luxury-houseboats,natural,MEDIUM,Partnership,Medium,Honeymoon/event synergy
+10,Alappuzha local,Kerala backwater tour operators (non-competing),,Medium,Partner,/alleppey-houseboats,natural,LOW,Partnership,Medium,Complementary services
+11,Alleppey travel blog,Independent Alleppey guide bloggers (x5),,High,Editorial review,/houseboat-prices,varied,HIGH,Experience offer,Medium,Most natural relevant links
+16,Alleppey travel blog,Alleppey things-to-do blogs (x5),,High,Mention,/,varied,HIGH,Pitch,Medium,Topical + local
+21,Kerala travel blog,Kerala itinerary bloggers (x6),,High,Resource mention,/blog,Kerala backwater houseboat,HIGH,Guide contribution,Medium,Kerala-wide reach
+27,Kerala travel blog,Kerala backwater-focused blogs (x6),,High,Editorial,/alleppey-houseboats,natural,MEDIUM,Pitch,Medium,Direct topical match
+33,India travel,Tripoto,https://www.tripoto.com/,High,Community editorial,/blog,Alleppey houseboat guide,HIGH,Publish story,Low,Editorial + reach
+34,India travel,Holidify,https://www.holidify.com/,High,Roundup,/alleppey-houseboats,Alleppey houseboats,HIGH,Submit+pitch,Low,Ranks for your terms
+35,India travel,Thrillophilia,https://www.thrillophilia.com/,High,Experiences,/houseboat-packages,Alleppey houseboat packages,HIGH,List,Low,Buyer-intent
+36,India travel,Travel Triangle,https://traveltriangle.com/,Medium,Roundup,/alleppey-houseboats,houseboat in Alleppey,MEDIUM,Pitch,Medium,Kerala coverage
+37,India travel,Trip101,https://trip101.com/,Medium,Listicle,/alleppey-houseboats,Alleppey houseboats,MEDIUM,Contributor,Medium,Best-of lists
+38,India travel,Waytoindia,https://www.waytoindia.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,India travel content
+39,India travel,IndiaMike community,https://www.indiamike.com/,Low,Community,/,natural,LOW,Genuine participation,Medium,Careful, no spam
+40,India travel,Tourmyindia,https://www.tourmyindia.com/,Medium,Listing,/alleppey-houseboats,natural,LOW,Submit,Medium,India tour content
+41,India travel,Trawell.in,https://www.trawell.in/,Medium,Listing,/,brand,LOW,Submit,Low,Destination guides
+42,India travel,Nativeplanet,https://www.nativeplanet.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Travel news
+43,Travel magazine,Outlook Traveller,https://www.outlooktraveller.com/,High,Editorial,/,brand,LOW,PR pitch,High,Authority editorial
+44,Travel magazine,Conde Nast Traveller India,https://www.cntraveller.in/,High,Editorial,/,brand,LOW,PR pitch,High,Premium authority
+45,Travel magazine,Travel+Leisure India,https://www.travelandleisureindia.in/,High,Editorial,/,brand,LOW,PR pitch,High,Authority
+46,Travel magazine,Lonely Planet India,https://www.lonelyplanet.com/india,High,Editorial,/,brand,LOW,Pitch,High,Global authority
+47,Travel magazine,Nat Geo Traveller India,https://www.natgeotraveller.in/,High,Editorial,/,brand,LOW,PR pitch,High,Premium
+48,Travel magazine,Travel Secrets,https://www.travelsecretsmag.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Travel mag
+49,Travel magazine,JetWings,https://www.jetwingsinternational.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Travel mag
+50,Travel magazine,Discover India,https://www.discoverindiamagazine.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Travel mag
+51,Tourism publication,TravelBiz Monitor,https://www.travelbizmonitor.com/,Medium,News,/,brand,MEDIUM,Press release,Medium,Trade press
+52,Tourism publication,Travel Trade Journal,https://www.traveltradejournal.com/,Medium,News,/,brand,MEDIUM,Press release,Medium,Trade press
+53,Tourism publication,ETTravelWorld,https://travel.economictimes.indiatimes.com/,Medium,News,/,brand,MEDIUM,Press release,High,Authority trade
+54,Tourism publication,India Outbound,https://indiaoutbound.info/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Tourism media
+55,Tourism publication,T3 (Travel Trends Today),https://www.traveltrendstoday.in/,Medium,News,/,brand,LOW,Pitch,Medium,Trade
+56,Tourism publication,Voyagers World,https://www.voyagersworld.in/,Medium,News,/,brand,LOW,Pitch,Medium,Trade
+57,Hospitality,Hospitality blogs/associations,,Medium,Editorial,/,brand,LOW,Outreach,Medium,Industry
+58,Hospitality,Hotelier India,https://www.hotelierindia.com/,Medium,Editorial,/,brand,LOW,Pitch,High,Hospitality trade
+59,Hospitality,Hospitality Biz India,https://www.hospitalitybizindia.com/,Medium,Editorial,/,brand,LOW,Pitch,Medium,Trade
+60,Hospitality,IHM resource pages,,Low,Resource,/blog,natural,LOW,Outreach,Medium,Education resource
+61,Hospitality,Responsible tourism networks,,Medium,Listing,/about,natural,LOW,Apply,Medium,Sustainability angle
+62,Hospitality,Kerala Responsible Tourism Mission,https://www.rtmission.kerala.gov.in/,Medium,Listing,/,brand,MEDIUM,Apply,Medium,Local gov + relevant
+63,Hotel/travel directory,TripAdvisor,https://www.tripadvisor.com/,Very High,Listing,/booking,brand,HIGH,Claim,Low,Existing listing + authority
+64,Hotel/travel directory,MakeMyTrip,https://www.makemytrip.com/,High,Listing,/booking,brand,HIGH,List,Low,OTA + traffic
+65,Hotel/travel directory,Goibibo,https://www.goibibo.com/,High,Listing,/booking,brand,MEDIUM,List,Low,OTA
+66,Hotel/travel directory,Yatra,https://www.yatra.com/,Medium,Listing,/booking,brand,MEDIUM,List,Low,OTA
+67,Hotel/travel directory,Cleartrip,https://www.cleartrip.com/,Medium,Listing,/booking,brand,MEDIUM,List,Low,OTA
+68,Hotel/travel directory,Viator,https://supplier.viator.com/,High,Experiences,/booking,brand,HIGH,Supplier signup,Medium,Global buyers
+69,Hotel/travel directory,GetYourGuide,https://supplier.getyourguide.com/,High,Experiences,/booking,brand,HIGH,Supplier signup,Medium,Global buyers
+70,Hotel/travel directory,Klook,https://www.klook.com/,Medium,Experiences,/booking,brand,MEDIUM,Signup,Medium,Asia buyers
+71,Hotel/travel directory,Airbnb Experiences,https://www.airbnb.co.in/,Medium,Experiences,/booking,brand,MEDIUM,Host signup,Medium,Reach
+72,Hotel/travel directory,Booking.com experiences,https://www.booking.com/,Medium,Listing,/booking,brand,MEDIUM,List,Medium,OTA
+73,Local directory,Google Business Profile,https://www.google.com/business/,Very High,Local profile,/,brand,HIGH,Verify,Low,#1 local lever
+74,Local directory,Bing Places,https://www.bingplaces.com/,High,Local profile,/,brand,HIGH,Self,Low,Easy citation
+75,Local directory,Justdial,https://www.justdial.com/,High,Directory,/,brand,HIGH,Self,Low,India discovery
+76,Local directory,Sulekha,https://www.sulekha.com/,Medium,Directory,/,brand,MEDIUM,Self,Low,India local
+77,Local directory,IndiaMART,https://seller.indiamart.com/,Medium,Directory,/contact,brand,MEDIUM,Self,Low,B2B
+78,Local directory,TradeIndia,https://www.tradeindia.com/,Low,Directory,/,brand,LOW,Self,Low,B2B
+79,Local directory,AskLaila,https://www.asklaila.com/,Low,Directory,/,brand,LOW,Self,Low,Local
+80,Local directory,Cylex India,https://www.cylex.in/,Low,Directory,/,brand,LOW,Self,Low,Local
+81,Local directory,Grotal,https://www.grotal.com/,Low,Directory,/,brand,LOW,Self,Low,Local
+82,Local directory,Yellowpages.in,https://www.yellowpages.in/,Low,Directory,/,brand,LOW,Self,Low,Local
+83,Honeymoon,WedMeGood,https://www.wedmegood.com/,Medium,Roundup,/luxury-houseboats,honeymoon houseboat in Alleppey,MEDIUM,Pitch,Medium,Couple product
+84,Honeymoon,WeddingWire India,https://www.weddingwire.in/,Medium,Listing,/luxury-houseboats,natural,LOW,List,Medium,Honeymoon
+85,Honeymoon,Honeymoon blogs (x2),,Medium,Editorial,/luxury-houseboats,natural,MEDIUM,Pitch,Medium,Niche
+86,Honeymoon,Couple travel blogs (x1),,Medium,Editorial,/luxury-houseboats,natural,MEDIUM,Experience offer,Medium,Niche
+87,Honeymoon,Honeymoon package aggregators,,Medium,Listing,/houseboat-packages,natural,LOW,List,Medium,Package intent
+88,Honeymoon,Kerala honeymoon guides,,Medium,Roundup,/luxury-houseboats,natural,MEDIUM,Pitch,Medium,Local + niche
+89,Family travel,Family-travel-India blogs (x2),,Medium,Editorial,/alleppey-houseboats,family houseboat in Alleppey,MEDIUM,Pitch,Medium,Segment
+90,Family travel,Kid-friendly Kerala guides,,Medium,Editorial,/alleppey-houseboats,natural,LOW,Pitch,Medium,Segment
+91,Family travel,Parenting/travel sites,,Low,Editorial,/,natural,LOW,Pitch,Medium,Reach
+92,Family travel,Multi-gen travel blogs,,Low,Editorial,/alleppey-houseboats,natural,LOW,Pitch,Medium,Group boats
+93,Kerala experience,Kerala food blogs,,Medium,Editorial,/blog,natural,MEDIUM,Collaboration,Medium,Cuisine angle
+94,Kerala experience,Kerala culture blogs,,Medium,Editorial,/blog,natural,LOW,Pitch,Medium,Culture angle
+95,Kerala experience,Ayurveda/wellness Kerala sites,,Low,Editorial,/,natural,LOW,Pitch,Medium,Adjacent
+96,Kerala experience,Kerala photography blogs,,Low,Editorial,/blog,natural,LOW,Collaboration,Medium,Visual content
+97,Tourism news/media,OnManorama (English),https://www.onmanorama.com/,Medium,News/PR,/,brand,MEDIUM,Story pitch,High,Kerala news
+98,Tourism news/media,The New Indian Express Kerala,https://www.newindianexpress.com/,Medium,News/PR,/,brand,MEDIUM,Story pitch,High,Kerala news
+99,Tourism news/media,The Hindu Kerala,https://www.thehindu.com/,Medium,News/PR,/,brand,LOW,Story pitch,High,Authority news
+100,Travel resource pages,University/expat India travel resource lists,,Medium,Resource link,/blog,Alleppey houseboat guide,MEDIUM,Resource outreach,Medium,High-trust .edu/resource

@@ -21,12 +21,12 @@ export default function HomeSEOContent() {
           </h2>
           <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed space-y-4">
             <p>
-              Kalappura Houseboats offers private houseboat stays on the backwaters
-              of Alleppey (Alappuzha), Kerala. Our fleet of traditional
+              Kalappura Houseboats offers a private, luxury houseboat experience on
+              the backwaters of Alleppey (Alappuzha), Kerala. Our fleet of traditional
               kettuvallam houseboats are available with 1, 2, or 3 bedrooms — all
               with air conditioning, private bathrooms, and an onboard kitchen
-              serving authentic Kerala cuisine. Cruise through Vembanad Lake,
-              the coconut-lined canals of Kuttanad, and the quiet lagoons that
+              serving authentic Kerala cuisine. Cruise the backwaters of Vembanad
+              Lake, the coconut-lined canals of Kuttanad, and the quiet lagoons that
               make Alleppey the most popular backwater destination in India.
             </p>
             <p>

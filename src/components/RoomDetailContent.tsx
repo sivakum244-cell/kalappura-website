@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ROOMS } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
+import { getRoomPrice, getStartingFromPrice } from "@/lib/pricing";
+import { useAvailability } from "@/components/AvailabilityBadge";
 
 export default function RoomDetailContent() {
   const params = useParams();
@@ -13,6 +15,8 @@ export default function RoomDetailContent() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
+  const { data: availabilityData } = useAvailability();
+  const dbRates = availabilityData?.rates as Record<string, number> | undefined;
 
   const room = ROOMS.find((r) => r.slug === params.slug);
 
@@ -65,6 +69,41 @@ export default function RoomDetailContent() {
   };
 
   const roomInfo = roomDescription[room.id as keyof typeof roomDescription];
+
+  // Room-specific FAQs (visible on page + FAQPage schema). Answers use genuine
+  // policies/specs already shown elsewhere on the page.
+  const roomFaqs: { q: string; a: string }[] = [
+    {
+      q: `How many guests can the ${room.name} accommodate?`,
+      a: `The ${room.name} has ${room.bedrooms} AC bedroom${room.bedrooms > 1 ? "s" : ""} and comfortably accommodates up to ${room.maxGuests} guests, plus a shared living area and open deck.`,
+    },
+    {
+      q: `What is included in the ${room.name} price?`,
+      a: `The price is per room per night and includes an air-conditioned bedroom, all meals (lunch, evening tea & snacks, dinner and breakfast), the overnight backwater cruise through Vembanad Lake and the village canals, and free parking at the dock. 18% GST applies.`,
+    },
+    {
+      q: `What are the check-in and check-out times?`,
+      a: `Check-in is at 12:00 PM (noon) and check-out is at 9:00 AM the next day. Late check-out may be available on request.`,
+    },
+    {
+      q: `Can I cancel my ${room.name} booking?`,
+      a: `Yes. You can cancel free of charge up to 7 days before check-in for a full refund. Only a 20% advance is needed to confirm, with the balance payable at the property.`,
+    },
+    {
+      q: `Is the ${room.name} a private houseboat?`,
+      a: `Yes. The ${room.name} in Alleppey (Alappuzha) is a private houseboat${roomInfo ? `, ${roomInfo.highlight.toLowerCase()}` : ""}. Your group has the boat to yourselves, with the crew in a separate section.`,
+    },
+  ];
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: roomFaqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
 
   // JSON-LD structured data for this room
   const roomJsonLd = {
@@ -135,6 +174,10 @@ export default function RoomDetailContent() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* Back Navigation */}
@@ -386,6 +429,26 @@ export default function RoomDetailContent() {
                 </div>
               </div>
 
+              {/* FAQs (visible + FAQPage schema) */}
+              <div className="mb-8">
+                <h2 className="font-display text-xl font-bold text-gray-900 mb-4">
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-3">
+                  {roomFaqs.map((faq) => (
+                    <details key={faq.q} className="group p-4 bg-white border border-gray-100 rounded-xl">
+                      <summary className="flex cursor-pointer items-center justify-between font-medium text-gray-900 list-none">
+                        <span>{faq.q}</span>
+                        <svg aria-hidden="true" focusable="false" className="w-4 h-4 text-gold-500 flex-shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </summary>
+                      <p className="mt-3 text-sm text-gray-600 leading-relaxed">{faq.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+
               {/* Internal links to related pages */}
               <div className="p-6 bg-sand-50 rounded-2xl">
                 <h3 className="font-display text-lg font-bold text-gray-900 mb-3">
@@ -404,6 +467,12 @@ export default function RoomDetailContent() {
                   <Link href="/overnight-houseboat" className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:border-gold-400 hover:text-gold-600 transition-colors">
                     Overnight Stay Info
                   </Link>
+                  <Link href="/day-cruise-houseboat-alleppey" className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:border-gold-400 hover:text-gold-600 transition-colors">
+                    Day Cruise
+                  </Link>
+                  <Link href="/booking" className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:border-gold-400 hover:text-gold-600 transition-colors">
+                    Alleppey Houseboat Booking
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -416,24 +485,37 @@ export default function RoomDetailContent() {
               className="lg:sticky lg:top-24 h-fit"
             >
               <div className="bg-white rounded-3xl border border-gray-200 shadow-luxury p-6">
-                {/* Price */}
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-gray-900">
-                      {formatPrice(room.price)}
-                    </span>
-                    <span className="text-gray-500">/room/night</span>
-                  </div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm text-gray-400 line-through">
-                      {formatPrice(room.originalPrice)}
-                    </span>
-                    <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
-                      Save {Math.round(((room.originalPrice - room.price) / room.originalPrice) * 100)}%
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">+ 18% GST • All meals included</p>
-                </div>
+                {/* Price — reflects admin's per-date rate when a check-in date is picked,
+                    otherwise the lowest upcoming rate ("starting from"). */}
+                {(() => {
+                  const displayPrice = checkIn
+                    ? getRoomPrice(room.id, checkIn, dbRates)
+                    : getStartingFromPrice(room.id, dbRates);
+                  const showSaving = room.originalPrice > displayPrice;
+                  return (
+                    <div className="mb-6">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-bold text-gray-900">
+                          {formatPrice(displayPrice)}
+                        </span>
+                        <span className="text-gray-500">/room/night</span>
+                      </div>
+                      {showSaving && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-sm text-gray-400 line-through">
+                            {formatPrice(room.originalPrice)}
+                          </span>
+                          <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
+                            Save {Math.round(((room.originalPrice - displayPrice) / room.originalPrice) * 100)}%
+                          </span>
+                        </div>
+                      )}
+                      <p className="text-xs text-gray-500 mt-1">
+                        {checkIn ? "Rate for selected date" : "Starting from"} • + 18% GST • All meals included
+                      </p>
+                    </div>
+                  );
+                })()}
 
                 {/* Booking Form */}
                 <div className="space-y-4 mb-6">

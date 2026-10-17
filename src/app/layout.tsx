@@ -4,8 +4,9 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 import ConversionPixels from "@/components/ConversionPixels";
 import Providers from "@/components/Providers";
-import { SITE_URL, ROOMS } from "@/lib/constants";
+import { SITE_URL, ROOMS, SITE_CONFIG } from "@/lib/constants";
 import { displayFont, bodyFont, accentFont } from "@/lib/fonts";
+import { Analytics } from "@vercel/analytics/react";
 
 // Preferred canonical origin (www HTTPS). Never default to the bare/non-www host,
 // otherwise the canonical tag will mismatch the URL all variants redirect to.
@@ -118,13 +119,22 @@ export default function RootLayout({
           "@type": "ImageObject",
           url: `${baseUrl}/images/gallery/drone-1.jpg`,
         },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9895053528",
-          contactType: "reservations",
-          areaServed: "IN",
-          availableLanguage: ["English", "Hindi", "Malayalam"],
-        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            telephone: SITE_CONFIG.phone,
+            contactType: "reservations",
+            areaServed: "IN",
+            availableLanguage: ["English", "Hindi", "Malayalam"],
+          },
+          {
+            "@type": "ContactPoint",
+            telephone: SITE_CONFIG.phoneSecondary,
+            contactType: "reservations",
+            areaServed: "IN",
+            availableLanguage: ["English", "Hindi", "Malayalam"],
+          },
+        ],
         sameAs: [
           "https://www.instagram.com/kalappurahouseboats",
           "https://www.facebook.com/kalappurahouseboats",
@@ -162,6 +172,14 @@ export default function RootLayout({
         numberOfRooms: ROOMS.reduce((sum, r) => sum + r.bedrooms, 0),
         priceRange: "₹15,000 - ₹24,000",
         starRating: { "@type": "Rating", ratingValue: "5" },
+        // Site-wide aggregate rating from real guest review data (10-point scale).
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: SITE_CONFIG.rating,
+          bestRating: 10,
+          worstRating: 1,
+          reviewCount: SITE_CONFIG.reviewCount,
+        },
         amenityFeature: [
           { "@type": "LocationFeatureSpecification", name: "Air Conditioning", value: true },
           { "@type": "LocationFeatureSpecification", name: "Free WiFi", value: true },
@@ -219,6 +237,8 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        {/* Vercel Web Analytics — privacy-friendly visitor tracking dashboard */}
+        <Analytics />
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import type { Metadata } from "next";
-import { ROOMS, SITE_URL } from "@/lib/constants";
+import { ROOMS, SITE_URL, SITE_CONFIG, REVIEWS } from "@/lib/constants";
 import RoomDetailContent from "@/components/RoomDetailContent";
 
 // Room-specific SEO data
@@ -120,6 +119,28 @@ export default async function RoomDetailPage({ params }: Props) {
               availability: "https://schema.org/InStock",
               priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
             },
+            // Real aggregate rating from SITE_CONFIG (10-point scale).
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: SITE_CONFIG.rating,
+              bestRating: 10,
+              worstRating: 1,
+              reviewCount: SITE_CONFIG.reviewCount,
+            },
+            // A sample of genuine guest reviews from REVIEWS.
+            review: REVIEWS.slice(0, 3).map((r) => ({
+              "@type": "Review",
+              author: { "@type": "Person", name: r.name },
+              datePublished: r.date,
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: r.rating,
+                bestRating: 10,
+                worstRating: 1,
+              },
+              name: r.title,
+              reviewBody: r.text,
+            })),
           },
           {
             "@type": "BreadcrumbList",

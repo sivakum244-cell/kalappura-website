@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LivePriceStrip from "@/components/LivePriceStrip";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Prices & Rates 2025 | Per Night Cost",
+  title: "Alleppey Houseboat Price 2026 | Boat House Rates Per Night",
   description:
-    "Alleppey houseboat prices starting ₹15,000/room/night. View rates for 1, 2 & 3 bedroom houseboats. Weekday & weekend pricing, package options, what's included. Transparent pricing, no hidden charges.",
+    "Alleppey houseboat prices from ₹15,000/room/night — see 1, 2 & 3 bedroom boat house rates with all meals, AC & cruise included. Transparent pricing, no hidden charges, book direct for the best rate.",
   keywords: [
-    "houseboat Alleppey price",
+    "Alleppey houseboat price",
     "Alleppey houseboat rates",
+    "Alleppey boat house price",
+    "Alleppey boat house rates",
     "Alappuzha houseboat price",
     "Alleppey houseboat cost",
     "Kerala houseboat rate per night",
@@ -23,6 +26,14 @@ export const metadata: Metadata = {
   },
 };
 
+const PRICING_FAQS = [
+  { q: "How much does a houseboat in Alleppey cost?", a: "Houseboat rates at Kalappura start from ₹15,000 per room per night for the Standard package. This includes all meals, AC bedroom, and a backwater cruise. Premium costs ₹19,000 and Semi Luxury costs ₹24,000 per room/night." },
+  { q: "Is the price per person or per room?", a: "All our prices are per room per night, not per person. Each room accommodates 2 adults + 1 child or extra bed." },
+  { q: "Are there any hidden charges?", a: "No hidden charges. The only additional cost is 18% GST on the total amount. Children (6-11) and extra beds are ₹1,000/night. Children under 5 stay free." },
+  { q: "Is there a difference between weekday and weekend rates?", a: "The base boat rate is slightly higher on Fridays and Saturdays (weekends). The package pricing remains the same." },
+  { q: "What payment options are available?", a: "We accept all major credit/debit cards, UPI, net banking, and cash. You only need to pay 20% advance at booking; the balance is paid at the property." },
+];
+
 export default function HouseboatPricesPage() {
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -33,9 +44,20 @@ export default function HouseboatPricesPage() {
     ],
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: PRICING_FAQS.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <main id="main-content" className="min-h-screen bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       {/* Header */}
       <div className="bg-gradient-to-b from-amber-900 to-amber-800 text-white py-20 px-4">
@@ -48,7 +70,10 @@ export default function HouseboatPricesPage() {
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
             Alleppey Houseboat Prices & Rates
           </h1>
-          <p className="text-lg text-amber-200 max-w-2xl mx-auto">
+          <p className="text-lg text-amber-100 max-w-2xl mx-auto font-medium mb-3">
+            An Alleppey houseboat costs ₹15,000 to ₹24,000 per room per night, including all meals, an AC bedroom and the backwater cruise (plus 18% GST).
+          </p>
+          <p className="text-base text-amber-200 max-w-2xl mx-auto">
             Transparent pricing for all our houseboats. All rates are per room per night and include meals, cruise, and crew.
           </p>
         </div>
@@ -114,29 +139,17 @@ export default function HouseboatPricesPage() {
           Children (6-11): ₹1,000 extra. Extra bed: ₹1,000. Children under 5 stay free.
         </p>
 
-        {/* Weekday vs Weekend */}
+        {/* Live current rates (pulled from admin DB rates) */}
         <div className="mt-12 p-6 bg-sand-50 rounded-2xl">
-          <h3 className="font-display text-xl font-bold text-gray-900 mb-4">Weekday vs Weekend Pricing</h3>
+          <h3 className="font-display text-xl font-bold text-gray-900 mb-2">Current Starting Rates</h3>
           <p className="text-sm text-gray-600 mb-4">
-            The base boat rate varies by day of the week. Fridays and Saturdays are considered weekends with slightly higher rates. The package add-on cost is the same regardless of day.
+            Live starting rates per boat, updated in real time. The base boat rate varies by date and day of the week
+            (Fridays and Saturdays are slightly higher). Package pricing (Standard/Premium/Semi Luxury) is added on top.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-white rounded-xl border border-gray-100">
-              <p className="font-semibold text-gray-900">1 Bedroom Boat</p>
-              <p className="text-sm text-gray-600">Weekday: ₹17,500 • Weekend: ₹20,000</p>
-            </div>
-            <div className="p-4 bg-white rounded-xl border border-gray-100">
-              <p className="font-semibold text-gray-900">2 Bedroom Boat</p>
-              <p className="text-sm text-gray-600">Weekday: ₹16,500 • Weekend: ₹18,500</p>
-            </div>
-            <div className="p-4 bg-white rounded-xl border border-gray-100">
-              <p className="font-semibold text-gray-900">3 Bedroom Boat</p>
-              <p className="text-sm text-gray-600">Weekday: ₹17,500 • Weekend: ₹20,000</p>
-            </div>
-          </div>
+          <LivePriceStrip />
           <p className="text-xs text-gray-500 mt-3">
-            Note: These are base boat rates. Package pricing (Standard/Premium/Semi Luxury) is per room and added on top.
-            Rates may change during peak season and holidays.
+            Note: These are current base boat rates and may change during peak season and holidays.
+            For exact pricing on your dates, check availability on the booking page.
           </p>
         </div>
       </section>
@@ -195,13 +208,7 @@ export default function HouseboatPricesPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="font-display text-2xl font-bold text-gray-900 mb-6 text-center">Pricing FAQ</h2>
           <div className="space-y-4">
-            {[
-              { q: "How much does a houseboat in Alleppey cost?", a: "Houseboat rates at Kalappura start from ₹15,000 per room per night for the Standard package. This includes all meals, AC bedroom, and a backwater cruise. Premium costs ₹19,000 and Semi Luxury costs ₹24,000 per room/night." },
-              { q: "Is the price per person or per room?", a: "All our prices are per room per night, not per person. Each room accommodates 2 adults + 1 child or extra bed." },
-              { q: "Are there any hidden charges?", a: "No hidden charges. The only additional cost is 18% GST on the total amount. Children (6-11) and extra beds are ₹1,000/night. Children under 5 stay free." },
-              { q: "Is there a difference between weekday and weekend rates?", a: "The base boat rate is slightly higher on Fridays and Saturdays (weekends). The package pricing remains the same." },
-              { q: "What payment options are available?", a: "We accept all major credit/debit cards, UPI, net banking, and cash. You only need to pay 20% advance at booking; the balance is paid at the property." },
-            ].map((faq) => (
+            {PRICING_FAQS.map((faq) => (
               <div key={faq.q} className="p-5 bg-white rounded-2xl border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">{faq.q}</h3>
                 <p className="text-sm text-gray-600">{faq.a}</p>

@@ -5,10 +5,14 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ROOMS } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
+import { getStartingFromPrice } from "@/lib/pricing";
+import { useAvailability } from "@/components/AvailabilityBadge";
 
 export default function Rooms() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { data: availabilityData } = useAvailability();
+  const dbRates = availabilityData?.rates as Record<string, number> | undefined;
 
   return (
     <section id="rooms" className="section-padding bg-sand-50" ref={ref}>
@@ -80,7 +84,7 @@ export default function Rooms() {
                   </div>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-3xl font-bold text-gray-900">
-                      {formatPrice(room.price)}
+                      {formatPrice(getStartingFromPrice(room.id, dbRates))}
                     </span>
                     <span className="text-sm text-gray-500">/room/night</span>
                   </div>

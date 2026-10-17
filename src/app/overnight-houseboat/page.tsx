@@ -24,6 +24,14 @@ export const metadata: Metadata = {
   },
 };
 
+const OVERNIGHT_FAQS = [
+  { q: "Is it safe to stay overnight on a houseboat?", a: "Yes. Our boats are anchored in safe, designated spots. Each boat has an experienced crew onboard throughout the night for safety. Life jackets are available for all guests." },
+  { q: "What time does the AC run?", a: "Depends on your package. Standard: 8:30 PM–6:30 AM (bedroom only). Premium: 5:30 PM–7:30 AM (bedroom/hall). Semi Luxury: all the time." },
+  { q: "Can I extend my stay to 2 nights?", a: "Yes, multi-night stays are available. Each additional night is charged at the same rate. Contact us to arrange extended cruises." },
+  { q: "What happens if it rains?", a: "Houseboats are covered and weatherproof. You can cruise in light rain without any issues. In heavy monsoon conditions, cruising may be limited but the stay is still comfortable." },
+  { q: "Is there phone signal on the backwaters?", a: "Mobile signal is generally available throughout the cruise route. WiFi is available on the boat, though signal strength may vary in deeper canal areas." },
+];
+
 export default function OvernightHouseboatPage() {
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -34,9 +42,20 @@ export default function OvernightHouseboatPage() {
     ],
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: OVERNIGHT_FAQS.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <main id="main-content" className="min-h-screen bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       {/* Header */}
       <div className="bg-gradient-to-b from-blue-900 to-blue-800 text-white py-20 px-4">
@@ -146,13 +165,7 @@ export default function OvernightHouseboatPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="font-display text-2xl font-bold text-gray-900 mb-6 text-center">Overnight Houseboat FAQ</h2>
           <div className="space-y-4">
-            {[
-              { q: "Is it safe to stay overnight on a houseboat?", a: "Yes. Our boats are anchored in safe, designated spots. Each boat has an experienced crew onboard throughout the night for safety. Life jackets are available for all guests." },
-              { q: "What time does the AC run?", a: "Depends on your package. Standard: 8:30 PM–6:30 AM (bedroom only). Premium: 5:30 PM–7:30 AM (bedroom/hall). Semi Luxury: all the time." },
-              { q: "Can I extend my stay to 2 nights?", a: "Yes, multi-night stays are available. Each additional night is charged at the same rate. Contact us to arrange extended cruises." },
-              { q: "What happens if it rains?", a: "Houseboats are covered and weatherproof. You can cruise in light rain without any issues. In heavy monsoon conditions, cruising may be limited but the stay is still comfortable." },
-              { q: "Is there phone signal on the backwaters?", a: "Mobile signal is generally available throughout the cruise route. WiFi is available on the boat, though signal strength may vary in deeper canal areas." },
-            ].map((faq) => (
+            {OVERNIGHT_FAQS.map((faq) => (
               <div key={faq.q} className="p-5 bg-white rounded-2xl border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">{faq.q}</h3>
                 <p className="text-sm text-gray-600">{faq.a}</p>

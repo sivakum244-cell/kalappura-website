@@ -110,7 +110,7 @@ export default function Hero() {
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6"
             >
               {/* Keyword-bearing H1 text for search engines & screen readers */}
-              <span className="sr-only">Alleppey Houseboat Booking – Kalappura Houseboats. </span>
+              <span className="sr-only">Kerala Houseboat &amp; Alleppey Houseboat Booking – Kalappura Houseboats. </span>
               <span className="block" aria-hidden="true">Cruise the</span>
               <span className="block relative" aria-hidden="true">
                 <span className="text-gradient-gold">Backwaters</span>
@@ -131,9 +131,9 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.7 }}
               className="text-lg text-white/70 max-w-lg mb-8 leading-relaxed"
             >
-              Handcrafted traditional houseboats with modern luxury. 
-              Wake up to serene backwaters, savor authentic Kerala cuisine, 
-              and create memories that last a lifetime.
+              Handcrafted traditional Kerala houseboats with modern luxury on the
+              Alleppey backwaters. Wake up to serene waters, savor authentic Kerala cuisine,
+              and cruise the backwaters in comfort.
             </motion.p>
 
             {/* Stats Row */}
@@ -238,7 +238,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="lg:hidden mt-10"
         >
-          <BookingEngine />
+          <BookingEngine showHeading={false} />
         </motion.div>
       </div>
 

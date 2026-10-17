@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Luxury Houseboats in Alleppey | Honeymoon & Premium Experience",
+  title: "Luxury Houseboat in Kerala & Alleppey | Premium Boats",
   description:
-    "Experience luxury houseboats in Alleppey (Alappuzha), Kerala. Private AC houseboats with premium amenities, all meals, onboard chef, and cruise through Kerala backwaters. Ideal for honeymoons and couples.",
+    "Book a luxury houseboat in Kerala (Alleppey / Alappuzha). Private AC boats with premium amenities, onboard chef, all meals & backwater cruise — among the best houseboats in Kerala for honeymoons and couples.",
   keywords: [
+    "luxury houseboat in kerala",
     "luxury houseboat Alleppey",
-    "Alleppey honeymoon houseboat",
-    "premium houseboat Kerala",
-    "Alleppey houseboat for couples",
-    "private luxury houseboat",
+    "best houseboat in kerala",
     "best houseboat Alleppey",
+    "premium houseboat Kerala",
+    "Alleppey honeymoon houseboat",
+    "private luxury houseboat Kerala",
   ],
   alternates: {
     canonical: "/luxury-houseboats",
@@ -47,10 +48,10 @@ export default function LuxuryHouseboatsPage() {
             <span className="text-white">Luxury Houseboats</span>
           </nav>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            Luxury Houseboats in Alleppey
+            Luxury Houseboat in Kerala &amp; Alleppey
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Private, intimate, and beautifully crafted. Our luxury houseboats offer the perfect setting for honeymoons, anniversaries, and premium experiences on Kerala backwaters.
+            Private, intimate, and beautifully crafted. Among the best houseboats in Kerala, our luxury boats in Alleppey offer the perfect setting for honeymoons, anniversaries, and premium backwater experiences.
           </p>
         </div>
       </div>

@@ -3,16 +3,28 @@ import HomeContent from "@/components/HomeContent";
 import { FAQS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Booking | Kalappura Houseboats",
+  title: "Alleppey Houseboat Booking | Private Boat House Stay | Kalappura",
   description:
-    "Book your Alleppey houseboat with Kalappura. Private 1, 2 & 3 bedroom AC boats on the Kerala backwaters with traditional cuisine, cruise & all meals. From ₹15,000/night.",
+    "Book an Alleppey houseboat (boat house) direct with Kalappura. Private 1, 2 & 3 bedroom AC houseboats on the Kerala backwaters — all meals, backwater cruise & instant confirmation. Best price, book online or on WhatsApp.",
+  keywords: [
+    "Alleppey houseboat",
+    "Alleppey houseboat booking",
+    "Alleppey boat house",
+    "Alleppey boat house booking",
+    "Alappuzha houseboat booking",
+    "houseboat booking Alleppey",
+    "Kerala houseboat booking",
+    "private houseboat Alleppey",
+    "best houseboat in Alleppey",
+    "houseboat in Alleppey",
+  ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Kalappura Houseboats | Private Luxury Houseboats in Alleppey",
+    title: "Alleppey Houseboat Booking | Kalappura Houseboats & Boat House",
     description:
-      "Experience Kerala backwaters aboard private luxury houseboats. 1, 2 & 3 bedroom boats with AC, all meals, and cruise through Alleppey canals. Book direct for best rates.",
+      "Book a private Alleppey houseboat (boat house) on the Kerala backwaters. 1, 2 & 3 bedroom AC boats with all meals and a backwater cruise. Book direct for best rates.",
     url: "/",
     images: [
       {
