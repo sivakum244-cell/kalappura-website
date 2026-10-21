@@ -149,6 +149,16 @@ const article = {
 <p><strong>What time does the cruise start?</strong><br>Check-in and boarding is at 12 PM, and the cruise begins soon after.</p>
 <p><strong>Can I book a houseboat online?</strong><br>Yes — you can <a href="/booking">book online</a> with instant confirmation, or reach us on WhatsApp.</p>
 
+<h2>Explore More Houseboat Guides</h2>
+<p>Use these guides to go deeper on the part of your trip that matters most:</p>
+<ul>
+<li><a href="/blog/how-to-choose-kerala-houseboat-package">How to choose the right Kerala houseboat package</a> — Standard, Premium, Semi Luxury or Honeymoon, and 1/2/3 bedrooms.</li>
+<li><a href="/blog/honeymoon-houseboat-kerala-backwaters">Honeymoon houseboat on the Kerala backwaters</a> — a private, romantic overnight cruise.</li>
+<li><a href="/blog/family-group-houseboat-alleppey-backwater-escape">Family &amp; group houseboat in Alleppey</a> — 2 and 3 bedroom boats for shared trips.</li>
+<li><a href="/blog/alleppey-backwaters-explained">The Alleppey backwaters, explained</a> — Vembanad, Kuttanad and the village canals.</li>
+<li><a href="/blog/direct-booking-advantage-alleppey-houseboat">The direct booking advantage</a> — best price guarantee and flexible cancellation.</li>
+</ul>
+
 <h3>Planning your Alleppey houseboat experience?</h3>
 <p>Explore Kalappura's houseboat options and choose a boat based on your group size, preferred cruise duration and travel dates. <a href="/alleppey-houseboats">Explore Kalappura Houseboats</a>.</p>
 
