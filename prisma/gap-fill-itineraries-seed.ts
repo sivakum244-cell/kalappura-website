@@ -287,7 +287,7 @@ const articles = [
   },
   {
     slug: "kerala-family-itinerary",
-    title: "Kerala Family Itinerary: A Fun, Relaxed Trip with an Alleppey Houseboat",
+    title: "Kerala Family Itinerary with an Alleppey Houseboat",
     excerpt: "Planning a Kerala family trip? Here's a relaxed, kid-friendly itinerary combining Kochi, Munnar and a spacious Alleppey houseboat — the perfect family holiday in Kerala.",
     coverImage: "/images/gallery/interior-1.jpg",
     category: "travel",

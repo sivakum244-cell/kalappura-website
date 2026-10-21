@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const blogPosts = [
   {
     slug: "best-time-alleppey-houseboat",
-    title: "Best Time to Visit Alleppey for a Houseboat Trip (Month-by-Month Guide)",
+    title: "Best Time to Visit Alleppey for a Houseboat Trip",
     excerpt: "Planning a houseboat trip in Alleppey? Here's a month-by-month breakdown of weather, crowds, and pricing to help you choose the perfect time for your Kerala backwater cruise.",
     coverImage: "/images/gallery/sunset-1.jpg",
     category: "travel",

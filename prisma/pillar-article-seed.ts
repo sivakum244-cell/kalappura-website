@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 const article = {
   slug: "kerala-houseboat-guide",
-  title: "Kerala Houseboat Guide 2026: Everything You Need to Know Before Booking an Alleppey Houseboat",
+  title: "Kerala Houseboat Guide: Backwaters, Boats & Booking",
   excerpt: "Planning a Kerala houseboat trip? Discover the best time to visit, houseboat prices, routes, food, day cruises, overnight stays and booking tips for Alleppey.",
   coverImage: "/images/gallery/blog-cover.jpg",
   category: "travel",

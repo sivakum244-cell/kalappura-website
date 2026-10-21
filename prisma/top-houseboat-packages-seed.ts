@@ -13,7 +13,7 @@ const articles = [
     slug: "top-houseboat-packages-alleppey",
     title: "Top Houseboat Packages in Alleppey: How to Choose the Best Houseboat",
     excerpt:
-      "Comparing top houseboat packages in Alleppey? A clear breakdown of Standard, Premium, Semi Luxury, Honeymoon and special occasion packages, 1/2/3 bedroom layouts, and how to pick the right boat for couples, families and groups.",
+      "Compare top houseboat packages in Alleppey — Standard, Premium, Semi Luxury and Honeymoon — plus 1/2/3 bedroom layouts and how to pick the right boat for couples, families and groups.",
     coverImage: "/images/gallery/drone-1.jpg",
     category: "travel",
     tags: "top houseboat packages in alleppey, best houseboat in alleppey, luxury houseboat alleppey, houseboat alleppey rates, alleppey houseboat prices, top rated houseboat in alleppey, alleppey houseboats",

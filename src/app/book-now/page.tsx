@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BookNowLanding from "@/components/BookNowLanding";
 
 export const metadata: Metadata = {
-  title: "Book Alleppey Houseboat | Best Price Guarantee | Kalappura",
+  title: { absolute: "Book Alleppey Houseboat | Best Price Guarantee" },
   description:
     "Book a private luxury houseboat in Alleppey. All meals, AC, backwater cruise included. Best price guarantee, 20% advance only, instant confirmation. Rated 9.8/10.",
   alternates: { canonical: "/book-now" },

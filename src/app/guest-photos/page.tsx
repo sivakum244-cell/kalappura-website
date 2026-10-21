@@ -3,7 +3,7 @@ import Link from "next/link";
 import GuestPhotosClient from "./GuestPhotosClient";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Pictures | Guest Photo Gallery",
+  title: { absolute: "Alleppey Houseboat Pictures | Guest Photo Gallery" },
   description:
     "Real Alleppey houseboat pictures shared by guests of Kalappura Houseboats — backwater views, Kerala sunsets, onboard food, and AC cabins from genuine houseboat trips in Alappuzha.",
   keywords: [
@@ -21,6 +21,14 @@ export const metadata: Metadata = {
       "Authentic Alleppey houseboat pictures from guests who cruised the Kerala backwaters with Kalappura Houseboats.",
     url: "/guest-photos",
     type: "website",
+    images: [
+      {
+        url: "/images/gallery/drone-1.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Guest photos of Kalappura houseboats on the Alleppey backwaters",
+      },
+    ],
   },
 };
 

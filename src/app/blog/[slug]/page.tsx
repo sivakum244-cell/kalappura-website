@@ -26,16 +26,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // they aren't flagged/truncated by crawlers and social cards. The on-page H1
     // keeps the full, descriptive title for readers.
     const socialTitle = clampTitle(post.title, 65);
+    const rawDescription = post.excerpt || `Read about ${post.title} on the Kalappura Houseboats blog.`;
+    const socialDescription = clampTitle(rawDescription, 200);
 
     return {
       // `absolute` drops the "| Kalappura Houseboats" template suffix for posts,
       // keeping the browser <title> within a reasonable length.
       title: { absolute: post.title },
-      description: post.excerpt || `Read about ${post.title} on the Kalappura Houseboats blog.`,
+      description: rawDescription,
       alternates: { canonical: `/blog/${post.slug}` },
       openGraph: {
         title: socialTitle,
-        description: post.excerpt,
+        description: socialDescription,
         url: `/blog/${post.slug}`,
         type: "article",
         images: post.coverImage ? [{ url: `${baseUrl}${post.coverImage}`, width: 1200, height: 630, alt: post.title }] : undefined,
@@ -43,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       twitter: {
         card: "summary_large_image",
         title: socialTitle,
-        description: post.excerpt,
+        description: socialDescription,
       },
     };
   } catch {

@@ -62,7 +62,7 @@ const articles = [
   },
   {
     slug: "day-cruise-vs-overnight-houseboat-alleppey",
-    title: "Day Cruise vs Overnight Houseboat in Alleppey: Which Should You Choose?",
+    title: "Day Cruise vs Overnight Houseboat in Alleppey",
     excerpt: "Day cruise or overnight houseboat in Alleppey? Compare both experiences — duration, meals, cost, and what you see — to decide which is right for your trip.",
     coverImage: "/images/gallery/blog-cover.jpg",
     category: "tips",
