@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Luxury Houseboat in Kerala & Alleppey | Premium Boats",
+  title: { absolute: "Luxury Houseboat in Kerala & Alleppey | Premium Boats" },
   description:
     "Book a luxury houseboat in Kerala (Alleppey / Alappuzha). Private AC boats with premium amenities, onboard chef, all meals & backwater cruise — among the best houseboats in Kerala for honeymoons and couples.",
   keywords: [

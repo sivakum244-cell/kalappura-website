@@ -4,7 +4,7 @@ import { ROOMS, SITE_CONFIG } from "@/lib/constants";
 import { formatPrice } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboats & Boat House | Private Booking in Alappuzha",
+  title: { absolute: "Alleppey Houseboats | Private Boat House in Alappuzha" },
   description:
     "Explore and book private houseboats (boat house) in Alleppey (Alappuzha), Kerala. 1, 2 & 3 bedroom AC houseboats with all meals, backwater cruise, and onboard chef. Book direct for best prices.",
   keywords: [

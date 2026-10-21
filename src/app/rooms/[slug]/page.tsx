@@ -62,7 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogDescription = trimForSocial(seo.description);
 
   return {
-    title: seo.title,
+    // `absolute` keeps the room title within length by dropping the layout's
+    // "| Kalappura Houseboats" suffix (the titles are self-describing).
+    title: { absolute: seo.title },
     description: seo.description,
     keywords: seo.keywords,
     alternates: {

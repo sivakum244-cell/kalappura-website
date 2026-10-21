@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/constants";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Honeymoon Houseboat in Alleppey | Romantic Kerala Cruise",
+  title: { absolute: "Honeymoon Houseboat in Alleppey | Romantic Kerala Cruise" },
   description:
     "Book a honeymoon houseboat in Alleppey (Alappuzha), Kerala. Private boat, candlelight dinner, flower decoration, sunset cruise and all meals — a romantic backwater escape for couples.",
   keywords: [

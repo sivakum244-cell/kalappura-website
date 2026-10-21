@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/constants";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Kuttanad Backwater Houseboat | Rice Bowl of Kerala Cruise",
+  title: { absolute: "Kuttanad Houseboat | Rice Bowl of Kerala Cruise" },
   description:
     "Cruise Kuttanad, the Rice Bowl of Kerala, on a private houseboat from Alleppey. See below-sea-level paddy fields, village canals and backwater life on an overnight or day cruise.",
   keywords: [

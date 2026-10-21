@@ -22,12 +22,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return { title: "Post Not Found" };
     }
 
+    // Social (og/twitter) titles are capped at ~65 chars on a word boundary so
+    // they aren't flagged/truncated by crawlers and social cards. The on-page H1
+    // keeps the full, descriptive title for readers.
+    const socialTitle = clampTitle(post.title, 65);
+
     return {
-      title: post.title,
+      // `absolute` drops the "| Kalappura Houseboats" template suffix for posts,
+      // keeping the browser <title> within a reasonable length.
+      title: { absolute: post.title },
       description: post.excerpt || `Read about ${post.title} on the Kalappura Houseboats blog.`,
       alternates: { canonical: `/blog/${post.slug}` },
       openGraph: {
-        title: post.title,
+        title: socialTitle,
         description: post.excerpt,
         url: `/blog/${post.slug}`,
         type: "article",
@@ -35,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       twitter: {
         card: "summary_large_image",
-        title: post.title,
+        title: socialTitle,
         description: post.excerpt,
       },
     };
@@ -44,11 +51,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// ISR: render each post on-demand on first request, then cache and regenerate
-// hourly (so edits appear without a redeploy). We intentionally do NOT use
-// generateStaticParams here — build-time prerendering of every post is both
-// slow and unsafe for this page, so posts render lazily and then cache.
+// Clamp a title to `max` chars on a word boundary, adding an ellipsis if trimmed.
+function clampTitle(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const slice = text.slice(0, max - 1);
+  const lastSpace = slice.lastIndexOf(" ");
+  return (lastSpace > 0 ? slice.slice(0, lastSpace) : slice).trimEnd() + "…";
+}
+
+// ISR: prerender every published post at build time, then regenerate hourly so
+// edits/new posts appear without a redeploy. Build-time static generation serves
+// each post instantly from the CDN (fixes the "slow/verySlow" page-load audit
+// findings) instead of rendering lazily on first request.
 export const revalidate = 3600;
+
+// Allow posts published AFTER the build (via DB seed) to still render on-demand,
+// then cache — so new articles don't 404 before the next deploy.
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: { published: true },
+      select: { slug: true },
+    });
+    return posts.map((p) => ({ slug: p.slug }));
+  } catch {
+    // DB unreachable at build time — fall back to on-demand rendering.
+    return [];
+  }
+}
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
@@ -170,7 +202,15 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Cover Image */}
       {post.coverImage && (
         <div className="w-full h-[300px] md:h-[400px] relative overflow-hidden">
-          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            width={1200}
+            height={400}
+            fetchPriority="high"
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
       )}

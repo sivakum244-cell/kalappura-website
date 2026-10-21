@@ -6,7 +6,7 @@ import CostCalculator from "@/components/CostCalculator";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Cost Calculator | Estimate Your Trip Price",
+  title: { absolute: "Alleppey Houseboat Cost Calculator | Trip Price Estimate" },
   description:
     "Free Alleppey houseboat cost calculator. Estimate your total price instantly — choose boat, package, nights, rooms and guests to see the full cost including GST. Transparent, no hidden charges.",
   keywords: [

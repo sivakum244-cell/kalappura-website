@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Packages | Standard, Premium & Semi Luxury",
+  title: { absolute: "Alleppey Houseboat Packages | Standard, Premium & Luxury" },
   description:
     "Compare houseboat packages in Alleppey. Standard (₹15,000), Premium (₹19,000) & Semi Luxury (₹24,000) per room/night. All meals included, AC, backwater cruise. See what each package offers.",
   keywords: [

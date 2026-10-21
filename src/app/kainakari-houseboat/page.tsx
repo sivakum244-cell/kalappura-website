@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/constants";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Kainakari Houseboat Cruise | Alleppey Village Backwaters",
+  title: { absolute: "Kainakari Houseboat Cruise | Alleppey Village Route" },
   description:
     "Cruise Kainakari on a private houseboat from Alleppey — the classic village backwater route with narrow canals, paddy fields and authentic Kerala village life.",
   keywords: [
