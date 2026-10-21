@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/how-to-reach" },
   openGraph: {
+    type: "website",
     title: "How to Reach Alleppey Houseboat | Kalappura Houseboats",
     description: "Directions to our houseboat dock from Cochin airport, railway station, and by road. Free parking available.",
     url: "/how-to-reach",

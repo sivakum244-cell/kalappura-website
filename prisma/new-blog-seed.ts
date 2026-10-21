@@ -82,7 +82,7 @@ const articles = [
 <h3>What should I wear on an Alleppey houseboat?</h3>
 <p>Light, breathable cotton clothing for the warm afternoon, plus one warm layer for the AC bedroom and cool morning. Casual and comfortable is best.</p>
 
-<p>For more trip planning, read our full <a href="${PILLAR}">Kerala Houseboat Guide</a>, check <a href="/houseboat-prices">houseboat prices</a>, or see <a href="/what-food-served-alleppey-houseboat">what food is served onboard</a>.</p>
+<p>For more trip planning, read our full <a href="${PILLAR}">Kerala Houseboat Guide</a>, check <a href="/houseboat-prices">houseboat prices</a>, or see <a href="/blog/what-food-served-alleppey-houseboat">what food is served onboard</a>.</p>
 
 <h3>Ready for the backwaters?</h3>
 <p><a href="/booking">Check availability and book your Alleppey houseboat</a> with instant confirmation and free cancellation up to 7 days before check-in.</p>

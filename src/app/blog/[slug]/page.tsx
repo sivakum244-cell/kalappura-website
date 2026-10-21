@@ -272,8 +272,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
           </div>
           <p className="text-xs text-gray-500 mt-4">
-            Already stayed with us?{" "}
-            <Link href="/review" className="text-gold-600 hover:underline">Leave a review</Link>{" "}— it means a lot to our small team.
+            Already stayed with us? Share your experience on Google — it means a lot to our small team.
           </p>
         </div>
       </article>

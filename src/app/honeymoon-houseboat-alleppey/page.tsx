@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/honeymoon-houseboat-alleppey" },
   openGraph: {
+    type: "website",
     title: "Honeymoon Houseboat in Alleppey | Romantic Kerala Cruise",
     description:
       "A romantic private houseboat honeymoon on the Alleppey backwaters — candlelight dinner, flower decoration, sunset cruise and all meals.",

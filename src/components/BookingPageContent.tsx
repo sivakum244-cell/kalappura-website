@@ -347,7 +347,7 @@ function BookingContent() {
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2">Book Your Alleppey Houseboat</h1>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2">Book Your Alleppey Houseboat</h2>
           <p className="text-gray-600">Complete your details to reserve a private Kerala backwater houseboat — instant confirmation.</p>
         </motion.div>
 

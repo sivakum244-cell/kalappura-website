@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     canonical: "/alleppey-houseboats",
   },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboats | Private Houseboats in Alappuzha",
     description:
       "1, 2 & 3 bedroom private houseboats in Alleppey. AC rooms, all meals, backwater cruise. Book direct for best prices.",

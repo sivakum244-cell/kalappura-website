@@ -164,7 +164,7 @@ const articles = [
 <p>Boats anchor by around 5:00 PM per Kerala Tourism rules and don't cruise after dark. Plan your sunset and evening around the anchored boat.</p>
 
 <h2>Don't Book Blind Through Random Agents</h2>
-<p>Overpaying via middlemen and vague listings is the most common regret. Confirm inclusions, the boat, and the route, and <a href="/blog/why-book-houseboat-direct">book direct</a> where possible.</p>
+<p>Overpaying via middlemen and vague listings is the most common regret. Confirm inclusions, the boat, and the route, and <a href="/blog/book-houseboat-direct-vs-otas-alleppey">book direct</a> where possible.</p>
 
 <h2>Don't Over-Pack or Under-Prepare</h2>
 <p>It's an overnight trip — pack light, but bring essentials, a light layer for the cool AC night, and any medicines. See <a href="/blog/what-to-pack-alleppey-houseboat-trip">what to pack</a>.</p>

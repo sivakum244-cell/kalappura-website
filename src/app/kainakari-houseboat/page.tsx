@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/kainakari-houseboat" },
   openGraph: {
+    type: "website",
     title: "Kainakari Houseboat Cruise | Alleppey Village Backwaters",
     description:
       "Private houseboat cruises through Kainakari — Alleppey's classic village backwater route with narrow canals and paddy fields.",

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   // Landing page for ads — keep it focused, allow indexing but it's mainly for paid traffic
   robots: { index: true, follow: true },
   openGraph: {
+    type: "website",
     title: "Book Alleppey Houseboat | Best Price Guarantee",
     description: "Private luxury houseboats in Alleppey. All meals, AC, cruise included. Book direct and save.",
     url: "/book-now",

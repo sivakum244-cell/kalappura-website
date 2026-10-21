@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboat Booking | Kalappura Houseboats & Boat House",
     description:
       "Book a private Alleppey houseboat (boat house) on the Kerala backwaters. 1, 2 & 3 bedroom AC boats with all meals and a backwater cruise. Book direct for best rates.",

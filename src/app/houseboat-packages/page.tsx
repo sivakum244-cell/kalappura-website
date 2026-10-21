@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     canonical: "/houseboat-packages",
   },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboat Packages | Kalappura Houseboats",
     description: "Standard, Premium & Semi Luxury packages. All meals, AC, backwater cruise included. Compare and book.",
     url: "/houseboat-packages",

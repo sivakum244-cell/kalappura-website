@@ -11,10 +11,19 @@ export const metadata: Metadata = {
     canonical: "/booking",
   },
   openGraph: {
+    type: "website",
     title: "Book a Houseboat in Alleppey | Kalappura Houseboats",
     description:
       "Book private houseboats in Alleppey online. 1-3 bedroom AC boats, all meals, backwater cruise. Instant confirmation, best price guarantee.",
     url: "/booking",
+    images: [
+      {
+        url: "/images/gallery/drone-1.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Kalappura houseboat cruising the Alleppey backwaters",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -26,6 +35,11 @@ export const metadata: Metadata = {
 export default function BookingPage() {
   return (
     <>
+      {/* Server-rendered H1 — always present in the initial HTML for crawlers,
+          even though the interactive form below is a client component inside
+          Suspense. Visually hidden so it does not duplicate the form's heading. */}
+      <h1 className="sr-only">Alleppey Houseboat Booking — Book Your Kerala Backwater Houseboat</h1>
+
       <BookingPageContent />
 
       {/* Server-rendered content for crawlers: real text + internal links,

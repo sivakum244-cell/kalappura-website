@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/budget-houseboat-alleppey" },
   openGraph: {
+    type: "website",
     title: "Budget Houseboat in Alleppey | Cheap Deals & Value Tips",
     description:
       "Get the best value on an Alleppey houseboat — monsoon discounts, book-direct savings, and honest budget tips.",

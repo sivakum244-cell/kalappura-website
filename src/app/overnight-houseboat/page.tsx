@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     canonical: "/overnight-houseboat",
   },
   openGraph: {
+    type: "website",
     title: "Overnight Houseboat Stay in Alleppey | Kalappura Houseboats",
     description: "Stay overnight on a private houseboat in Alleppey. Backwater cruise, all meals, AC rooms. From ₹15,000/night.",
     url: "/overnight-houseboat",

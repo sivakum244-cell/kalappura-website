@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Contact Kalappura Houseboats in Alleppey (Alappuzha), Kerala. Call or WhatsApp +91 98950 53528, email info@kalappurahouseboats.com, or visit our dock. We reply within an hour.",
   alternates: { canonical: "/contact" },
   openGraph: {
+    type: "website",
     title: "Contact Kalappura Houseboats",
     description: "Get in touch — call, WhatsApp, or email. We reply within an hour.",
     url: "/contact",

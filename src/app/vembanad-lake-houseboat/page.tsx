@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/vembanad-lake-houseboat" },
   openGraph: {
+    type: "website",
     title: "Vembanad Lake Houseboat Cruise | Alleppey",
     description:
       "Private houseboat cruises on Vembanad Lake — Kerala's largest lake — from Alleppey. Open views, sunsets and backwater villages.",

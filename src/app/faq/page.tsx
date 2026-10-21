@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/faq" },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboat FAQ | Kalappura Houseboats",
     description: "Common questions about Alleppey houseboats answered — pricing, meals, timing, cancellation, and more.",
     url: "/faq",

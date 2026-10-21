@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/alleppey-backwaters" },
   openGraph: {
+    type: "website",
     title: "Alleppey Backwaters Guide | Kerala Backwaters Explained",
     description:
       "What the Alleppey backwaters are, the lakes and canals you'll cruise, wildlife, best time to visit, and how to experience them.",

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/kuttanad-houseboat" },
   openGraph: {
+    type: "website",
     title: "Kuttanad Backwater Houseboat Cruise | Alleppey",
     description:
       "Private houseboat cruises through Kuttanad — the Rice Bowl of Kerala — with below-sea-level paddy fields and village canals.",

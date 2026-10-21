@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     canonical: "/houseboat-prices",
   },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboat Prices & Rates | Kalappura Houseboats",
     description: "Transparent houseboat pricing from ₹15,000/room/night. 1, 2 & 3 bedroom boats. All meals, AC, cruise included.",
     url: "/houseboat-prices",

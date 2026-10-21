@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/day-cruise-houseboat-alleppey" },
   openGraph: {
+    type: "website",
     title: "Alleppey Houseboat Day Cruise | One Day Boat Trip",
     description:
       "How an Alleppey houseboat day cruise works — timings, inclusions, and whether a day trip or overnight suits you best.",

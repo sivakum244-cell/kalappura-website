@@ -234,7 +234,7 @@ const articles = [
 
 <h2>How to Make Sure You Get Value</h2>
 <ul>
-<li><strong>Book direct</strong> to avoid agent mark-ups — see <a href="/blog/why-book-houseboat-direct">why book direct</a>.</li>
+<li><strong>Book direct</strong> to avoid agent mark-ups — see <a href="/blog/book-houseboat-direct-vs-otas-alleppey">why book direct</a>.</li>
 <li>Fill the boat with a group to lower the per-person cost.</li>
 <li>Travel off-peak for better rates (see <a href="/blog/best-time-alleppey-houseboat">best time to visit</a>).</li>
 <li>Confirm inclusions, AC hours and the route before booking.</li>

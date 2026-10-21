@@ -180,7 +180,7 @@ const articles = [
 <ul>
 <li>Travel in shoulder or monsoon season for lower rates</li>
 <li>Fill the boat — cost per person drops with a bigger group</li>
-<li><strong>Book direct</strong> to avoid agent mark-ups — see <a href="/blog/why-book-houseboat-direct">why book direct</a></li>
+<li><strong>Book direct</strong> to avoid agent mark-ups — see <a href="/blog/book-houseboat-direct-vs-otas-alleppey">why book direct</a></li>
 <li>Book early for peak dates to lock in availability and price</li>
 </ul>
 <p>Want an exact figure? Use our <a href="/houseboat-cost-calculator">houseboat cost calculator</a>.</p>

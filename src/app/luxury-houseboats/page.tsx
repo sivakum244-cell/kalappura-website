@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     canonical: "/luxury-houseboats",
   },
   openGraph: {
+    type: "website",
     title: "Luxury Houseboats in Alleppey | Kalappura Houseboats",
     description: "Private luxury houseboats for honeymoons and premium experiences on Kerala backwaters.",
     url: "/luxury-houseboats",

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Enjoyed your stay with Kalappura Houseboats in Alleppey? Share your experience with a quick Google review — it takes less than a minute and means the world to our small team.",
   alternates: { canonical: "/review" },
   openGraph: {
+    type: "website",
     title: "Leave a Review | Kalappura Houseboats",
     description: "Share your Alleppey houseboat experience with a quick Google review.",
     url: "/review",

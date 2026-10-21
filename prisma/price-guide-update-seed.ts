@@ -111,7 +111,7 @@ const articles = [
 <h3>Book Early for Fixed Dates</h3>
 <p>Advance planning can give you more choice during busy periods.</p>
 <h3>Ask for Direct Booking Information</h3>
-<p>If booking directly, ask the operator for the final price and booking conditions. See <a href="/blog/why-book-houseboat-direct">why book direct</a>.</p>
+<p>If booking directly, ask the operator for the final price and booking conditions. See <a href="/blog/book-houseboat-direct-vs-otas-alleppey">why book direct</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
 

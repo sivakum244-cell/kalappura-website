@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Read travel guides, tips, and stories about Alleppey houseboats, Kerala backwaters, and planning your perfect houseboat trip. Expert advice from Kalappura Houseboats.",
   alternates: { canonical: "/blog" },
   openGraph: {
+    type: "website",
     title: "Blog | Kalappura Houseboats",
     description: "Travel guides, tips, and stories about Alleppey houseboats and Kerala backwaters.",
     url: "/blog",

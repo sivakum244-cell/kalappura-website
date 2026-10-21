@@ -59,6 +59,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const ogDescription = trimForSocial(seo.description);
+
   return {
     title: seo.title,
     description: seo.description,
@@ -68,8 +70,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     openGraph: {
       title: seo.title,
-      description: seo.description,
+      // OG/social descriptions are trimmed to <=200 chars (social preview limit);
+      // the full detail stays in the meta description above.
+      description: ogDescription,
       url: `/rooms/${slug}`,
+      type: "website",
       images: [
         {
           url: `${baseUrl}${room.images[0]}`,
@@ -78,15 +83,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           alt: `${room.name} - Kalappura Houseboats, Alleppey`,
         },
       ],
-      type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: seo.title,
-      description: seo.description,
+      description: ogDescription,
       images: [`${baseUrl}${room.images[0]}`],
     },
   };
+}
+
+// Trim a description to <=200 chars on a word boundary for social (OG/Twitter) cards.
+function trimForSocial(text: string, max = 200): string {
+  if (text.length <= max) return text;
+  const slice = text.slice(0, max - 1);
+  const lastSpace = slice.lastIndexOf(" ");
+  return (lastSpace > 0 ? slice.slice(0, lastSpace) : slice).trimEnd() + "…";
 }
 
 export function generateStaticParams() {

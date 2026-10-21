@@ -12,9 +12,10 @@ export default function Footer() {
     { name: "Luxury Houseboats", href: "/luxury-houseboats" },
     { name: "Overnight Houseboat", href: "/overnight-houseboat" },
     { name: "How to Reach", href: "/how-to-reach" },
+    { name: "Guest Photos", href: "/guest-photos" },
     { name: "FAQ", href: "/faq" },
     { name: "Blog", href: "/blog" },
-    { name: "Reviews", href: "/review" },
+    { name: "Book Direct", href: "/book-now" },
     { name: "Book Now", href: "/booking" },
   ];
 

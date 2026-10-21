@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/alleppey-vs-kumarakom" },
   openGraph: {
+    type: "website",
     title: "Alleppey vs Kumarakom Houseboat | Kalappura Houseboats",
     description: "Which Kerala backwater destination is right for you? Honest comparison of Alleppey vs Kumarakom houseboats.",
     url: "/alleppey-vs-kumarakom",

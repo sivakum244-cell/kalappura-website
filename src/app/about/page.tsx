@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Learn about Kalappura Houseboats & Tours in Alleppey, Kerala. Meet host Jose J with 15+ years of hospitality experience, 5000+ happy guests, and a passion for Kerala backwaters.",
   alternates: { canonical: "/about" },
   openGraph: {
+    type: "website",
     title: "About Kalappura Houseboats | Our Story",
     description: "Meet the team behind Kalappura Houseboats — 15+ years of Kerala backwater hospitality.",
     url: "/about",
