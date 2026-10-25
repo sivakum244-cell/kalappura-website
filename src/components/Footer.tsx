@@ -13,6 +13,7 @@ export default function Footer() {
     { name: "Overnight Houseboat", href: "/overnight-houseboat" },
     { name: "How to Reach", href: "/how-to-reach" },
     { name: "Guest Photos", href: "/guest-photos" },
+    { name: "Group Booking", href: "/group-booking" },
     { name: "FAQ", href: "/faq" },
     { name: "Blog", href: "/blog" },
     { name: "Book Direct", href: "/book-now" },

@@ -38,9 +38,13 @@ export default function GoogleMap() {
     function initMap() {
       if (!mapRef.current || !(window as unknown as Record<string, unknown>).google) return;
 
-      const google = (window as unknown as { google: { maps: typeof import("google.maps") } }).google;
+      // google.maps types aren't installed; the Maps JS API is loaded at runtime
+      // via the injected <script>, so we access it through a loose cast.
+      const google = (window as unknown as { google: { maps: Record<string, unknown> } }).google;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const gmaps = google.maps as any;
 
-      const map = new google.maps.Map(mapRef.current, {
+      const map = new gmaps.Map(mapRef.current, {
         center: PROPERTY_LOCATION,
         zoom: 15,
         styles: [
@@ -54,11 +58,11 @@ export default function GoogleMap() {
       });
 
       // Custom marker
-      new google.maps.Marker({
+      new gmaps.Marker({
         position: PROPERTY_LOCATION,
         map,
         title: "Kalappura Houseboats & Tours",
-        animation: google.maps.Animation.DROP,
+        animation: gmaps.Animation.DROP,
       });
     }
   }, []);

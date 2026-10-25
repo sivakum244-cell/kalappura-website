@@ -172,13 +172,16 @@ export default function RootLayout({
         numberOfRooms: ROOMS.reduce((sum, r) => sum + r.bedrooms, 0),
         priceRange: "₹15,000 - ₹24,000",
         starRating: { "@type": "Rating", ratingValue: "5" },
-        // Site-wide aggregate rating from real guest review data (10-point scale).
+        // Aggregate guest rating — exposed so Google can show star ratings in
+        // results. SITE_CONFIG.rating is stored on a 10-point scale, scaled to 5
+        // for schema.org. Kept in sync with constants to avoid drift.
         aggregateRating: {
           "@type": "AggregateRating",
-          ratingValue: SITE_CONFIG.rating,
-          bestRating: 10,
-          worstRating: 1,
-          reviewCount: SITE_CONFIG.reviewCount,
+          ratingValue: (Math.round((SITE_CONFIG.rating / 2) * 100) / 100).toString(),
+          bestRating: "5",
+          worstRating: "1",
+          ratingCount: SITE_CONFIG.reviewCount.toString(),
+          reviewCount: SITE_CONFIG.reviewCount.toString(),
         },
         amenityFeature: [
           { "@type": "LocationFeatureSpecification", name: "Air Conditioning", value: true },

@@ -528,7 +528,7 @@ export default function AdminDashboard() {
           <div>
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-gray-700">Currently Blocked Dates</h3>
-              <button onClick={loadBlockedDates} className="text-xs text-gold-600 hover:text-gold-700">Refresh</button>
+              <button onClick={() => loadBlockedDates()} className="text-xs text-gold-600 hover:text-gold-700">Refresh</button>
             </div>
             {blockedDatesList.length === 0 ? (
               <p className="text-sm text-gray-400 text-center py-4">No dates blocked. All dates are available for booking.</p>

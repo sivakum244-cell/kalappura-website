@@ -238,6 +238,11 @@ export default async function BlogPostPage({ params }: Props) {
               {post.publishedAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
             </time>
           )}
+          {post.updatedAt && post.publishedAt && post.updatedAt.getTime() - post.publishedAt.getTime() > 86400000 && (
+            <span className="text-sm text-gray-400">
+              · Updated {post.updatedAt.toLocaleDateString("en-IN", { month: "long", year: "numeric" })}
+            </span>
+          )}
           <span className="text-sm text-gray-400">by {post.author}</span>
         </div>
 

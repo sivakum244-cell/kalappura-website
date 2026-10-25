@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactElement } from "react";
 import { motion, useInView } from "framer-motion";
 import { AMENITIES } from "@/lib/constants";
 
-const amenityIcons: Record<string, JSX.Element> = {
+const amenityIcons: Record<string, ReactElement> = {
   car: <path d="M7 17m-2 0a2 2 0 104 0 2 2 0 10-4 0M17 17m-2 0a2 2 0 104 0 2 2 0 10-4 0M5 17H3v-6l2-5h9l4 5h1a2 2 0 012 2v4h-2m-4 0H9" />,
   plane: <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />,
   utensils: <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" />,
