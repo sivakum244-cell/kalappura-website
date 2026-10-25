@@ -73,8 +73,30 @@ export default async function BlogPage() {
         </div>
       </div>
 
+      {/* Start Here — essential guides. Surfaces the pillar + key planning guides
+          from the high-authority index, improving discovery and internal linking. */}
+      <section className="max-w-6xl mx-auto px-4 pt-14">
+        <h2 className="font-display text-2xl font-bold text-gray-900 mb-6">Start Here: Essential Guides</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            { href: "/blog/kerala-houseboat-guide", title: "Kerala Houseboat Guide", desc: "The complete overview — prices, routes, food, timing and booking." },
+            { href: "/blog/how-to-choose-kerala-houseboat-package", title: "How to Choose Your Package", desc: "Standard, Premium, Semi Luxury or Honeymoon — and the right boat size." },
+            { href: "/blog/best-houseboat-alleppey-first-timers", title: "First-Timer's Guide", desc: "New to houseboats? Three simple decisions for a great first trip." },
+            { href: "/blog/what-to-expect-alleppey-houseboat-overnight", title: "What to Expect Overnight", desc: "An hour-by-hour walkthrough of an overnight cruise." },
+            { href: "/blog/alleppey-houseboat-price-2026", title: "Houseboat Prices 2026", desc: "Full rate guide by boat size, package and season." },
+            { href: "/blog/honeymoon-houseboat-kerala-backwaters", title: "Honeymoon on the Backwaters", desc: "Plan a private, romantic overnight cruise for two." },
+          ].map((g) => (
+            <Link key={g.href} href={g.href} className="block p-5 bg-sand-50 rounded-2xl border border-gray-100 hover:border-gold-300 hover:shadow-sm transition-all">
+              <h3 className="font-display text-lg font-bold text-gray-900 mb-1">{g.title}</h3>
+              <p className="text-sm text-gray-600">{g.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Posts Grid */}
       <section className="max-w-6xl mx-auto px-4 py-16">
+        <h2 className="font-display text-2xl font-bold text-gray-900 mb-6">All Articles</h2>
         {posts.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-400 text-lg mb-2">No articles published yet</p>
