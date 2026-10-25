@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Kalappura Houseboats",
+  title: { absolute: "Terms of Service | Kalappura Houseboats" },
   description:
-    "Terms of Service for Kalappura Houseboats & Tours. Booking, payment, cancellation, check-in/check-out policies, and guest responsibilities for your Alleppey houseboat stay.",
+    "Terms of Service for Kalappura Houseboats & Tours — booking, payment, cancellation, check-in/out policies and guest responsibilities.",
   alternates: { canonical: "/terms" },
   robots: { index: true, follow: true },
 };

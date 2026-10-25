@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey vs Kumarakom Houseboat | Which Is Better?" },
   description:
-    "Alleppey vs Kumarakom houseboat comparison — which Kerala backwater destination is right for you? Compare scenery, activities, crowds, and experience. Book your Alleppey houseboat with Kalappura.",
+    "Alleppey vs Kumarakom houseboat — which Kerala backwater destination is right for you? Compare scenery, activities, crowds and the overall experience.",
   keywords: [
     "Alleppey vs Kumarakom houseboat",
     "Alleppey or Kumarakom",

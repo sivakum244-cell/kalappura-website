@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Group Houseboat Booking in Alleppey | Kalappura" },
   description:
-    "Planning an Alleppey houseboat for a large group? Book private 2 & 3 bedroom boats, or multiple boats cruising together. All meals included, coordinated route, best group rate booking direct.",
+    "Planning an Alleppey houseboat for a large group? Book private 2 & 3 bedroom boats or multiple boats cruising together — all meals, best group rate.",
   keywords: [
     "group houseboat booking alleppey",
     "houseboat for large group kerala",

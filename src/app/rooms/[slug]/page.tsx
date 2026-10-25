@@ -7,7 +7,7 @@ const roomSEO: Record<string, { title: string; description: string; keywords: st
   "standard-cabin-on-boat": {
     title: "3 Bedroom Houseboat in Alleppey | Family & Group Houseboat",
     description:
-      "Book a spacious 3 bedroom private houseboat in Alleppey (Alappuzha). Ideal for families and groups up to 9 guests. AC rooms, all meals included, backwater cruise through Vembanad Lake. Starting ₹17,500/room/night.",
+      "Book a spacious 3 bedroom private houseboat in Alleppey for families and groups up to 9. AC rooms, all meals, backwater cruise. From ₹17,500/room/night.",
     keywords: [
       "3 bedroom houseboat Alleppey",
       "family houseboat Alleppey",
@@ -19,7 +19,7 @@ const roomSEO: Record<string, { title: string; description: string; keywords: st
   "double-twin-room-lake-view": {
     title: "2 Bedroom Houseboat in Alleppey | Lake View Houseboat",
     description:
-      "Book a 2 bedroom private houseboat with lake views in Alleppey (Alappuzha). Perfect for small families and friends, up to 6 guests. AC rooms, all meals, Kerala backwater cruise included. Starting ₹16,500/room/night.",
+      "Book a 2 bedroom private houseboat with lake views in Alleppey for families and friends up to 6. AC rooms, all meals, cruise. From ₹16,500/room/night.",
     keywords: [
       "2 bedroom houseboat Alleppey",
       "lake view houseboat Alleppey",
@@ -29,9 +29,9 @@ const roomSEO: Record<string, { title: string; description: string; keywords: st
     ],
   },
   "suite-with-river-view": {
-    title: "1 Bedroom Houseboat in Alleppey | Honeymoon & Couples Houseboat",
+    title: "1 Bedroom Houseboat in Alleppey | Honeymoon & Couples",
     description:
-      "Book an intimate 1 bedroom private houseboat in Alleppey (Alappuzha). Ideal for couples and honeymooners. Complete privacy, river views, AC room, all meals, and backwater cruise. Starting ₹17,500/night.",
+      "Book an intimate 1 bedroom private houseboat in Alleppey for couples and honeymooners. Privacy, river views, AC, all meals, cruise. From ₹17,500/night.",
     keywords: [
       "1 bedroom houseboat Alleppey",
       "honeymoon houseboat Alleppey",

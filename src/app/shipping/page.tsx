@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Shipping & Delivery Policy | Kalappura Houseboats" },
   description:
-    "Shipping & Delivery policy for Kalappura Houseboats & Tours. We are a houseboat booking service — no physical products are shipped. Booking confirmations are delivered instantly by email, SMS or WhatsApp.",
+    "Shipping & Delivery policy for Kalappura Houseboats — a houseboat booking service, so no physical products ship. Confirmations arrive by email, SMS or WhatsApp.",
   alternates: { canonical: "/shipping" },
   robots: { index: true, follow: true },
 };

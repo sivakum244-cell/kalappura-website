@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Honeymoon Houseboat in Alleppey | Romantic Kerala Cruise" },
   description:
-    "Book a honeymoon houseboat in Alleppey (Alappuzha), Kerala. Private boat, candlelight dinner, flower decoration, sunset cruise and all meals — a romantic backwater escape for couples.",
+    "Book a honeymoon houseboat in Alleppey, Kerala. Private boat, candlelight dinner, flower decoration, sunset cruise and all meals for couples.",
   keywords: [
     "honeymoon houseboat alleppey",
     "honeymoon houseboat in kerala",

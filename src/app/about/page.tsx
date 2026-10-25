@@ -3,9 +3,9 @@ import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "About Kalappura Houseboats | Our Story & Hosts",
+  title: { absolute: "About Kalappura Houseboats | Our Story & Hosts" },
   description:
-    "Learn about Kalappura Houseboats & Tours in Alleppey, Kerala. Meet host Jose J with 15+ years of hospitality experience, 5000+ happy guests, and a passion for Kerala backwaters.",
+    "Learn about Kalappura Houseboats & Tours in Alleppey, Kerala. Meet host Jose J — 15+ years of hospitality, 5000+ happy guests on the backwaters.",
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",

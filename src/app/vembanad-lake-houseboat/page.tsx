@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Vembanad Lake Houseboat Cruise | Alleppey Backwaters" },
   description:
-    "Cruise Vembanad Lake on a private houseboat from Alleppey. The largest lake in Kerala — open backwater views, sunsets, birdlife and village canals on an overnight or day cruise.",
+    "Cruise Vembanad Lake on a private houseboat from Alleppey — Kerala's largest lake, with open backwater views, sunsets, birdlife and village canals.",
   keywords: [
     "vembanad lake houseboat",
     "vembanad lake houseboat cruise",

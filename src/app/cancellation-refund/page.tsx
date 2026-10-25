@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Cancellation & Refund Policy | Kalappura Houseboats" },
   description:
-    "Cancellation and refund policy for Kalappura Houseboats & Tours. Free cancellation up to 7 days before check-in, refund timelines, and how to request a cancellation for your Alleppey houseboat booking.",
+    "Cancellation and refund policy for Kalappura Houseboats — free cancellation up to 7 days before check-in, refund timelines and how to cancel.",
   alternates: { canonical: "/cancellation-refund" },
   robots: { index: true, follow: true },
 };

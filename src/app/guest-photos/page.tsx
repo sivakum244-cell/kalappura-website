@@ -5,7 +5,7 @@ import GuestPhotosClient from "./GuestPhotosClient";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Pictures | Guest Photo Gallery" },
   description:
-    "Real Alleppey houseboat pictures shared by guests of Kalappura Houseboats — backwater views, Kerala sunsets, onboard food, and AC cabins from genuine houseboat trips in Alappuzha.",
+    "Real Alleppey houseboat pictures shared by guests of Kalappura Houseboats — backwater views, Kerala sunsets, onboard food and AC cabins.",
   keywords: [
     "Alleppey houseboat pictures",
     "Alleppey houseboat photos",

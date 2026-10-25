@@ -7,7 +7,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Booking Online | Kalappura" },
   description:
-    "Book your Alleppey houseboat (boat house) online in minutes — 1, 2 & 3 bedroom AC boats, all meals included, just 20% advance, instant confirmation & free cancellation up to 7 days before check-in.",
+    "Book your Alleppey houseboat online — 1, 2 & 3 bedroom AC boats, all meals included, 20% advance, instant confirmation and free cancellation.",
   alternates: {
     canonical: "/booking",
   },

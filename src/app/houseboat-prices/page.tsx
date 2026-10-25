@@ -6,7 +6,7 @@ import ReviewsStrip from "@/components/ReviewsStrip";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Price 2026 | Rates Per Night" },
   description:
-    "Alleppey houseboat prices from ₹15,000/room/night — see 1, 2 & 3 bedroom boat house rates with all meals, AC & cruise included. Transparent pricing, no hidden charges, book direct for the best rate.",
+    "Alleppey houseboat prices from ₹15,000/room/night — 1, 2 & 3 bedroom rates with all meals, AC & cruise included. Transparent pricing, no hidden charges.",
   keywords: [
     "Alleppey houseboat price",
     "Alleppey houseboat rates",

@@ -5,7 +5,7 @@ import ReviewsStrip from "@/components/ReviewsStrip";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Packages | Standard, Premium & Luxury" },
   description:
-    "Compare houseboat packages in Alleppey. Standard (₹15,000), Premium (₹19,000) & Semi Luxury (₹24,000) per room/night. All meals included, AC, backwater cruise. See what each package offers.",
+    "Compare Alleppey houseboat packages — Standard (₹15,000), Premium (₹19,000) & Semi Luxury (₹24,000) per room/night. All meals, AC & cruise included.",
   keywords: [
     "Alleppey houseboat packages",
     "houseboat package Alleppey",

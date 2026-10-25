@@ -6,7 +6,7 @@ import { formatPrice } from "@/lib/utils";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboats | Private Boat House in Alappuzha" },
   description:
-    "Explore and book private houseboats (boat house) in Alleppey (Alappuzha), Kerala. 1, 2 & 3 bedroom AC houseboats with all meals, backwater cruise, and onboard chef. Book direct for best prices.",
+    "Explore and book private houseboats in Alleppey (Alappuzha), Kerala. 1, 2 & 3 bedroom AC boats with all meals, backwater cruise and onboard chef.",
   keywords: [
     "Alleppey houseboat",
     "Alleppey houseboats",

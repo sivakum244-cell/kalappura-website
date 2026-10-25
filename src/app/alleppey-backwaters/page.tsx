@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Backwaters Guide | Kerala Backwaters Explained" },
   description:
-    "A complete guide to the Alleppey backwaters — what they are, the lakes and canals you'll cruise (Vembanad, Punnamada, Kuttanad), wildlife, best time to visit, and how to experience them by houseboat.",
+    "A complete guide to the Alleppey backwaters — the lakes and canals you'll cruise (Vembanad, Punnamada, Kuttanad), wildlife, and when to visit.",
   keywords: [
     "Alleppey backwaters",
     "Kerala backwaters",

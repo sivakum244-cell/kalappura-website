@@ -3,9 +3,9 @@ import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Contact Kalappura Houseboats | Alleppey, Kerala",
+  title: { absolute: "Contact Kalappura Houseboats | Alleppey, Kerala" },
   description:
-    "Contact Kalappura Houseboats in Alleppey (Alappuzha), Kerala. Call or WhatsApp +91 98950 53528, email info@kalappurahouseboats.com, or visit our dock. We reply within an hour.",
+    "Contact Kalappura Houseboats in Alleppey, Kerala. Call or WhatsApp +91 98950 53528, email info@kalappurahouseboats.com, or visit our dock.",
   alternates: { canonical: "/contact" },
   openGraph: {
     type: "website",
@@ -83,6 +83,7 @@ export default function ContactPage() {
 
       {/* Contact methods */}
       <section className="max-w-5xl mx-auto px-4 py-16">
+        <h2 className="font-display text-2xl font-bold text-gray-900 text-center mb-8">Ways to Reach Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {/* Phone */}
           <a href={`tel:${SITE_CONFIG.phone}`} className="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg transition-shadow text-center">
@@ -145,6 +146,35 @@ export default function ContactPage() {
               referrerPolicy="no-referrer-when-downgrade"
               title="Kalappura Houseboats Location"
             />
+          </div>
+        </div>
+
+        {/* Helpful info — adds genuine content for visitors and search engines */}
+        <div className="mt-12">
+          <h2 className="font-display text-2xl font-bold text-gray-900 mb-5">Before You Get in Touch</h2>
+          <div className="space-y-4 text-gray-600 leading-relaxed">
+            <p>
+              The quickest way to reach us is WhatsApp — most enquiries get a reply within an hour
+              during the day. If you already know your dates, sending them along with your group size
+              and preferred package helps us check availability and quote faster.
+            </p>
+            <h3 className="font-semibold text-gray-900">What to include in your message</h3>
+            <p>
+              To speed things up, share your travel dates, number of adults and children, whether you
+              want a <Link href="/rooms/suite-with-river-view" className="text-gold-600 hover:underline">1 bedroom</Link>,
+              {" "}<Link href="/rooms/double-twin-room-lake-view" className="text-gold-600 hover:underline">2 bedroom</Link> or
+              {" "}<Link href="/rooms/standard-cabin-on-boat" className="text-gold-600 hover:underline">3 bedroom</Link> houseboat,
+              and any food preferences or special occasions. You can also compare options on our
+              {" "}<Link href="/houseboat-packages" className="text-gold-600 hover:underline">packages</Link> and
+              {" "}<Link href="/houseboat-prices" className="text-gold-600 hover:underline">prices</Link> pages first.
+            </p>
+            <h3 className="font-semibold text-gray-900">When we&apos;re available</h3>
+            <p>
+              Our reservations team responds throughout the day, every day. Check-in on the houseboat
+              is at 12:00 PM and check-out is at 9:00 AM the next morning. For directions to our dock,
+              see <Link href="/how-to-reach" className="text-gold-600 hover:underline">how to reach us</Link>,
+              or read common questions on the <Link href="/faq" className="text-gold-600 hover:underline">FAQ page</Link>.
+            </p>
           </div>
         </div>
 

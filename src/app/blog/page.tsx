@@ -4,9 +4,9 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Blog | Alleppey Houseboat Travel Guide & Tips",
+  title: { absolute: "Alleppey Houseboat Blog | Travel Guides & Tips" },
   description:
-    "Read travel guides, tips, and stories about Alleppey houseboats, Kerala backwaters, and planning your perfect houseboat trip. Expert advice from Kalappura Houseboats.",
+    "Travel guides, tips and stories about Alleppey houseboats, Kerala backwaters, and planning your perfect houseboat trip — from Kalappura Houseboats.",
   alternates: { canonical: "/blog" },
   openGraph: {
     type: "website",

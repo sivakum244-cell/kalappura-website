@@ -11,7 +11,7 @@ const PILLAR = "/blog/kerala-houseboat-guide";
 const articles = [
   {
     slug: "top-houseboat-packages-alleppey",
-    title: "Top Houseboat Packages in Alleppey: How to Choose the Best Houseboat",
+    title: "Top Houseboat Packages in Alleppey: How to Choose",
     excerpt:
       "Compare top houseboat packages in Alleppey — Standard, Premium, Semi Luxury and Honeymoon — plus 1/2/3 bedroom layouts and how to pick the right boat for couples, families and groups.",
     coverImage: "/images/gallery/drone-1.jpg",

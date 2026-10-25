@@ -162,7 +162,7 @@ export default function CostCalculator() {
       {/* Result */}
       <div className="lg:sticky lg:top-24 h-fit">
         <div className="bg-white rounded-3xl border border-gray-100 shadow-card p-6">
-          <h3 className="font-display text-lg font-bold text-gray-900 mb-4">Estimated Cost</h3>
+          <h2 className="font-display text-lg font-bold text-gray-900 mb-4">Estimated Cost</h2>
           <div className="space-y-2.5 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">

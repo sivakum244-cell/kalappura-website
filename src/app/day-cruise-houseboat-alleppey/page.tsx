@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Day Cruise | One Day Boat Trip" },
   description:
-    "Alleppey houseboat day cruise guide — timings, what's included, how a one day houseboat trip works, and how it compares to an overnight stay on the Kerala backwaters.",
+    "Alleppey houseboat day cruise guide — timings, what's included, how a one-day trip works, and how it compares to an overnight backwater stay.",
   keywords: [
     "alleppey houseboat day cruise",
     "one day houseboat alleppey",

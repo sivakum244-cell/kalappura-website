@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Kuttanad Houseboat | Rice Bowl of Kerala Cruise" },
   description:
-    "Cruise Kuttanad, the Rice Bowl of Kerala, on a private houseboat from Alleppey. See below-sea-level paddy fields, village canals and backwater life on an overnight or day cruise.",
+    "Cruise Kuttanad, the Rice Bowl of Kerala, on a private houseboat from Alleppey — below-sea-level paddy fields, village canals and backwater life.",
   keywords: [
     "kuttanad houseboat",
     "kuttanad backwater houseboat",

@@ -5,7 +5,7 @@ import { FAQS } from "@/lib/constants";
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat FAQ | Common Questions Answered" },
   description:
-    "Answers to common questions about Alleppey houseboats — pricing, meals, check-in times, AC, cancellation, family stays, honeymoon options, and more. Everything you need before booking.",
+    "Common questions about Alleppey houseboats answered — pricing, meals, check-in times, AC, cancellation, family stays and honeymoon options.",
   keywords: [
     "Alleppey houseboat FAQ",
     "houseboat questions",

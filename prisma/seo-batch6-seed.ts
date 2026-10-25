@@ -105,7 +105,7 @@ const articles = [
   },
   {
     slug: "alleppey-houseboat-anniversary-celebration",
-    title: "Alleppey Houseboat for an Anniversary: Plan a Romantic Celebration",
+    title: "Alleppey Houseboat Anniversary Celebration Guide",
     excerpt: "Celebrate your anniversary on an Alleppey houseboat. Here's how to plan a romantic backwater celebration — private boat, candlelight dinner, cake, decorations and the best timing.",
     coverImage: "/images/gallery/sunset-1.jpg",
     category: "experience",
@@ -146,7 +146,7 @@ const articles = [
   },
   {
     slug: "kerala-backwaters-vs-kashmir-shikara",
-    title: "Kerala Backwaters vs Kashmir Houseboat: Which Should You Choose?",
+    title: "Kerala Backwaters vs Kashmir Houseboat Compared",
     excerpt: "Kerala backwaters or a Kashmir houseboat on Dal Lake? An honest comparison of scenery, climate, experience and who each suits — to help you plan your India trip.",
     coverImage: "/images/gallery/river-1.jpg",
     category: "travel",

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Overnight Houseboat in Alleppey | Kerala Backwater Stay" },
   description:
-    "Book an overnight houseboat stay in Alleppey (Alappuzha). Check in at 12 PM, cruise through backwaters, anchor overnight, and check out at 9 AM. All meals, AC, and private crew included. From ₹15,000/night.",
+    "Book an overnight houseboat stay in Alleppey. Check in at noon, cruise the backwaters, anchor overnight, check out at 9 AM. All meals & AC included.",
   keywords: [
     "overnight houseboat Alleppey",
     "overnight houseboat Kerala",

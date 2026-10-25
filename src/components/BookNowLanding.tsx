@@ -95,7 +95,7 @@ export default function BookNowLanding() {
           ].map((item) => (
             <div key={item.title} className="text-center p-6 bg-white rounded-2xl shadow-sm">
               <div className="text-4xl mb-3">{item.icon}</div>
-              <h3 className="font-display text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+              <h2 className="font-display text-lg font-bold text-gray-900 mb-2">{item.title}</h2>
               <p className="text-sm text-gray-600">{item.desc}</p>
             </div>
           ))}

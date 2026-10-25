@@ -3,9 +3,9 @@ import HomeContent from "@/components/HomeContent";
 import { FAQS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Alleppey Houseboat Booking | Private Boat House Stay | Kalappura",
+  title: { absolute: "Alleppey Houseboat Booking | Kalappura Houseboats" },
   description:
-    "Book an Alleppey houseboat (boat house) direct with Kalappura. Private 1, 2 & 3 bedroom AC houseboats on the Kerala backwaters — all meals, backwater cruise & instant confirmation. Best price, book online or on WhatsApp.",
+    "Book an Alleppey houseboat direct with Kalappura. Private 1, 2 & 3 bedroom AC boats on the Kerala backwaters — all meals, cruise & instant confirmation.",
   keywords: [
     "Alleppey houseboat",
     "Alleppey houseboat booking",

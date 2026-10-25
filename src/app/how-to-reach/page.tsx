@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "How to Reach Alleppey Houseboat | Airport & Train" },
   description:
-    "How to reach Kalappura Houseboats in Alleppey (Alappuzha), Kerala. Directions from Cochin International Airport (85 km), Alleppey Railway Station (2.5 km), and by road. Free parking at our dock.",
+    "How to reach Kalappura Houseboats in Alleppey, Kerala — directions from Cochin Airport (85 km), Alleppey Railway Station (2.5 km) and by road.",
   keywords: [
     "how to reach Alleppey houseboat",
     "Cochin airport to Alleppey houseboat",

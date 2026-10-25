@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Budget Houseboat in Alleppey | Cheap Deals & Tips" },
   description:
-    "Looking for a budget or cheap houseboat in Alleppey? Here's how to get the best value — monsoon deals up to 30% off, book-direct savings, and honest tips for an affordable Kerala backwater cruise.",
+    "Looking for a budget houseboat in Alleppey? How to get the best value — monsoon deals up to 30% off, book-direct savings, and honest money-saving tips.",
   keywords: [
     "budget houseboat Alleppey",
     "cheap houseboat Alleppey",

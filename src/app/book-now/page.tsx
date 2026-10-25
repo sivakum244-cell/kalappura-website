@@ -4,7 +4,7 @@ import BookNowLanding from "@/components/BookNowLanding";
 export const metadata: Metadata = {
   title: { absolute: "Book Alleppey Houseboat | Best Price Guarantee" },
   description:
-    "Book a private luxury houseboat in Alleppey. All meals, AC, backwater cruise included. Best price guarantee, 20% advance only, instant confirmation. Rated 9.8/10.",
+    "Book a private luxury houseboat in Alleppey. All meals, AC & backwater cruise included. Best price guarantee, 20% advance, instant confirmation.",
   alternates: { canonical: "/book-now" },
   // Landing page for ads — keep it focused, allow indexing but it's mainly for paid traffic
   robots: { index: true, follow: true },

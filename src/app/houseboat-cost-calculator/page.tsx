@@ -8,7 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Cost Calculator | Trip Price Estimate" },
   description:
-    "Free Alleppey houseboat cost calculator. Estimate your total price instantly — choose boat, package, nights, rooms and guests to see the full cost including GST. Transparent, no hidden charges.",
+    "Free Alleppey houseboat cost calculator. Estimate your total instantly — choose boat, package, nights, rooms and guests to see the full price with GST.",
   keywords: [
     "Alleppey houseboat cost calculator",
     "houseboat price calculator Kerala",
