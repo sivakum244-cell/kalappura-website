@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BookingPageContent from "@/components/BookingPageContent";
+import ReviewsStrip from "@/components/ReviewsStrip";
 
 import Link from "next/link";
 
@@ -41,6 +42,9 @@ export default function BookingPage() {
       <h1 className="sr-only">Alleppey Houseboat Booking — Book Your Kerala Backwater Houseboat</h1>
 
       <BookingPageContent />
+
+      {/* Social proof near the booking decision point */}
+      <ReviewsStrip heading="Trusted by Guests from Around the World" />
 
       {/* Server-rendered content for crawlers: real text + internal links,
           below the interactive booking form. Does not affect the form. */}

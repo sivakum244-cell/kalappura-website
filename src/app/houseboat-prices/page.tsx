@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LivePriceStrip from "@/components/LivePriceStrip";
+import ReviewsStrip from "@/components/ReviewsStrip";
 
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Price 2026 | Rates Per Night" },
@@ -220,6 +221,8 @@ export default function HouseboatPricesPage() {
       </section>
 
       {/* CTA */}
+      <ReviewsStrip />
+
       <section className="py-16 px-4 text-center">
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/booking" className="px-8 py-3 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition-colors">

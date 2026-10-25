@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ReviewsStrip from "@/components/ReviewsStrip";
 
 export const metadata: Metadata = {
   title: { absolute: "Alleppey Houseboat Packages | Standard, Premium & Luxury" },
@@ -182,6 +183,9 @@ export default function HouseboatPackagesPage() {
           </div>
         </div>
       </section>
+
+      {/* Social proof */}
+      <ReviewsStrip />
 
       {/* CTA & Links */}
       <section className="py-16 px-4 text-center">

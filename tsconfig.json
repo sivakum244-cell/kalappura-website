@@ -36,6 +36,7 @@
   ],
   "exclude": [
     "node_modules",
-    "_backup_before_changes"
+    "_backup_before_changes",
+    "prisma"
   ]
 }

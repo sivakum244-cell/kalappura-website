@@ -21,10 +21,15 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   eslint: {
+    // ESLint is still skipped at build time to avoid style-rule warnings failing
+    // the deploy. Run `npm run lint` locally to catch issues.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    // Type errors now fail the build (the codebase is at zero tsc errors). This
+    // turns the build into a real safety net so a broken commit fails loudly
+    // instead of silently shipping.
+    ignoreBuildErrors: false,
   },
   // Security headers
   async headers() {

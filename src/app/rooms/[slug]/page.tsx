@@ -133,24 +133,26 @@ export default async function RoomDetailPage({ params }: Props) {
               availability: "https://schema.org/InStock",
               priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
             },
-            // Real aggregate rating from SITE_CONFIG (10-point scale).
+            // Aggregate rating on a 5-point scale (consistent with the sitewide
+            // LodgingBusiness schema). SITE_CONFIG.rating is stored out of 10.
             aggregateRating: {
               "@type": "AggregateRating",
-              ratingValue: SITE_CONFIG.rating,
-              bestRating: 10,
-              worstRating: 1,
-              reviewCount: SITE_CONFIG.reviewCount,
+              ratingValue: (Math.round((SITE_CONFIG.rating / 2) * 100) / 100).toString(),
+              bestRating: "5",
+              worstRating: "1",
+              ratingCount: SITE_CONFIG.reviewCount.toString(),
+              reviewCount: SITE_CONFIG.reviewCount.toString(),
             },
-            // A sample of genuine guest reviews from REVIEWS.
+            // A sample of genuine guest reviews from REVIEWS (ratings scaled to 5).
             review: REVIEWS.slice(0, 3).map((r) => ({
               "@type": "Review",
               author: { "@type": "Person", name: r.name },
               datePublished: r.date,
               reviewRating: {
                 "@type": "Rating",
-                ratingValue: r.rating,
-                bestRating: 10,
-                worstRating: 1,
+                ratingValue: (Math.round((r.rating / 2) * 100) / 100).toString(),
+                bestRating: "5",
+                worstRating: "1",
               },
               name: r.title,
               reviewBody: r.text,
