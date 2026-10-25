@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 interface GuestPhoto {
   id: string;
@@ -84,8 +85,9 @@ export default function GuestPhotosSection() {
                 transition={{ duration: 0.4, delay: i * 0.06 }}
                 className="relative aspect-square rounded-xl overflow-hidden group"
               >
-                <img src={photo.imageUrl} alt={photo.caption || `Photo by ${photo.guestName}`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <Image src={photo.imageUrl} alt={photo.caption || `Photo by ${photo.guestName}`}
+                  fill sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <p className="text-white text-xs font-medium truncate">{photo.guestName}</p>

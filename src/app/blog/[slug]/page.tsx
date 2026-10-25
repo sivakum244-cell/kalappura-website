@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/constants";
@@ -204,14 +205,13 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Cover Image */}
       {post.coverImage && (
         <div className="w-full h-[300px] md:h-[400px] relative overflow-hidden">
-          <img
+          <Image
             src={post.coverImage}
             alt={post.title}
-            width={1200}
-            height={400}
-            fetchPriority="high"
-            decoding="async"
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
@@ -238,7 +238,7 @@ export default async function BlogPostPage({ params }: Props) {
               {post.publishedAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
             </time>
           )}
-          {post.updatedAt && post.publishedAt && post.updatedAt.getTime() - post.publishedAt.getTime() > 86400000 && (
+okd          {post.updatedAt && post.publishedAt && post.updatedAt.getTime() - post.publishedAt.getTime() > 86400000 && (
             <span className="text-sm text-gray-400">
               · Updated {post.updatedAt.toLocaleDateString("en-IN", { month: "long", year: "numeric" })}
             </span>

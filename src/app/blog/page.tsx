@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import prisma from "@/lib/prisma";
 
 export const metadata: Metadata = {
@@ -88,15 +89,13 @@ export default async function BlogPage() {
               <article key={post.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow group">
                 {post.coverImage && (
                   <Link href={`/blog/${post.slug}`}>
-                    <div className="h-48 overflow-hidden">
-                      <img
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
                         src={post.coverImage}
                         alt={post.title}
-                        width={400}
-                        height={192}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
                   </Link>
