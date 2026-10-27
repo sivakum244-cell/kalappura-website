@@ -124,6 +124,17 @@ const nextConfig: NextConfig = {
       { source: "/2-bedroom-houseboat", destination: "/rooms/double-twin-room-lake-view", permanent: true },
       { source: "/3-bedroom-houseboat", destination: "/rooms/standard-cabin-on-boat", permanent: true },
       { source: "/houseboats", destination: "/alleppey-houseboats", permanent: true },
+      // Keyword-plan aliases → existing canonical pages (301). Capture the exact
+      // search slugs from the keyword map without creating duplicate content.
+      { source: "/alleppey-day-cruise", destination: "/day-cruise-houseboat-alleppey", permanent: true },
+      { source: "/alleppey-houseboat-rate-per-night", destination: "/houseboat-prices", permanent: true },
+      { source: "/honeymoon-houseboat", destination: "/honeymoon-houseboat-alleppey", permanent: true },
+      { source: "/group-houseboat", destination: "/group-booking", permanent: true },
+      { source: "/best-time-alleppey-houseboat", destination: "/blog/best-time-alleppey-houseboat", permanent: true },
+      { source: "/houseboat-monsoon", destination: "/blog/alleppey-houseboat-monsoon-season-guide", permanent: true },
+      { source: "/houseboat-december", destination: "/blog/alleppey-houseboat-christmas-new-year-2026", permanent: true },
+      { source: "/cancellation-policy", destination: "/cancellation-refund", permanent: true },
+      { source: "/houseboat-experience", destination: "/overnight-houseboat", permanent: true },
     ];
   },
   // Enable gzip/brotli compression for text assets.

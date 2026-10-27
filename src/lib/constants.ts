@@ -324,6 +324,31 @@ export const FAQS = [
       "Check-in is at 12:00 PM (noon) and check-out is at 9:00 AM the next day. Early check-in or late check-out may be available upon request, subject to availability.",
   },
   {
+    question: "What are the AC timings on the houseboat?",
+    answer:
+      "On the Standard package, the AC runs in the bedroom from 8:30 PM to 6:30 AM. Premium extends AC to roughly 5:30 PM–7:30 AM, and the Semi Luxury package has AC available all the time. This is regulated because the boat runs AC on a generator while anchored.",
+  },
+  {
+    question: "Is the houseboat private or shared?",
+    answer:
+      "Every Kalappura houseboat is booked privately — the entire boat, deck, and crew are yours. We do not sell individual seats or share a boat between unrelated groups. You can book just one room on a larger boat if you prefer.",
+  },
+  {
+    question: "Should I choose a day cruise or an overnight stay?",
+    answer:
+      "A day cruise (a few hours) gives you a taste of the backwaters. An overnight stay is the full experience — afternoon cruise, sunset, dinner, a quiet night anchored on the water, and a misty morning. For most travellers, the overnight stay is well worth it.",
+  },
+  {
+    question: "Where is the boarding point / jetty?",
+    answer:
+      "Boarding is at our dock in Alleppey (Alappuzha) — Mullackal Ward, Iron Bridge P.O, Thirumala East Gate Road, Kerala 688011. It's about 2.5 km from Alleppey Railway Station and 85 km from Cochin International Airport. Free parking is available, and we can arrange airport or station pickup on request.",
+  },
+  {
+    question: "What should I ask before booking a houseboat in Alleppey?",
+    answer:
+      "Confirm that the boat is private, which meals are included, the AC hours for your package, the cruise route and duration, the check-in/check-out times, and the cancellation policy. Booking directly with the operator (not an agent) usually gives the best price and clearest answers.",
+  },
+  {
     question: "What is the cancellation policy?",
     answer:
       "Free cancellation up to 7 days before check-in. Cancellations within 7 days will be charged 50% of the booking amount. No-shows will be charged the full amount.",
