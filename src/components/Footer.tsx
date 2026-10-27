@@ -26,7 +26,6 @@ export default function Footer() {
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms & Conditions", href: "/terms" },
     { name: "Cancellation & Refund", href: "/cancellation-refund" },
-    { name: "Shipping & Delivery", href: "/shipping" },
     { name: "FAQ", href: "/faq" },
   ];
 
@@ -204,7 +203,7 @@ export default function Footer() {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-500">
-            © 2025 Kalappura Houseboats & Tours. All rights reserved.
+            © {new Date().getFullYear()} Kalappura Houseboats & Tours. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <span className="text-xs text-gray-500">Secure Payments:</span>

@@ -102,26 +102,16 @@ export default function Hero() {
               <span className="text-white/80 text-sm font-medium">Alleppey, Kerala • India</span>
             </motion.div>
 
-            {/* Main Heading — visible marketing headline + accessible/SEO keyword phrase */}
+            {/* Main Heading — single, properly-spaced H1 (fixes the previous
+                "theBackwatersin" run-together bug caused by adjacent spans with
+                no whitespace). Visible text matches the SEO H1 exactly. */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15] mb-6"
             >
-              {/* Keyword-bearing H1 text for search engines & screen readers */}
-              <span className="sr-only">Kerala Houseboat &amp; Alleppey Houseboat Booking – Kalappura Houseboats. </span>
-              <span className="block" aria-hidden="true">Cruise the</span>
-              <span className="block relative" aria-hidden="true">
-                <span className="text-gradient-gold">Backwaters</span>
-                <motion.span
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, delay: 1.2 }}
-                  className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full"
-                />
-              </span>
-              <span className="block text-3xl sm:text-4xl md:text-5xl mt-2 font-accent font-light text-white/80" aria-hidden="true">in Pure Luxury</span>
+              Private <span className="text-gradient-gold">Alleppey Houseboat</span> Booking — AC Boats with All Meals
             </motion.h1>
 
             {/* Subtitle */}
@@ -218,6 +208,10 @@ export default function Hero() {
                 </span>
               ))}
             </motion.div>
+            {/* Footnote for the "Free Cancellation*" badge above */}
+            <p className="text-[11px] text-white/40 mt-2">
+              *Free cancellation up to 7 days before check-in.
+            </p>
           </div>
 
           {/* Right: Booking Engine */}

@@ -318,10 +318,31 @@ export const AMENITIES = [
 ];
 
 export const FAQS = [
+  // TODO (owner to confirm): two FAQ answers below state facts that need your
+  // sign-off before they are treated as authoritative —
+  //   1. Boarding point: is "Mullackal Ward, Iron Bridge P.O..." the actual
+  //      boarding JETTY, or the office address? Update the answer if different.
+  //   2. Cancellation terms: confirm "free >7 days, 50% within 7 days, no-show
+  //      = full" is the correct public policy.
+  {
+    question: "How much does a houseboat cost and what's included?",
+    answer:
+      "Standard rates start at ₹15,000 per room per night plus 18% GST. Every booking includes an air-conditioned bedroom, a private bathroom, the backwater cruise, and all meals — lunch, evening tea with snacks, dinner, and breakfast the next morning. Premium and Semi Luxury packages are also available.",
+  },
   {
     question: "What are the check-in and check-out times?",
     answer:
       "Check-in is at 12:00 PM (noon) and check-out is at 9:00 AM the next day. Early check-in or late check-out may be available upon request, subject to availability.",
+  },
+  {
+    question: "When is the best season to visit Alleppey for a houseboat?",
+    answer:
+      "December to February has the coolest, clearest weather and is the most popular season — book early. March to May is warmer but comfortable with AC. June to September (monsoon) is the greenest and the best value, with occasional rain. The backwaters can be cruised year-round.",
+  },
+  {
+    question: "Can we add an extra bed, and what are the charges for children?",
+    answer:
+      "Children under 5 stay free. Children aged 6–11 and extra beds are ₹1,000 per night each. Each room comfortably fits 2 adults plus 1 child or an extra bed. Life jackets are provided for children.",
   },
   {
     question: "What are the AC timings on the houseboat?",

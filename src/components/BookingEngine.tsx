@@ -97,7 +97,7 @@ export default function BookingEngine({ showHeading = true }: { showHeading?: bo
 
         {/* Price hint */}
         <p className="text-center text-white/40 text-xs mt-4">
-          From ₹15,300/night • 20% advance, balance at property
+          From ₹15,000/room/night + 18% GST • 20% advance, balance on arrival
         </p>
       </div>
     </form>

@@ -20,6 +20,16 @@ export default function HomeSEOContent() {
             Houseboat Holidays in Alleppey, Kerala
           </h2>
           <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed space-y-4">
+            {/* Answer block — concise, factual summary for search engines & AI
+                assistants to read and cite. Plain HTML text, not hidden. */}
+            <p className="text-gray-800 font-medium">
+              Kalappura runs private 1-, 2- and 3-bedroom air-conditioned houseboats
+              from Alleppey. You board around noon, cruise Vembanad Lake and the
+              Kainakari canals, anchor at 5 PM and check out at 9 AM. Standard rates
+              start at ₹15,000 per room per night plus 18% GST, with lunch, evening
+              tea, dinner and breakfast included. Air conditioning runs from 8:30 PM
+              to 6:30 AM. Pay a 20% advance; the balance is due on arrival.
+            </p>
             <p>
               Kalappura Houseboats offers a private, luxury houseboat experience on
               the backwaters of Alleppey (Alappuzha), Kerala. Our fleet of traditional

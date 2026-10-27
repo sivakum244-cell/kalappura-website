@@ -3,9 +3,9 @@ import HomeContent from "@/components/HomeContent";
 import { FAQS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: { absolute: "Alleppey Houseboat Booking | Kalappura Houseboats" },
+  title: { absolute: "Alleppey Houseboat Booking | Private AC Boats ₹15,000+" },
   description:
-    "Book an Alleppey houseboat direct with Kalappura. Private 1, 2 & 3 bedroom AC boats on the Kerala backwaters — all meals, cruise & instant confirmation.",
+    "Book a private AC houseboat in Alleppey direct. 1-3 bedroom boats, all meals and cruise included. 20% advance, rest on arrival. Chat on WhatsApp.",
   keywords: [
     "Alleppey houseboat",
     "Alleppey houseboat booking",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: "Alleppey Houseboat Booking | Kalappura Houseboats & Boat House",
+    title: "Alleppey Houseboat Booking | Private AC Boats ₹15,000+",
     description:
-      "Book a private Alleppey houseboat (boat house) on the Kerala backwaters. 1, 2 & 3 bedroom AC boats with all meals and a backwater cruise. Book direct for best rates.",
+      "Book a private AC houseboat in Alleppey direct. 1-3 bedroom boats, all meals and cruise included. 20% advance, rest on arrival.",
     url: "/",
     images: [
       {
@@ -73,6 +73,25 @@ export default function Home() {
     },
   };
 
+  // Offer schema for the Standard package starting price (₹15,000/room/night +
+  // 18% GST). Uses only the confirmed advertised Standard rate.
+  const offerJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    name: "Standard Package — Private Alleppey Houseboat (per room, per night)",
+    description:
+      "Private AC houseboat in Alleppey with all meals (lunch, evening tea, dinner, breakfast) and an overnight backwater cruise. Standard rate per room per night; 18% GST additional.",
+    price: "15000",
+    priceCurrency: "INR",
+    availability: "https://schema.org/InStock",
+    url: "https://www.alleppeyhouseboat.online/booking",
+    seller: {
+      "@type": "LodgingBusiness",
+      name: "Kalappura Houseboats & Tours",
+      url: "https://www.alleppeyhouseboat.online",
+    },
+  };
+
   return (
     <>
       <script
@@ -82,6 +101,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(offerJsonLd) }}
       />
       <HomeContent />
     </>

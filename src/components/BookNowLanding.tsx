@@ -82,6 +82,10 @@ export default function BookNowLanding() {
               </span>
             ))}
           </div>
+          {/* Footnote for the "Free Cancellation*" badge above */}
+          <p className="text-center text-xs text-white/50 mt-3">
+            *Free cancellation up to 7 days before check-in.
+          </p>
         </div>
       </section>
 
